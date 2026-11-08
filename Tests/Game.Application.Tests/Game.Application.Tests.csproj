@@ -19,4 +19,8 @@
     <ItemGroup>
         <Using Include="NUnit.Framework"/>
     </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Source\Game.Application\Game.Application.csproj" />
+    </ItemGroup>
 </Project>
