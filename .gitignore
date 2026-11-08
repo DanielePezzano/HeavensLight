@@ -42,7 +42,7 @@ coverage.*
 *.coverage
 *.coveragexml
 
-# Unity generated files (Unity project under Source/Game.Unity/Game.Unity)
+# Unity generated files (Unity project under Source/Game.UnityS)
 /Source/Game.Unity/[Ll]ibrary/
 /Source/Game.Unity/[Tt]emp/
 /Source/Game.Unity/[Oo]bj/
