@@ -1,51 +1,51 @@
 # Heaven's Light
 
-Heaven's Light è un gioco strategico spaziale 4X in fase di progettazione. Questo repository raccoglie la documentazione e, progressivamente, il codice sorgente del progetto.
+Heaven's Light è un gioco strategico spaziale 4X in fase di progettazione. Il repository contiene la documentazione e la struttura iniziale del codice sorgente.
 
 ## Stato del progetto
 
-Il progetto è nella fase di preparazione. Il Game Design Document (GDD) è in lavorazione e definisce le regole, i sistemi e le decisioni di design.
+La fase zero, dedicata alla preparazione della struttura e degli strumenti di sviluppo, è completata sul branch `Fase-zero`. Il gameplay non è ancora stato implementato.
 
-La libreria C# e i progetti Unity non sono ancora stati creati.
+## Architettura
 
-## Architettura prevista
+- **Game.Core** — modelli e regole fondamentali della simulazione, indipendenti da Unity.
+- **Game.Application** — casi d'uso e coordinamento della logica di gioco; dipende da `Game.Core`.
+- **Game.Unity** — progetto Unity per la presentazione, l'interfaccia, l'input e l'integrazione con la simulazione.
 
-Il codice sarà organizzato per separare le regole di simulazione dall'interfaccia e dal motore grafico:
+Le librerie `Game.Core` e `Game.Application` supportano i target `.NET 10` e `.NET Standard 2.1`. Il progetto Unity usa Unity `6000.6.8f1`.
 
-- **Game.Core** — modelli di dominio e regole fondamentali, indipendenti da Unity.
-- **Game.Application** — casi d'uso e coordinamento delle operazioni di gioco.
-- **Game.Unity** — integrazione con Unity, interfaccia, visualizzazione e input.
-
-La simulazione sarà progettata per poter essere verificata indipendentemente dalla presentazione grafica. Il primo obiettivo è un prototipo single-player; il multiplayer potrà essere affrontato in una fase successiva.
-
-## Struttura prevista
+## Struttura attuale
 
 ```text
-Documentation/
-  GDD/
-  TechnicalDesign/
-  Decisions/
-Source/
-  Game.Core/
-  Game.Application/
-  Game.Unity/
-Tests/
-  Core.UnitTests/
-  Simulation.Tests/
-  Integration.Tests/
-Assets/
+HeavensLight/
+├── HeavensLight.sln
+├── README.md
+├── .gitignore
+├── Source/
+│   ├── Game.Core/
+│   │   └── Game.Core.csproj
+│   ├── Game.Application/
+│   │   └── Game.Application.csproj
+│   └── Game.Unity/
+│       ├── Assets/
+│       ├── Packages/
+│       └── ProjectSettings/
+└── Tests/
+    ├── Game.Core.Tests/
+    │   └── Game.Core.Tests.csproj
+    └── Game.Application.Tests/
+        └── Game.Application.Tests.csproj
 ```
 
-La struttura è indicativa e verrà aggiornata man mano che i contenuti vengono aggiunti al repository.
+La solution .NET contiene le due librerie e i relativi progetti di test. Il progetto Unity viene aperto tramite Unity Hub ed è configurato per usare Rider come editor esterno.
 
-## Tecnologie previste
+## Test
 
-- C#
-- Unity
-- Git e GitHub
-- NUnit per i test automatici
-- JSON per i dati iniziali di gioco
+- **Game.Core.Tests** — include il test iniziale che verifica i limiti validi dei mesi di gioco (da 1 a 12).
+- **Game.Application.Tests** — progetto di test predisposto; i test dei casi d'uso verranno aggiunti quando sarà implementata la relativa logica.
 
-## Documentazione
+I test automatici usano NUnit.
 
-Il GDD contiene le regole di gioco concordate e le questioni ancora aperte. Le proposte non ancora approvate non devono essere considerate decisioni definitive.
+## Versionamento
+
+Il repository usa Git. Sono versionati i file necessari per ricostruire il progetto Unity, inclusi `Assets`, `Packages` e `ProjectSettings`; le cartelle temporanee e gli artefatti generati sono esclusi tramite `.gitignore`.
