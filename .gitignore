@@ -43,20 +43,20 @@ coverage.*
 *.coveragexml
 
 # Unity generated files (Unity project under Source/Game.Unity/Game.Unity)
-/Source/Game.Unity/Game.Unity/[Ll]ibrary/
-/Source/Game.Unity/Game.Unity/[Tt]emp/
-/Source/Game.Unity/Game.Unity/[Oo]bj/
-/Source/Game.Unity/Game.Unity/[Bb]uild/
-/Source/Game.Unity/Game.Unity/[Bb]uilds/
-/Source/Game.Unity/Game.Unity/[Ll]ogs/
-/Source/Game.Unity/Game.Unity/[Uu]ser[Ss]ettings/
-/Source/Game.Unity/Game.Unity/[Mm]emoryCaptures/
-/Source/Game.Unity/Game.Unity/[Rr]ecordings/
-/Source/Game.Unity/Game.Unity/[Aa]ssets/AssetStoreTools*
-/Source/Game.Unity/Game.Unity/*.csproj
-/Source/Game.Unity/Game.Unity/*.sln
-/Source/Game.Unity/Game.Unity/*.slnx
-/Source/Game.Unity/Game.Unity/*.userprefs
+/Source/Game.Unity/[Ll]ibrary/
+/Source/Game.Unity/[Tt]emp/
+/Source/Game.Unity/[Oo]bj/
+/Source/Game.Unity/[Bb]uild/
+/Source/Game.Unity/[Bb]uilds/
+/Source/Game.Unity/[Ll]ogs/
+/Source/Game.Unity/[Uu]ser[Ss]ettings/
+/Source/Game.Unity/[Mm]emoryCaptures/
+/Source/Game.Unity/[Rr]ecordings/
+/Source/Game.Unity/[Aa]ssets/AssetStoreTools*
+/Source/Game.Unity/*.csproj
+/Source/Game.Unity/*.sln
+/Source/Game.Unity/*.slnx
+/Source/Game.Unity/*.userprefs
 
 # Logs and temporary files
 *.log
