@@ -6,7 +6,7 @@ Heaven's Light è un gioco strategico spaziale 4X in fase di progettazione. Ques
 
 Il progetto è nella fase di preparazione. Il Game Design Document (GDD) è in lavorazione e definisce le regole, i sistemi e le decisioni di design.
 
-La libreria C# e i progetti Unity non sono ancora stati creati.
+La libreria C# e i progetti Unity sono stati creati nella loro versione iniziale
 
 ## Architettura prevista
 
