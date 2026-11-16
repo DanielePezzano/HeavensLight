@@ -2,6 +2,18 @@
 
 Cronologia delle modifiche al documento di game design. Le voci sono riportate dalle versioni precedenti e ordinate dalla più recente alla più vecchia.
 
+## Novità v0.57
+
+Confermato in §4.3.5 che le ricette hanno un output principale e possono
+prevedere uno o più sottoprodotti soltanto in ricette specificamente
+scelte; il formato base resta di 2–4 input e un output principale.
+Allineato il riferimento ai sottoprodotti in §4.3.3 e aggiornato il
+registro sintetico delle decisioni (§10). Aggiunta l'indicazione della
+versione corrente (0.57) nell'intestazione del GDD. Annotato in
+`OPEN_QUESTIONS.md` il rimando ad ADR-003 anche in OQ-004. Registrata la decisione in
+`DECISIONS.md` con ADR-003. OQ-001 resta aperta: annotata in
+`OPEN_QUESTIONS.md` la parte decisa e gli aspetti ancora da definire.
+
 ## Novità v0.56
 
 Riorganizzata la documentazione di progetto introducendo

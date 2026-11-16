@@ -107,3 +107,47 @@ valutare e non vengono assegnate automaticamente.
   all’archivio delle questioni risolte.
 - La migrazione iniziale non assegna priorità o dipendenze non ancora
   analizzate e non trasforma proposte in decisioni approvate.
+
+---
+
+## ADR-003 — Sottoprodotti opzionali nelle ricette
+
+- **Data:** 2026-11-16
+- **Stato:** Confermata
+- **Ambito:** Economia e produzione — formato delle ricette
+- **Riferimento GDD:** §4.3.5; OQ-001
+
+### Contesto
+
+Nell'ambito della definizione del catalogo completo delle ricette
+(OQ-001) occorreva stabilire se le ricette potessero produrre, oltre
+all'output principale, anche sottoprodotti. Il GDD indicava gli
+eventuali sottoprodotti come da definire.
+
+### Decisione
+
+Le ricette hanno un output principale e possono prevedere uno o più
+sottoprodotti soltanto in ricette specificamente scelte; non tutte le
+ricette li hanno. Il formato base resta di 2–4 input e un output
+principale.
+
+### Alternative considerate
+
+- **A. Nessun sottoprodotto (un solo output per ricetta):** non adottata.
+  Offriva semplicità e nessuna regola aggiuntiva di stoccaggio.
+- **B. Sottoprodotti opzionali, solo in ricette scelte:** adottata.
+  Consente profondità industriale dove serve senza gravare sulle altre
+  ricette.
+- **C. Sottoprodotti in tutte le raffinazioni:** non adottata. Avrebbe
+  appesantito catalogo e logistica.
+
+### Conseguenze
+
+- Le ricette senza sottoprodotti restano invariate nel formato.
+- Servono regole specifiche per le ricette con sottoprodotti.
+
+### Note e questioni collegate
+
+Restano aperti, nell'ambito di OQ-001: quali ricette prevedono
+sottoprodotti; regole di stoccaggio, smaltimento e volume; tipologia e
+trasportabilità dei sottoprodotti; il resto del catalogo.
