@@ -104,6 +104,7 @@ automaticamente in fase di migrazione.
 - **Preparazione dell’analisi:** assistente.
 - **Proposta corrente:** nessuna proposta approvata. Eventuali valori o modelli già presenti nel GDD sono indicati come provvisori e non diventano automaticamente decisioni.
 - **Riferimenti:** §4.3–§4.4.
+- **Decisione parziale:** il punto sui sottoprodotti è deciso con ADR-003 (sottoprodotti opzionali, presenti solo in ricette specificamente scelte; formato GDD §4.3.5). Restano aperti: quali ricette hanno sottoprodotti; regole di stoccaggio, smaltimento e volume; tipologia e trasportabilità dei sottoprodotti; il resto del catalogo (materiali per famiglia, quantità, tempi, bilanciamento).
 
 ### OQ-002 — Depositi naturali e distribuzione delle risorse
 
@@ -146,6 +147,7 @@ automaticamente in fase di migrazione.
 - **Preparazione dell’analisi:** assistente.
 - **Proposta corrente:** nessuna proposta approvata. Eventuali valori o modelli già presenti nel GDD sono indicati come provvisori e non diventano automaticamente decisioni.
 - **Riferimenti:** §4.3–§4.4.
+- **Nota:** il principio generale sui sottoprodotti è deciso con ADR-003 (opzionali, solo in ricette specificamente scelte; GDD §4.3.5). Restano aperti per questa questione i processi di raffinazione, i materiali in ingresso, i prodotti in uscita e quali raffinazioni prevedano sottoprodotti (vedi anche OQ-001).
 
 ### OQ-005 — Reparti integrati e lavorazioni degli impianti
 

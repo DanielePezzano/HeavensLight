@@ -1,6 +1,7 @@
 # Game Design Document — HeavensLight
 
 **Last updated:** 16 novembre 2026  
+**Versione:** 0.57  
 **Stato:** documento di progettazione corrente
 
 Questo documento descrive il modello di gioco corrente. Le decisioni confermate, le proposte e le questioni aperte sono indicate nelle sezioni pertinenti. Le questioni ancora aperte sono gestite in `OPEN_QUESTIONS.md`; la cronologia delle modifiche è mantenuta separatamente in `CHANGELOG.md`.
@@ -882,7 +883,8 @@ ricetta o un processo industriale che specifichi almeno:
 - materiali e quantità in ingresso;
 - tempo di lavorazione;
 - capacità produttiva richiesta;
-- prodotti in uscita ed eventuali sottoprodotti.
+- prodotti in uscita ed eventuali sottoprodotti (previsti solo in
+  ricette specificamente scelte, §4.3.5).
 
 Questi elementi costituiscono una struttura di riferimento proposta;
 non sono ancora stati definiti valori numerici, ricette o regole
@@ -938,8 +940,15 @@ Valori numerici, ricette, costi dei livelli e consumi sono da definire.
 #### 4.3.5 Ricette: formato e regole [FORMATO CONFERMATO, VALORI PROVVISORI]
 
 Ogni ricetta è semplice e strutturata: da **2 a 4 input**, un output
-principale, un impianto richiesto e una tecnologia richiesta. Gli
-eventuali sottoprodotti sono da definire.
+principale, un impianto richiesto e una tecnologia richiesta.
+
+**Sottoprodotti** ([ADR-003](DECISIONS.md#adr-003--sottoprodotti-opzionali-nelle-ricette))
+**[CONFERMATO]**: le ricette hanno un output principale e possono
+prevedere uno o più sottoprodotti soltanto in ricette specificamente
+scelte; non tutte le ricette li hanno. Il formato base resta di 2–4
+input e un output principale. Restano da definire (OQ-001): quali
+ricette prevedono sottoprodotti, le regole di stoccaggio, smaltimento e
+volume, la tipologia e la trasportabilità dei sottoprodotti.
 
 **Tipi di lavorazione**
 
@@ -2886,6 +2895,7 @@ incorporata nel GDD e registrata negli altri documenti pertinenti.
 | Tema | Decisione |
 |---|---|
 | Organizzazione documentale | Quattro documenti canonici distinti: GDD, DECISIONS, CHANGELOG e OPEN_QUESTIONS (ADR-002) |
+| Sottoprodotti nelle ricette ([ADR-003](DECISIONS.md#adr-003--sottoprodotti-opzionali-nelle-ricette)) | Output principale più eventuali sottoprodotti, presenti solo in ricette specificamente scelte; non tutte le ricette li hanno; formato base invariato: 2–4 input e un output principale (§4.3.5) |
 | Modalità | Single-player e multiplayer |
 | Struttura | Gioco a turni; risoluzione affidata al TurnResolver, con eventi ordinati (mai realmente simultanei) |
 | TurnResolver | Azioni con ETA; quelle non completate entro il turno vanno in una coda persistente consultata a inizio elaborazione |
