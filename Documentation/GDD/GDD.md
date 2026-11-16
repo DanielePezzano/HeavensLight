@@ -1,105 +1,25 @@
-# Documento di Game Design --- Bozza iniziale
+# Game Design Document — HeavensLight
 
-**Progetto:** Test di Codice\
-**Versione:** 0.48 --- bozza di lavoro\
-**Data:** 12 novembre 2026\
-**Stato:** consolidamento delle decisioni emerse nella progettazione; aggiornamento delle regole di danneggiamento, riparazione e ricostruzione degli impianti
+**Last updated:** 16 novembre 2026  
+**Stato:** documento di progettazione corrente
 
-> **Novità v0.48:** completate le regole operative di riparazione e distruzione (§4.3.7): un reparto a 0 PS è distrutto e non può essere riparato, ma deve essere ricostruito con un nuovo ordine, costi e tempi di costruzione; la ricostruzione non ripristina gli ordini precedentemente cancellati e conserva l'impostazione di riparazione automatica. Definita la gestione di nuovi danni durante una riparazione, la distribuzione autonoma dei PC di riparazione secondo priorità e anzianità e la priorità predefinita degli ordini automatici. Precisate le cancellazioni degli ordini collegati alla distruzione di un reparto o impianto e il rientro dei convogli già in viaggio. Aggiornato il registro sintetico delle decisioni.
->
-> **Novità v0.47:** completate le regole di selezione dei reparti colpiti
-> (§4.3.7): distinzione tra attacchi mirati e danni non mirati; per gli
-> attacchi mirati la probabilità di colpire il reparto selezionato dipende
-> da precisione dell'arma, difese del bersaglio e tecnologie disponibili.
-> Un attacco mancato può non causare danni oppure colpire accidentalmente
-> un altro reparto. I danni non mirati selezionano i reparti in modo
-> casuale ponderato; un attacco può coinvolgere uno o più reparti in base
-> all'arma o all'evento. Definiti inoltre il limite del danno ai PS residui
-> del reparto, la perdita del danno eccedente, i danni secondari come eventi
-> distinti e l'assenza di PS separati per l'impianto principale. Aggiornato
-> il registro sintetico delle decisioni.
->
-> **Novità v0.46:** estese le regole di integrità strutturale (§4.3.7)
-> introducendo le categorie di danno e i relativi modificatori
-> moltiplicativi, gli ordini di riparazione manuali o automatici, una
-> capacità di riparazione autonoma per ogni impianto e il ripristino
-> progressivo dei Punti Struttura. Definita inoltre la riduzione
-> direttamente proporzionale della capacità produttiva del reparto in
-> funzione dei PS persi. Aggiornato il registro sintetico delle decisioni.
->
-> Questo documento raccoglie le regole concordate finora. Le decisioni
-> confermate sono distinte dalle proposte e dalle questioni ancora
-> aperte. Le parti non ancora definite non devono essere considerate
-> regole definitive.
->
-> **Novità v0.45:** definita l'associazione degli ordini produttivi ai
-> reparti: la ricetta determina la tipologia compatibile, il giocatore
-> seleziona l'impianto principale e, se sono presenti più reparti
-> compatibili, sceglie quello specifico; con un solo reparto compatibile
-> l'assegnazione è automatica. Gli ordini non cambiano reparto
-> automaticamente; il trasferimento manuale è consentito tra reparti
-> compatibili dello stesso impianto, conservando identità, anzianità,
-> priorità e progresso, e applicando la nuova distribuzione PC dal mese
-> successivo. Definite le conseguenze dell'indisponibilità temporanea,
-> parziale e permanente dei reparti e degli impianti. Introdotti i Punti
-> Struttura (PS): il totale dell'impianto è la somma dei PS dei reparti,
-> modificabile da tecnologie e fattori sociali. Demolizione volontaria e
-> distruzione hanno gli stessi effetti: gli ordini produttivi e di
-> rifornimento diretti alla struttura vengono rimossi; i convogli già
-> in movimento invertono la rotta e riportano il carico al punto di
-> partenza, dove le risorse tornano disponibili all'arrivo. Aggiornato
-> il registro sintetico delle decisioni.
+Questo documento descrive il modello di gioco corrente. Le decisioni confermate, le proposte e le questioni aperte sono indicate nelle sezioni pertinenti. Le questioni ancora aperte sono gestite in `OPEN_QUESTIONS.md`; la cronologia delle modifiche è mantenuta separatamente in `CHANGELOG.md`.
 
-> **Novità v0.44:** definiti i limiti massimi di PC utilizzabili dai
-> singoli reparti (§4.3.6). Ogni reparto ha un limite proprio, calcolato
-> a partire dal 50% della capacità base dell'impianto principale al
-> livello 1, moltiplicato per il coefficiente del livello dell'impianto
-> e per i modificatori tecnologici generali e specifici applicabili.
-> I modificatori sono moltiplicativi e il risultato è arrotondato per
-> difetto. Precisato che i limiti dei reparti non aumentano il budget
-> complessivo dell'impianto e che la somma dei PC assegnati resta
-> vincolata sia al budget disponibile sia ai limiti dei singoli reparti.
-> Aggiornato il registro sintetico delle decisioni.
->
-> **Novità v0.43:** integrate in §4.3.6 le decisioni sul calcolo
-> del fabbisogno di PC, sulla determinazione mensile dei coefficienti
-> di efficienza e sulla capacità effettivamente disponibile. Precisata
-> l'autonomia dei budget tra impianti principali e stabilito che ogni
-> ordine produttivo è associato a un solo impianto principale; le fasi
-> di una filiera sono rappresentate da ordini distinti. Aggiornato il
-> registro sintetico delle decisioni. Restano da definire alcuni casi
-> limite del calcolo.
+## Indice
 
-> **Novità v0.42:** consolidate in §4.3.6 le regole di distribuzione
-> automatica dei Punti Capacità (PC): assegnazione mensile, mancata
-> redistribuzione durante il mese, ripartizione equa tra ordini della
-> stessa priorità, gestione dei PC indivisibili e dei residui secondo
-> anzianità dell'ordine. Precisato inoltre che i processi sospesi non
-> mantengono una quota di PC riservata e che, alla riattivazione, un
-> ordine rientra nella sequenza di precedenza come nuovo ordine ai fini
-> della distribuzione. Aggiornato il registro sintetico delle decisioni.
->
-> **Novità v0.40:** aggiornato il documento per allineare intestazione e
-> riepilogo editoriale alla versione corrente. Sono state integrate in
-> §5 le decisioni e le proposte relative a classi stellari, sistemi
-> multipli, lune, anomalie e ricchezza delle risorse dei corpi celesti.
-> In §6 sono state sviluppate le sezioni su crescita demografica,
-> specie, stabilità sociale e sostentamento. I valori indicati come
-> proposte o da bilanciare restano provvisori e non costituiscono
-> parametri definitivi.
->
-> **Novità v0.38:** confermate le regole su merge di ingestione, limiti
-> anti-loop, `RequiredFuel`, modifiche ammesse per categoria di ordine,
-> dipendenze, arrotondamenti e interruzioni (§2.3.4, §2.3.5, §2.7,
-> §2.8, §2.10.1).
->
-> **Novità v0.37:** il capitolo 1 (§2) è stato riscritto per integrare il
-> modello a tick, il flag di blocco persistente, la distinzione tra
-> ordini incompleti e ordini continuativi, e la barriera di
-> pianificazione. È stato aggiunto il capitolo 11 con l'architettura
-> tecnica del TurnResolver.
+1. [Visione e pilastri del gioco](#1-visione-e-pilastri-del-gioco)
+2. [Capitolo 1 --- Tempo e sistema degli ordini](#2-capitolo-1-tempo-e-sistema-degli-ordini)
+3. [Capitolo 2 --- Galassia e generazione della mappa](#3-capitolo-2-galassia-e-generazione-della-mappa)
+4. [Capitolo 3 --- Risorse ed economia](#4-capitolo-3-risorse-ed-economia)
+5. [Capitolo 4 --- Sistemi stellari e corpi celesti](#5-capitolo-4-sistemi-stellari-e-corpi-celesti)
+6. [Capitolo 5 --- Colonie e popolazione](#6-capitolo-5-colonie-e-popolazione)
+7. [Capitolo 6 --- Flotte e combattimento](#7-capitolo-6-flotte-e-combattimento)
+8. [Gestione delle questioni aperte](#8-gestione-delle-questioni-aperte)
+9. [Principi di progettazione da preservare](#9-principi-di-progettazione-da-preservare)
+10. [Registro sintetico delle decisioni confermate](#10-registro-sintetico-delle-decisioni-confermate)
+11. [Architettura tecnica del TurnResolver](#11-architettura-tecnica-del-turnresolver)
 
-------------------------------------------------------------------------
+---
 
 ## 1. Visione e pilastri del gioco
 
@@ -112,7 +32,7 @@ e non una semplice replica di altri titoli del genere.
 -   Le partite possono includere giocatori umani e imperi controllati
     dall'intelligenza artificiale.
 
-### 1.2 Struttura temporale e simultaneità [AGGIORNATO v0.37]
+### 1.2 Struttura temporale e simultaneità
 
 -   Il gioco è a turni.
 -   Le azioni vengono pianificate dai giocatori e poi risolte dal
@@ -154,7 +74,7 @@ operazioni militari.
 
 ## 2. Capitolo 1 --- Tempo e sistema degli ordini
 
-### 2.1 Unità temporale [AGGIORNATO v0.37]
+### 2.1 Unità temporale
 
 -   Un turno di gioco corrisponde a **un anno**.
 -   Ogni anno è suddiviso in **12 mesi**.
@@ -167,7 +87,7 @@ operazioni militari.
     `sotto_istante` in `[0, 999]`. I confronti tra istanti sono confronti
     interi esatti, senza aritmetica floating-point.
 
-### 2.2 Pianificazione annuale [AGGIORNATO v0.37]
+### 2.2 Pianificazione annuale
 
 -   Durante la fase di pianificazione, il giocatore organizza in
     anticipo le proprie azioni per tutti i 12 mesi dell'anno.
@@ -185,7 +105,7 @@ operazioni militari.
     ordini persistenti (§2.10) e avvengono nella **fase di pianificazione
     successiva**, non durante la risoluzione.
 
-### 2.3 Risoluzione del turno: TurnResolver [CONFERMATO, AGGIORNATO v0.37]
+### 2.3 Risoluzione del turno: TurnResolver [CONFERMATO]
 
 Il turno è risolto da un componente dedicato, il **TurnResolver**.
 
@@ -206,7 +126,7 @@ Il turno è risolto da un componente dedicato, il **TurnResolver**.
     giocatore per l'ordine interno di elaborazione.
 -   I giocatori non vedono gli ordini degli avversari.
 
-#### 2.3.1 Criteri di spareggio [CONFERMATO, AGGIORNATO v0.37]
+#### 2.3.1 Criteri di spareggio [CONFERMATO]
 
 A parità di ETA (stesso tick assoluto) gli eventi sono ordinati
 secondo questi criteri, applicati in sequenza come confronto
@@ -228,7 +148,7 @@ priorità Minima precede una produzione a priorità Critica **solo se
 hanno lo stesso tick assoluto**. Se la produzione ha ETA precedente,
 viene eseguita prima.
 
-#### 2.3.2 Blocco persistente e ricalcolo ETA [RISCRITTO v0.37]
+#### 2.3.2 Blocco persistente e ricalcolo ETA
 
 Il modello distingue nettamente due situazioni, che la versione
 precedente mescolava:
@@ -260,7 +180,7 @@ La distinzione è netta:
 Superata la soglia configurabile (default: **3**), l'evento passa a
 `Failed` con motivazione `RepeatedRecalc` ed è segnalato al giocatore.
 
-#### 2.3.3 Loop mensile [NUOVO v0.37]
+#### 2.3.3 Loop mensile
 
 Ogni mese è risolto in quattro fasi in sequenza rigida:
 
@@ -280,7 +200,7 @@ Ogni mese è risolto in quattro fasi in sequenza rigida:
     `Cancelled`, emissione del riepilogo mensile per ciascun giocatore
     (log filtrato, §11.6), avanzamento al mese successivo.
 
-#### 2.3.4 Ingestione annuale [NUOVO v0.37]
+#### 2.3.4 Ingestione annuale
 
 Prima della Fase A del primo mese dell'anno, il TurnResolver esegue
 un'**ingestione atomica** una sola volta:
@@ -298,14 +218,14 @@ eventi figli generati dagli executor (round di combattimento, cicli di
 ordini continuativi). Questo è compatibile con il determinismo, perché
 la generazione dipende solo dallo stato e dai template, entrambi noti.
 
-**Formato del merge [CONFERMATO v0.38].** Il merge è un elenco ordinato di
+**Formato del merge [CONFERMATO].** Il merge è un elenco ordinato di
 comandi `(order_id, operazione, payload)`, applicati per `order_id`
 crescente. Operazioni: `Create`, `Modify`, `Cancel`, `Revoke`.
 L'applicazione è atomica per comando: un comando non valido viene
 scartato e registrato nel log, senza influire sugli altri. In caso di
 più comandi sullo stesso ordine vince l'ultimo.
 
-**Limiti anti-loop [CONFERMATO v0.38].**
+**Limiti anti-loop [CONFERMATO].**
 
 -   `MaxChildrenPerEvent` (default 64) e `MaxEventsPerMonth` globale
     (configurabile).
@@ -315,7 +235,7 @@ più comandi sullo stesso ordine vince l'ultimo.
 -   Il superamento dei limiti porta l'ordine a `Failed` con motivazione
     `LoopLimit`, con notifica al giocatore.
 
-#### 2.3.5 Carburante richiesto dal movimento [CONFERMATO v0.38]
+#### 2.3.5 Carburante richiesto dal movimento [CONFERMATO]
 
 -   `RequiredFuel` è calcolato alla **generazione** dell'evento ed è
     usato per prenotazione ed ETA.
@@ -444,7 +364,7 @@ minerali.
 
 Le quote non ancora consumate rimangono prenotate per l'ordine.
 
-**Arrotondamento [CONFERMATO v0.38].** I costi sono unità intere. Le
+**Arrotondamento [CONFERMATO].** I costi sono unità intere. Le
 quote della prima e della seconda fase sono arrotondate **per difetto**;
 la terza fase assorbe il resto, così che il totale sia sempre esatto.
 Le attività di durata inferiore a 3 mesi hanno un'unica fase al 100%.
@@ -462,7 +382,7 @@ Quando un ordine viene annullato:
     possono proseguire, restare in attesa oppure diventare non validi,
     secondo le condizioni aggiornate.
 
-**Dipendenze [CONFERMATO v0.38].** Alla modifica o all'annullamento di un
+**Dipendenze [CONFERMATO].** Alla modifica o all'annullamento di un
 ordine padre:
 
 -   i dipendenti passano a `Waiting` con motivo `DependencyCancelled`;
@@ -492,7 +412,7 @@ tale stato finché il giocatore non la riprende, la modifica o la
 annulla. - Le risorse non ancora consumate restano prenotate durante
 l'interruzione.
 
-### 2.10 Persistenza degli ordini tra anni [RISCRITTO v0.37]
+### 2.10 Persistenza degli ordini tra anni
 
 La versione precedente confondeva due nozioni distinte, che vanno
 separate nel modello dati e nel comportamento.
@@ -542,7 +462,7 @@ template che produce eventi.**
     **cicli futuri** usano il nuovo template. La modifica non è mai
     retroattiva.
 
-#### 2.10.1 Modifiche ammesse per categoria [CONFERMATO v0.38]
+#### 2.10.1 Modifiche ammesse per categoria [CONFERMATO]
 
 Le modifiche avvengono solo in pianificazione e hanno effetto tramite il
 merge di ingestione (§2.3.4).
@@ -563,6 +483,10 @@ previsto.
 ------------------------------------------------------------------------
 
 ## 3. Capitolo 2 --- Galassia e generazione della mappa
+
+I parametri ancora da definire per geometria, distribuzione regionale,
+generazione dei sistemi, rotte, popolazioni autoctone ed esplorazione
+sono tracciati in `OPEN_QUESTIONS.md` (OQ-022–OQ-029).
 
 ### 3.1 Morfologia generale
 
@@ -761,7 +685,7 @@ abitabili o opportunità di colonizzazione.
 Gli stati non sono mutuamente esclusivi: un sistema può essere
 contemporaneamente esplorabile, colonizzabile e abitato.
 
-### 3.7 Movimento e collegamenti tra sistemi [AGGIORNATO v0.37]
+### 3.7 Movimento e collegamenti tra sistemi
 
 Il movimento segue un **modello ibrido** su due scale.
 
@@ -808,7 +732,7 @@ Il movimento segue un **modello ibrido** su due scale.
 -   I portali avversari e i transiti sono visibili solo tramite
     **intelligence o sensori** (§1.3).
 
-#### 3.7.5 Stati di una rotta [NUOVO v0.37]
+#### 3.7.5 Stati di una rotta
 
 Per il modello del TurnResolver (§2.3.2) è necessario distinguere:
 
@@ -830,13 +754,8 @@ per livello, tempi di viaggio, soglie di distruzione delle rotte).
 
 ## 4. Capitolo 3 --- Risorse ed economia
 
-*[Capitolo invariato rispetto a v0.36. Le regole su risorse localizzate,
-PC, ricette e trasporto restano valide. Il §4.6.5 va letto alla luce
-del §2.10 tipo B: la "rotta permanente" è un ordine continuativo
-auto-reistanziante.]*
-
-Questo capitolo raccoglie le regole confermate sulle risorse. I dettagli
-non ancora decisi sono riportati nelle questioni aperte (§8.1).
+Questo capitolo raccoglie le regole confermate sulle risorse. I dettagli non ancora decisi sono tracciati in `OPEN_QUESTIONS.md` (in
+particolare OQ-001–OQ-021).
 
 ### 4.1 Set di risorse
 
@@ -1333,17 +1252,33 @@ di efficienza specifici dell'ordine, in base ai modificatori applicabili
 alla sua località e al suo contesto.
 
 Il fabbisogno di PC viene calcolato in funzione del lavoro residuo e
-dell'efficienza risultante:
+dell'efficienza risultante. Per evitare che il denominatore sia nullo
+o negativo, l'efficienza effettiva utilizzata nel calcolo è definita
+applicando una soglia minima al prodotto dei coefficienti globale e
+locale:
 
-`PC_necessari = ceil(LR_residuo / (E_g × E_l))`
+`E_eff = max(E_g × E_l, 0.01)`
+
+`PC_necessari = ceil(LR_residuo / E_eff)`
 
 Dove:
 - `LR_residuo` è il Lavoro Richiesto ancora da completare, espresso in
   UDL;
 - `E_g` è il coefficiente globale applicabile all'ordine;
 - `E_l` è il coefficiente locale applicabile all'ordine;
+- `E_eff` è l'efficienza effettiva impiegata nel calcolo, pari al
+  prodotto `E_g × E_l` ma mai inferiore a `0.01`;
+- `max` seleziona il maggiore tra il prodotto dei coefficienti e la
+  soglia minima;
 - `ceil` indica l'arrotondamento all'intero superiore, necessario
   perché i PC sono unità indivisibili.
+
+La soglia minima di `0.01` si applica al prodotto `E_g × E_l`, non ai
+singoli coefficienti separatamente. Costituisce un invariante del
+sistema: nessuna combinazione di modificatori può ridurre l'efficienza
+effettiva sotto tale valore. Il denominatore del calcolo è quindi
+sempre strettamente positivo e il fabbisogno non presenta il caso
+indefinito dovuto a un'efficienza nulla o negativa.
 
 Il fabbisogno così calcolato indica il numero massimo di PC che
 l'ordine può assorbire per completare il lavoro residuo nel mese,
@@ -1522,19 +1457,57 @@ già consumati, ma riceve una nuova posizione nella sequenza di
 precedenza, successiva agli ordini già presenti. Rientra nella
 distribuzione mensile soltanto quando è nuovamente operativo.
 
-#### 4.3.7 Integrità strutturale, danni, riparazioni, demolizione e distruzione degli impianti [REGOLE CONFERMATE, PARAMETRI DA DEFINIRE]
+#### 4.3.7 Integrità strutturale, danni, riparazioni, demolizione e distruzione degli impianti [REGOLE CONFERMATE, PARAMETRI DA DEFINIRE: OQ-006–OQ-008]
 
 **Punti Struttura (PS)**
 
 Ogni reparto dispone di propri **Punti Struttura (PS)**. Il valore
 complessivo dei Punti Struttura di un impianto principale è pari alla
-somma dei Punti Struttura di tutti i suoi reparti:
+somma dei Punti Struttura massimi o correnti dei suoi reparti, secondo
+il contesto del calcolo:
 
 `PS_impianto = somma(PS_reparto_i)`
 
-I Punti Struttura possono essere incrementati o modificati da
-tecnologie specifiche e dal fattore sociale dell'impero. I valori base,
-i modificatori numerici e le relative formule restano da definire.
+**Calcolo dei PS massimi [CONFERMATO]**
+
+Tutti i reparti condividono lo stesso valore base di PS massimi,
+indipendentemente dalla tipologia e dal livello del reparto. Il valore
+numerico del parametro base resta da stabilire durante il bilanciamento.
+
+Il valore base viene modificato dai seguenti fattori:
+
+- **Fattori locali:** condizioni ambientali e condizioni sociali della
+  località in cui si trova il reparto.
+- **Fattori globali:** tecnologie specifiche applicabili, caratteristiche
+  generali del governo e caratteristiche intrinseche della razza.
+
+Tutti i modificatori applicabili si combinano in modo moltiplicativo.
+Un modificatore non applicabile vale 1,00. Il risultato finale viene
+arrotondato per difetto, poiché i PS massimi sono un valore intero:
+
+`PS_massimi = floor(PS_base × M_ambiente × M_sociale_locale × M_tecnologia × M_governo × M_razza)`
+
+**Ricalcolo dei PS massimi e aggiornamento dei PS correnti [CONFERMATO]**
+
+Quando un evento modifica uno o più fattori ambientali, sociali,
+tecnologici, governativi o razziali applicabili al reparto, i suoi PS
+massimi vengono ricalcolati immediatamente, senza attendere il turno o
+il mese successivo.
+
+I PS correnti sono gestiti con precisione decimale interna e non vengono
+arrotondati durante i calcoli. L'interfaccia può mostrarli come valori
+interi.
+
+- Se il nuovo valore massimo è inferiore ai PS correnti, i PS correnti
+  vengono ridotti immediatamente al nuovo massimo. La differenza viene
+  persa e non può essere recuperata tramite riparazione.
+- Se il nuovo valore massimo è superiore ai PS correnti, i PS correnti
+  non aumentano automaticamente. Il recupero dei PS mancanti avviene
+  tramite riparazione.
+
+Il totale corrente dell'impianto principale continua a essere
+determinato dalla somma dei PS correnti dei suoi reparti; il totale
+massimo è determinato dalla somma dei rispettivi PS massimi.
 
 **Categorie di danno e mitigazione**
 
@@ -1753,10 +1726,13 @@ costruzione. La ricostruzione crea un nuovo reparto: non ripristina gli
 ordini produttivi o di altro tipo che erano stati cancellati con la
 distruzione del reparto.
 
-Il nuovo reparto mantiene l'impostazione di riparazione automatica
-configurata sul reparto prima della distruzione. La gestione di
-eventuali altre impostazioni personalizzate del reparto dopo la
-ricostruzione resta da definire.
+Il nuovo reparto mantiene le impostazioni personalizzate proprie
+del reparto precedente, incluse le impostazioni strutturali, il flag di
+riparazione automatica e la priorità predefinita degli ordini generati
+automaticamente. Le priorità personalizzate assegnate ai singoli ordini
+non vengono recuperate, poiché tali ordini sono stati cancellati con la
+distruzione. Non vengono inoltre recuperate impostazioni che dipendono
+specificamente dagli ordini cancellati.
 
 **Indisponibilità e danni**
 
@@ -1957,8 +1933,8 @@ Tempi di viaggio, distanze e collegamenti sono definiti nel §3.7.
 ## 5. Capitolo 4 --- Sistemi stellari e corpi celesti
 
 Questo capitolo raccoglie le prime regole confermate sul contenuto dei
-singoli sistemi stellari. I parametri non ancora definiti sono riportati
-nelle questioni aperte (§8.5).
+singoli sistemi stellari. I parametri non ancora definiti sono tracciati in
+`OPEN_QUESTIONS.md` (OQ-030–OQ-034).
 
 ### 5.1 Contenuto dei sistemi
 
@@ -1998,7 +1974,7 @@ Un sistema stellare può contenere:
 -   Resta valida la distinzione tra sistemi esistenti, esplorabili,
     colonizzabili e abitati (§3.6).
 
-### 5.6 Classi stellari
+### 5.6 Classi stellari [OQ-030]
 
 -   Le stelle appartengono alle classi spettrali **O, B, A, F, G, K, M**.
 -   Esistono inoltre tre **oggetti compatti**: **nana bianca**,
@@ -2013,7 +1989,7 @@ Un sistema stellare può contenere:
     dell'età stellare (§3.5), con concentrazione di buchi neri nel
     nucleo.
 
-Frequenze [CONFERMATO v0.39: gradiente realistico; VALORI DA
+Frequenze [CONFERMATO : gradiente realistico; VALORI DA
 BILANCIARE] sul totale delle stelle:
 
 | Classe | Frequenza [PROPOSTA] |
@@ -2044,7 +2020,7 @@ Esistono sette tipi:
 -   giganti di ghiaccio;
 -   lavici/infernali.
 
-### 5.8 Abitabilità
+### 5.8 Abitabilità [OQ-031]
 
 L'abitabilità di un pianeta dipende da:
 
@@ -2052,7 +2028,7 @@ L'abitabilità di un pianeta dipende da:
 -   il **tipo di pianeta**;
 -   **atmosfera e temperatura**.
 
-Modello [CONFERMATO v0.39]:
+Modello [CONFERMATO]:
 
 -   La **fascia abitabile** deriva dalla luminosità della stella: stretta
     e vicina per le nane rosse, ampia e lontana per le stelle calde.
@@ -2066,7 +2042,7 @@ Modello [CONFERMATO v0.39]:
     corpi restano colonizzabili solo come avamposti e miniere (§5.5).
 -   Valori numerici delle soglie: da definire con le specie.
 
-#### 5.8.1 Sistemi multipli [CONFERMATO v0.39]
+#### 5.8.1 Sistemi multipli [CONFERMATO]
 
 -   **Orbite di tipo S**: ogni pianeta orbita attorno a una singola
     stella, oppure attorno al baricentro di una **coppia stretta** di
@@ -2081,7 +2057,7 @@ Modello [CONFERMATO v0.39]:
     lontana, oppure tre stelle indipendenti; la configurazione è
     scelta in fase di generazione.
 
-### 5.9 Anomalie
+### 5.9 Anomalie [OQ-032]
 
 Sono previste cinque categorie di anomalie, poche e con effetti di
 gameplay:
@@ -2102,8 +2078,7 @@ Effetti confermati delle anomalie:
 | Pulsar e aree di radiazioni | Danneggiano gli equipaggi e disturbano i sistemi elettronici; impediscono colonie abitate |
 | Tempeste di plasma | Temporanee e mobili; danneggiano gli scudi e interrompono movimento e comunicazioni |
 
-I valori numerici sono definiti come segue [CONFERMATO v0.39 il modello;
-VALORI DA BILANCIARE]:
+I valori numerici sono definiti come segue [CONFERMATO: il modello; VALORI DA BILANCIARE]:
 
 -   Ogni anomalia agisce **solo nel sistema che la contiene**; non
     influenza i sistemi vicini.
@@ -2124,7 +2099,7 @@ Le regole di rischio dettagliate restano da affinare in bilanciamento.
 
 ### 5.10 Lune
 
--   Le lune sono **poche** [CONFERMATO v0.39]: circa il **15%** dei
+-   Le lune sono **poche** [CONFERMATO]: circa il **15%** dei
     pianeti ha almeno una luna [PROPOSTA]; massimo **2 lune** per
     pianeta, **4** per i pianeti gassosi e i giganti di ghiaccio.
 -   Possono orbitare attorno a **qualsiasi tipo di pianeta**, ma la
@@ -2133,7 +2108,7 @@ Le regole di rischio dettagliate restano da affinare in bilanciamento.
 -   Una luna può essere **abitabile solo molto raramente** e in
     condizioni particolari, per esempio una luna di un gigante situato
     nella fascia abitabile della stella.
--   Condizioni precise [CONFERMATO v0.39]: una luna è candidata
+-   Condizioni precise [CONFERMATO]: una luna è candidata
     all'abitabilità solo se orbita attorno a un pianeta **gassoso o
     gigante di ghiaccio** situato nella **fascia abitabile** della
     stella locale (§5.8). Ogni luna candidata è abitabile con
@@ -2141,7 +2116,7 @@ Le regole di rischio dettagliate restano da affinare in bilanciamento.
     atmosfera e temperatura seguono §5.8 e la capacità demografica ha un
     moltiplicatore **×0,3** (§6.1) [PROPOSTA].
 
-### 5.11 Origine delle risorse nei corpi celesti
+### 5.11 Origine delle risorse nei corpi celesti [OQ-033]
 
 -   Ogni corpo celeste ha una **ricchezza per ciascuna risorsa**, legata
     al proprio tipo.
@@ -2156,7 +2131,7 @@ Le regole di rischio dettagliate restano da affinare in bilanciamento.
 | Energia | Stella del sistema e anomalie (buchi neri, pulsar) |
 
 -   Le associazioni indicano le fonti prevalenti, non esclusive.
--   [CONFERMATO v0.39] Ogni corpo ha, **per ciascuna risorsa**, un
+-   [CONFERMATO] Ogni corpo ha, **per ciascuna risorsa**, un
     livello di ricchezza a 5 gradi: **assente, povera, media, ricca,
     eccezionale**, estratto con probabilità dipendenti dal tipo di
     corpo.
@@ -2171,13 +2146,17 @@ Le regole di rischio dettagliate restano da affinare in bilanciamento.
 
 I corpi non elencati hanno ricchezza assente per quella risorsa, salvo
 eccezioni. Il moltiplicatore numerico di ogni livello è da definire con
-le ricette (§8.1) [PROPOSTA: ×0 / ×0,5 / ×1 / ×1,5 / ×2,5].
+le ricette (OQ-001) [PROPOSTA: ×0 / ×0,5 / ×1 / ×1,5 / ×2,5].
 
 ------------------------------------------------------------------------
 
 ## 6. Capitolo 5 --- Colonie e popolazione
 
-### 6.1 Popolazione e crescita demografica [AGGIORNATO v0.39, CONFERMATO: modello logistico, VALORI DA BILANCIARE]
+Le questioni relative a specie, bilanciamento dei parametri, navi
+coloniali e organizzazione sociale sono tracciate in
+`OPEN_QUESTIONS.md` (OQ-035–OQ-038).
+
+### 6.1 Popolazione e crescita demografica [CONFERMATO: modello logistico, VALORI DA BILANCIARE: OQ-036]
 
 -   Ogni colonia ha una **popolazione numerica**, espressa in
     **milioni**.
@@ -2214,7 +2193,7 @@ Capacità per tipo di corpo, in milioni, prima dei moltiplicatori
 [PROPOSTA]: piccolo 50, medio 150, grande 400, luna 20. Avamposti e
 corpi non abitabili: nessuna crescita, popolazione fissa minima (§6.6).
 
-### 6.2 Specie [AGGIORNATO v0.39, CONFERMATO: 4-6 specie con tratti marcati]
+### 6.2 Specie [CONFERMATO: 4-6 specie con tratti marcati]
 
 -   Esistono **specie giocabili** (da 4 a 6) con tratti marcati e un
     ambiente preferito.
@@ -2250,7 +2229,7 @@ diverse. Ogni minoranza ≥ 10% della popolazione applica i propri tratti
 di stabilità (malus se la specie principale le è ostile) in proporzione
 alla quota.
 
-### 6.3 Stabilità sociale [AGGIORNATO v0.39, CONFERMATO: scala 0--100 con soglie, VALORI DA BILANCIARE]
+### 6.3 Stabilità sociale [CONFERMATO: scala 0--100 con soglie, VALORI DA BILANCIARE]
 
 -   Ogni colonia ha una **stabilità** da 0 a 100, aggiornata ogni mese
     verso un **target**.
@@ -2274,7 +2253,7 @@ stabilità += clamp(target − stabilità, −3, +3)   // inerzia mensile
 
 Fattori del target [PROPOSTA]:
 
--   **Organizzazione sociale**: ±10 (forme da definire, §8.6).
+-   **Organizzazione sociale**: ±10 (forme da definire; OQ-038).
 -   **Condizioni**: carestia −20; sovraffollamento (pop > 90% cap) −5;
     energia mancante −10.
 -   **Guerra**: −5 per colonia attaccata o bloccata; −10 per colonia
@@ -2284,7 +2263,7 @@ Fattori del target [PROPOSTA]:
 Gli effetti sull'efficienza si applicano come moltiplicatore alla
 capacità effettiva degli impianti (§4.4).
 
-### 6.4 Sostentamento e carestia [AGGIORNATO v0.39, VALORI DA BILANCIARE]
+### 6.4 Sostentamento e carestia [VALORI DA BILANCIARE]
 
 -   La popolazione richiede **cibo**; i servizi richiedono **energia**.
 -   Consumo base [PROPOSTA]: 1 unità di cibo e 0,5 di energia per
@@ -2308,7 +2287,7 @@ capacità effettiva degli impianti (§4.4).
     (§3.6.1, §5.5).
 -   Nave coloniale base [PROPOSTA]: capacità 0,5 M, velocità come cargo
     di taglia media (§4.6); costi in PC e risorse da definire con le
-    ricette (§8.1).
+    ricette (OQ-001).
 
 ### 6.6 Colonie, impianti e avamposti
 
@@ -2319,16 +2298,287 @@ capacità effettiva degli impianti (§4.4).
     con efficienza proporzionale se il personale è insufficiente;
     avamposti 0,01 M importati.
 
-### 6.7 Organizzazione sociale [DA DECIDERE]
+### 6.7 Organizzazione sociale [DA DECIDERE: OQ-038]
 
 Proposta di 4 forme, ciascuna con un compromesso: **Industriale**
 (+efficienza, −stabilità), **Corporativa** (+commercio, −ricerca),
 **Collettivista** (+stabilità, −crescita), **Militarista** (+flotte,
 −stabilità civile).
 
+### 6.8 Ricerca e sviluppo tecnologico [REGOLE CONFERMATE, PARAMETRI DA DEFINIRE: OQ-042–OQ-051]
+
+#### 6.8.1 Generazione dei Punti Ricerca
+
+-   I **Punti Ricerca (PR)** sono generati da due fonti:
+    -   **Popolazione:** ogni milione di unità di popolazione genera
+        **1 PR per turno**.
+    -   **Installazioni scientifiche:** laboratori planetari,
+        università/istituti di ricerca e stazioni scientifiche orbitali
+        generano PR aggiuntivi secondo una produzione base specifica.
+-   La produzione da popolazione non è modificata da moltiplicatori.
+-   La produzione delle installazioni è modificata dai fattori
+    **ambientali, sociali e contingenti** applicabili.
+-   La produzione totale dell'impero è la somma delle due fonti:
+    `PR_totali = PR_popolazione + PR_installazioni`.
+-   I PR possono essere **frazionari**. Le quantità sono conservate con
+    precisione decimale interna, senza arrotondamenti intermedi.
+
+#### 6.8.2 Serbatoio imperiale e avvio degli studi
+
+-   Tutti i PR prodotti confluiscono in un **serbatoio di ricerca
+    centralizzato a livello imperiale**.
+-   I PR non utilizzati restano nel serbatoio e si accumulano tra i
+    turni.
+-   Ogni tecnologia definisce un **costo in PR per avviare lo studio**.
+    Il costo viene sottratto dal serbatoio al momento dell'avvio.
+-   Il costo in PR è quindi un requisito di avvio e non rappresenta,
+    di per sé, il tempo necessario a completare lo sviluppo.
+-   L'impero può mantenere al massimo **tre ricerche attive
+    contemporaneamente**.
+-   I PR non assegnati a uno studio restano nel serbatoio; non vengono
+    distribuiti automaticamente.
+
+#### 6.8.3 Tempo di sviluppo
+
+-   Ogni tecnologia definisce anche un **tempo di sviluppo** necessario
+    per completare lo studio, distinto dal costo in PR di avvio.
+-   Dopo l'avvio, la ricerca avanza nel tempo fino al completamento.
+    Non è sufficiente disporre dei PR: occorre attendere il tempo di
+    sviluppo effettivo.
+-   Il tempo di sviluppo può essere modificato da fattori **ambientali,
+    sociali e contingenti**.
+-   I modificatori applicabili e la relativa formula numerica sono da
+    definire.
+
+#### 6.8.4 Categorie e specializzazioni delle installazioni scientifiche
+
+Il sistema prevede tre categorie distinte di installazioni scientifiche:
+
+-   **Laboratori planetari:** strutture dedicate alla ricerca
+    sperimentale e applicata. Ogni laboratorio viene associato a uno
+    specifico ramo della TechTree; il giocatore sceglie la
+    specializzazione al momento della costruzione.
+-   **Università e istituti di ricerca:** strutture dedicate alla ricerca
+    teorica e multidisciplinare. Non ricevono bonus specifici legati a un
+    singolo ramo tecnologico.
+-   **Stazioni scientifiche orbitali:** installazioni dedicate alla
+    ricerca scientifica e spaziale avanzata. Ricevono il bonus di
+    specializzazione alla produzione di PR per le ricerche dei rami
+    **D. Scienza e Intelligence** e **C. Navale e Propulsione**. Non
+    ricevono il bonus per il ramo **E. Colonizzazione e Biologico**.
+
+La specializzazione non limita le tecnologie che una struttura può
+ospitare: ogni installazione scientifica idonea può essere assegnata a
+una ricerca di qualsiasi ramo. Il bonus di specializzazione si applica
+alla produzione di PR dell'installazione quando questa contribuisce a una
+ricerca coerente con il proprio ambito; non riduce il costo in PR della
+tecnologia.
+
+**Produzione base per tipologia.** La produzione base per turno di
+un'installazione di livello 1 è:
+
+| Installazione | Produzione base L1 |
+|---|---:|
+| Laboratorio planetario | 1 PR/turno |
+| Università / istituto di ricerca | 2 PR/turno |
+| Stazione scientifica orbitale | 3 PR/turno |
+
+La gerarchia risultante è quindi
+`PR_base_laboratorio < PR_base_università/istituto < PR_base_stazione_orbitale`.
+La produzione base cresce inoltre con il livello dell'installazione,
+utilizzando la seguente progressione comune:
+
+| Livello | Moltiplicatore della produzione base PR |
+|---|---:|
+| L1 | ×1,00 |
+| L2 | ×1,50 |
+| L3 | ×2,00 |
+| L4 | ×2,50 |
+| L5 | ×3,00 |
+
+La progressione per livello è un parametro iniziale di bilanciamento e
+potrà essere rivista. I valori base e i moltiplicatori determinano la
+produzione teorica prima dell'applicazione dei requisiti operativi e dei
+modificatori.
+
+**Bonus di specializzazione.** Un'installazione specializzata riceve un
+bonus del **+25%** alla propria produzione di PR quando contribuisce a
+una ricerca coerente con la propria specializzazione. Il moltiplicatore
+è `M_specializzazione = 1,25` in caso di compatibilità e `1,00` negli
+altri casi. Il bonus si applica una sola volta per installazione,
+indipendentemente dal numero di caratteristiche che rendono compatibile
+la ricerca. Installazioni diverse applicano ciascuna il proprio bonus
+alla propria produzione; i bonus non si sommano tra installazioni.
+Università e istituti non ricevono bonus specifici per ramo. I laboratori
+planetari ricevono il bonus per il ramo a cui sono specializzati. Le
+stazioni orbitali ricevono il bonus nei soli rami C e D; il ramo E è
+escluso anche nel caso in cui la stazione disponga di laboratori dedicati
+a tale ambito.
+
+La produzione teorica di un'installazione, prima dei modificatori
+ambientali, sociali e contingenti, è quindi calcolata come:
+
+`PR_teorici = PR_base_tipologia × M_livello × M_specializzazione`.
+
+I modificatori ambientali, sociali e contingenti si applicano secondo le
+regole generali. La produzione effettiva è inoltre vincolata ai requisiti
+operativi e alla disponibilità del personale scientifico (§6.8.4.1).
+
+La specializzazione di un laboratorio planetario può essere modificata
+anche dopo la costruzione, mediante un processo di **riconversione che
+richiede tempo e risorse**. I relativi costi e tempi sono da definire.
+Durante la riconversione il laboratorio è temporaneamente inoperativo:
+tutte le ricerche assegnate vengono sospese automaticamente e conservano
+integralmente il progresso accumulato. Al termine della riconversione,
+le ricerche riprendono automaticamente. Il giocatore può, in alternativa,
+trasferire preventivamente un progetto a un'altra installazione
+compatibile; il trasferimento facoltativo segue le regole generali di
+trasferimento, inclusa la sospensione per un turno.
+
+##### 6.8.4.1 Requisiti operativi, personale e formazione scientifica
+
+**Requisiti operativi delle installazioni.** Per produrre PR,
+un'installazione scientifica deve soddisfare le condizioni operative
+minime applicabili:
+
+-   integrità strutturale sufficiente a mantenere la struttura operativa;
+-   disponibilità di energia;
+-   presenza di personale scientifico;
+-   per le stazioni orbitali, collegamenti logistici necessari al
+    sostentamento della struttura.
+
+Il mancato rispetto di un requisito operativo essenziale può rendere
+l'installazione inoperativa e interromperne la produzione di PR. Le soglie
+strutturali, i fabbisogni energetici e i requisiti logistici quantitativi
+restano da definire.
+
+**Categorie professionali scientifiche.** Il personale scientifico è
+suddiviso in tre categorie:
+
+1. **Ricercatori:** svolgono l'attività scientifica e contribuiscono allo
+   sviluppo della ricerca.
+2. **Tecnici scientifici:** gestiscono strumenti, laboratori,
+   apparecchiature e attività sperimentali.
+3. **Personale di supporto scientifico:** assicura il funzionamento
+   organizzativo e operativo delle installazioni scientifiche.
+
+**Disponibilità e produzione di PR.** La produzione effettiva di PR
+dipende dal personale scientifico disponibile presso l'installazione.
+Una disponibilità di personale inferiore al fabbisogno riduce
+progressivamente la produzione, senza rendere automaticamente inattiva
+la struttura. In assenza totale di personale scientifico la produzione
+di PR è nulla. Il moltiplicatore
+applicato alla produzione teorica è:
+
+`M_personale = min(1, Personale_disponibile / Personale_richiesto)`.
+
+Il personale disponibile oltre il fabbisogno richiesto non genera un
+bonus ulteriore. Il fabbisogno richiesto cresce con il livello
+dell'installazione secondo gli stessi moltiplicatori utilizzati per la
+produzione base:
+
+| Livello | Moltiplicatore del personale richiesto |
+|---|---:|
+| L1 | ×1,00 |
+| L2 | ×1,50 |
+| L3 | ×2,00 |
+| L4 | ×2,50 |
+| L5 | ×3,00 |
+
+Il fabbisogno assoluto di personale e la sua ripartizione tra le tre
+categorie professionali devono essere definiti per ciascuna tipologia di
+installazione. La formula esprime il rapporto tra personale disponibile
+e richiesto. La ripartizione del fabbisogno tra le tre categorie deve
+comunque essere rispettata: la presenza di personale in una categoria
+non compensa automaticamente l'assenza di personale in un'altra.
+
+La produzione effettiva di PR, prima degli altri modificatori generali,
+è pertanto:
+
+`PR_effettivi = PR_teorici × M_personale`.
+
+**Formazione annuale nelle università e negli istituti.** Ogni
+università/istituto di ricerca produce annualmente personale qualificato
+in tutte e tre le categorie professionali. La produzione base è uguale
+per ciascuna categoria: in condizioni neutre, il numero di ricercatori,
+tecnici scientifici e addetti al supporto scientifico formati ogni anno
+è lo stesso.
+
+La quantità effettivamente formata è influenzata dai consueti fattori
+applicabili alla produzione: fattori tecnologici globali, fattori sociali
+globali, fattori sociali specifici, fattori ambientali locali e fattori
+contingenti. I fattori sociali globali, tra cui l'impostazione di governo,
+possono modificare la distribuzione della formazione tra le tre
+categorie, favorendone alcune rispetto alle altre. La parità riguarda
+quindi la produzione base in assenza di modificatori che alterino la
+composizione.
+
+Non sono ancora definiti i valori assoluti della formazione annuale per
+livello e tipologia di università/istituto, né le formule numeriche dei
+singoli modificatori.
+
+#### 6.8.5 Sede della ricerca
+
+-   Ogni progetto deve essere assegnato a uno specifico **laboratorio
+    planetario, università/istituto di ricerca o stazione scientifica
+    orbitale** idoneo.
+-   La sede assegnata è la struttura presso cui si svolge lo sviluppo
+    tecnologico e determina i modificatori locali applicabili.
+-   Le installazioni scientifiche sono quindi infrastrutture strategiche
+    e possibili obiettivi militari per gli imperi avversari.
+-   La distribuzione dei progetti tra più sedi può ridurre il rischio
+    strategico derivante dalla concentrazione della ricerca in un'unica
+    struttura.
+
+#### 6.8.6 Danni, indisponibilità e distruzione della sede
+
+-   **Struttura danneggiata ma operativa:** la ricerca continua;
+    eventuali penalità alla velocità di sviluppo dipendono dalle
+    condizioni della struttura e dai modificatori applicabili.
+-   **Struttura temporaneamente inoperativa:** la ricerca viene sospesa
+    e conserva integralmente il progresso accumulato.
+-   **Struttura completamente distrutta:** il progetto non viene
+    annullato, ma subisce una perdita parziale del progresso. La perdita
+    percentuale è calcolata secondo la formula:
+
+    `Perdita_% = (T_totale − T_trascorso) × 100 / T_totale`
+
+    dove `T_totale` è il tempo di sviluppo effettivo previsto al momento
+    dell'avvio della ricerca, dopo l'applicazione dei modificatori allora
+    vigenti, e `T_trascorso` è il tempo trascorso dall'avvio della ricerca
+    fino alla distruzione della sede. La perdita è proporzionale al
+    **tempo residuo previsto rispetto a `T_totale`**, non al progresso
+    effettivamente accumulato: la formula misura quindi il tempo trascorso
+    rispetto alla durata di riferimento congelata, non la percentuale di
+    sviluppo già completata. Il progresso residuo è conservato e può
+    essere trasferito a un'altra installazione compatibile.
+-   `T_totale` viene **congelato al momento dell'avvio** e resta il
+    riferimento per il calcolo della perdita per tutta la durata del
+    progetto. I modificatori successivi possono cambiare la velocità
+    effettiva di sviluppo, ma non modificano retroattivamente questo
+    valore di riferimento.
+-   La perdita di progresso si applica **esclusivamente alla
+    distruzione completa** della struttura; non si applica alla semplice
+    indisponibilità temporanea.
+
+#### 6.8.7 Trasferimento di un progetto
+
+-   Un progetto può essere trasferito a un'altra installazione
+    compatibile.
+-   Il trasferimento non comporta ulteriori perdite del progresso
+    accumulato, oltre all'eventuale perdita già applicata in seguito
+    alla distruzione completa della sede precedente.
+-   Durante il trasferimento la ricerca resta sospesa per **un turno**.
+-   La nuova sede può determinare una velocità di sviluppo diversa,
+    in funzione dei propri modificatori locali.
+
 ------------------------------------------------------------------------
 
 ## 7. Capitolo 6 --- Flotte e combattimento
+
+Il completamento del catalogo dei componenti, i costi di costruzione
+dell’Accademia e il bilanciamento dei parametri di combattimento sono
+tracciati in `OPEN_QUESTIONS.md` (OQ-039–OQ-041).
 Questo capitolo descrive navi, classi, progettazione, componenti e
 combattimento (valori provvisori da bilanciare, §7.9--7.12). Gli eventi di
 movimento e combattimento sono ordinati dal TurnResolver (§2.3).
@@ -2375,7 +2625,7 @@ movimento e combattimento sono ordinati dal TurnResolver (§2.3).
 -   Per costruire una nave servono sia la **tecnologia** sia un
     **Cantiere** del livello minimo richiesto dalla taglia (§4.3.6).
 
-### 7.5 Componenti [CONFERMATO]
+### 7.5 Componenti [CONFERMATO: CATALOGO E TECNOLOGIE DA COMPLETARE, OQ-039–OQ-040]
 
 Tipi di componente installabili:
 
@@ -2422,7 +2672,7 @@ Tipi di componente installabili:
     50/30/20, §2.7) e resta a bordo. Se la nave è distrutta, il
     personale è perso.
 
-**Valori [CONFERMATO v0.38, DA BILANCIARE].**
+**Valori [CONFERMATO, DA BILANCIARE].**
 
 Quota base per taglia di scafo:
 
@@ -2459,9 +2709,9 @@ eccesso a interi):
 -   La popolazione addestrata esce dalla colonia. Se scende sotto il
     minimo, l'Accademia passa a `Waiting` (condizione interna, §2.5).
 -   Costi di costruzione e potenziamento: progressivi e legati ai PC,
-    da definire con le ricette (§8.1).
+    da definire con le ricette (OQ-001; OQ-040).
 
-### 7.6 Svolgimento del combattimento [AGGIORNATO v0.37]
+### 7.6 Svolgimento del combattimento
 
 -   Il combattimento è **automatico**: il giocatore non interviene
     durante la risoluzione, che è affidata al TurnResolver (§2.3).
@@ -2477,7 +2727,7 @@ eccesso a interi):
     ordine di battaglia** (per esempio aggressiva, difensiva, ritirata
     a una soglia di danno), che guida le scelte automatiche.
 
-**Round per mese [CONFERMATO v0.38]:** 3 round al mese (tick 0, 333,
+**Round per mese [CONFERMATO]:** 3 round al mese (tick 0, 333,
 666). I valori di danno, scudi e armatura sono in §7.9; le riparazioni
 in §7.11.
 
@@ -2513,7 +2763,7 @@ in §7.11.
 valori di velocità, struttura dell'albero tecnologico, livello esatto
 di Cantiere per la taglia Grande.
 
-### 7.9 Statistiche e risoluzione del danno [CONFERMATO v0.38, VALORI DA BILANCIARE]
+### 7.9 Statistiche e risoluzione del danno [CONFERMATO, VALORI DA BILANCIARE: OQ-041]
 
 **Struttura (HP scafo) per taglia:** Piccolo 100, Medio 300, Grande 800,
 Capitale 2000, Colosso 5000.
@@ -2549,7 +2799,7 @@ Capitale 2000, Colosso 5000.
 inizio round e applicati insieme a fine round, senza vantaggio di
 iniziativa (coerente con §2.6).
 
-### 7.10 Ritirata [CONFERMATO v0.38]
+### 7.10 Ritirata [CONFERMATO]
 
 -   La soglia di ritirata è una percentuale della struttura totale
     della flotta (default 50%).
@@ -2557,7 +2807,7 @@ iniziativa (coerente con §2.6).
     flotta è maggiore o uguale a quella dell'inseguitore; altrimenti
     l'inseguitore ottiene un round di fuoco libero.
 
-### 7.11 Riparazioni [CONFERMATO v0.38]
+### 7.11 Riparazioni [CONFERMATO, VALORI DA BILANCIARE: OQ-041]
 
 -   Possibili solo in un sistema con Cantiere o stazione propria.
 -   Costo: 30% del costo in risorse della nave per riparazione completa,
@@ -2567,7 +2817,7 @@ iniziativa (coerente con §2.6).
 -   Nessuna riparazione in volo, salvo navi ausiliarie (§1.4), a metà
     ritmo.
 
-### 7.12 Spionaggio, ricerca in nave e costruzione [CONFERMATO v0.38]
+### 7.12 Spionaggio, ricerca in nave e costruzione [CONFERMATO]
 
 **Spionaggio.**
 
@@ -2595,171 +2845,18 @@ I componenti costano PC in Fabbrica (§4.3.4).
 
 ------------------------------------------------------------------------
 
-## 8. Questioni aperte e decisioni da affrontare
+## 8. Gestione delle questioni aperte
 
-*[Le questioni di §8.1 e §8.4–8.7 restano invariate. La sezione §8.2 è
-aggiornata.]*
-Le seguenti questioni non sono ancora state definite in modo conclusivo
-e non devono essere considerate regole approvate.
+Le questioni progettuali ancora da definire, le relative proposte, le
+dipendenze, le priorità e gli aspetti che bloccano sono gestiti in
+`OPEN_QUESTIONS.md`. Il documento costituisce il backlog operativo del
+processo di game design; gli identificativi `OQ-XXX` sono stabili e
+possono essere richiamati nelle sezioni pertinenti del GDD.
 
-### 8.1 Risorse, produzione e logistica
-
--   Catalogo completo delle ricette: materiali di ciascuna famiglia,
-    quantità, tempi, sottoprodotti e bilanciamento dei valori.
--   Tipi di depositi naturali, distribuzione delle risorse e relazione
-    tra depositi, corpi celesti e fonti ambientali.
--   Strutture e tecnologie richieste per estrarre risorse da pianeti,
-    lune, asteroidi, giganti gassosi e nebulose.
--   Processi di raffinazione, ricette industriali, materiali in
-    ingresso, prodotti in uscita ed eventuali sottoprodotti.
--   Reparti integrati di ciascun impianto, costi di potenziamento e
-    tempi di lavorazione.
--   Valori base dei Punti Struttura dei reparti, modificatori tecnologici
-    e sociali, e formule numeriche di applicazione.
--   Valori numerici dei danni per categoria; probabilità di successo
-    degli attacchi mirati, probabilità di impatto accidentale e pesi
-    usati per la selezione casuale dei bersagli non mirati.
--   Parametri numerici per determinare quanti reparti possono essere
-    coinvolti da ciascuna arma o tipologia di evento e per la generazione
-    degli eventuali danni secondari.
--   Valori base dei PC di riparazione per tipologia e livello di impianto;
-    valori numerici dei modificatori tecnologici, ambientali, sociali,
-    governativi e razziali.
--   Valori numerici dei modificatori di mitigazione per ciascuna
-    categoria di danno e progressione delle relative tecnologie.
--   Lavoro Richiesto (LR) e parametri di bilanciamento degli ordini di
-    riparazione; eventuali limiti minimi/massimi dei coefficienti.
--   Comportamento degli ordini di riparazione se la struttura viene
-    distrutta durante l'intervento, inclusa la gestione del progresso e
-    delle risorse già consumate; gestione di nuovi danni mentre è già
-    attivo un ordine di riparazione.
--   Costi di costruzione dettagliati delle strutture, da cui derivano
-    proporzionalmente i costi di riparazione.
--   Quantità di energia e personale richiesti da ciascun impianto.
--   Ruolo specifico di ciascuna risorsa, capacità di stoccaggio,
-    deperimento e consumi di mantenimento.
--   Valori numerici dei fabbisogni di PC delle singole ricette e dei
-    processi industriali, e relativi criteri di bilanciamento.
--   Gestione del calcolo del fabbisogno quando il prodotto
-    `E_g × E_l` è nullo o non positivo.
--   Modelli produttivi concreti e relativi criteri di assegnazione delle
-    priorità; regole di spareggio cronologico quando il flag di
-    precedenza assoluta non risolve una parità.
--   Fattori sociali, ambientali e tecnologici che modificano la capacità
-    effettiva degli impianti, relativa entità e formule di applicazione.
--   Regole e parametri per i vincoli operativi e logistici che possono
-    sospendere singoli processi; eventuali condizioni specifiche per
-    ciascuna tipologia di impianto.
--   Costi di potenziamento e condizioni tecnologiche dettagliate per
-    ciascun livello dell'impianto.
--   Effetti concreti dell'organizzazione sociale dell'impero su
-    integrazione, specializzazione ed efficienza industriale.
--   Capacità, velocità e costi dei cargo; regole di intercettazione e
-    di scorta; tempi di viaggio.
--   Esistono commercio tra imperi e una valuta?
--   Come vengono calcolate e aggiornate le previsioni di produzione?
--   Come vengono trattate le risorse prenotate se un pianeta viene
-    conquistato, bloccato o perde capacità produttiva?
--   Come si gestiscono arrotondamenti e frazioni nelle quote 50/30/20?
-
-### 8.2 Ordini e simulazione [AGGIORNATO v0.37]
-
-Le seguenti questioni sono state **risolte** in v0.37 e non sono più
-aperte:
-
--   ~~Quali sono le regole per identificare un ordine permanentemente
-    impossibile?~~ → Risolto in §2.5: `Failed` solo per destinazione
-    distrutta, tecnologia rimossa, `RepeatedRecalc` superato.
--   ~~Quali criteri di spareggio si applicano agli ordini generali quando
-    due ordini hanno la stessa priorità e lo stesso mese previsto?~~ →
-    Risolto in §2.3.1: `TiebreakSeed` deterministico.
--   ~~Dopo quanti ricalcoli dell'ETA un'azione bloccata viene segnalata
-    al giocatore?~~ → Risolto in §2.3.2: default 3.
--   ~~Come sono risolti i conflitti tra ordini concorrenti?~~ → Risolto
-    in §2.3.3 Fase C: esecuzione sequenziale secondo l'ordinamento, un
-    evento che ne blocca un altro causa il passaggio a `Blocked` del
-    secondo.
-
-Le seguenti questioni sono state **risolte** in v0.38:
-
--   Modifiche ammesse per categoria di ordine → §2.10.1.
--   Dipendenze in caso di modifica o annullamento → §2.8.
--   Limite anti-loop per eventi figli → §2.3.4.
--   Formato del merge di ingestione → §2.3.4.
--   `RequiredFuel` del movimento → §2.3.5.
-
-### 8.3 Attività e avanzamento
-
-**Decisioni confermate v0.38:**
-
--   **Tempo residuo dopo un'interruzione:**
-    `residuo = durata_totale − progresso_conservato`, in tick interi,
-    arrotondato per eccesso.
--   **Attività senza costo o durata standard:** durata minima di 3 mesi
-    per applicare le tre fasi (§2.7); sotto questa soglia, fase unica.
--   **Deterioramento in interruzione:** nessun deterioramento né costo
-    di mantenimento nella prima versione; resta un'estensione futura.
-
-### 8.4 Galassia e generazione della mappa
-
--   Quali saranno i valori quantitativi precisi della larghezza e
-    dell'estensione dei bracci e come verranno parametrizzate le
-    variazioni locali della loro geometria?
--   Quali saranno le proporzioni numeriche tra addensamenti
-    secondari piccoli, medi e grandi?
--   Come varierà la densità all'interno dei singoli addensamenti
-    secondari?
--   Valori numerici di quota dei sistemi per regione e raggio della
-    regione di transizione tra nucleo e regioni intermedie.
--   Quali saranno le regole di generazione dei singoli sistemi stellari,
-    dei corpi celesti e delle loro caratteristiche?
--   Raggio massimo delle rotte, costi e capacità dei livelli dei
-    portali, tempi di viaggio numerici.
--   Frequenza e ruolo delle popolazioni autoctone o neutrali, soglie
-    tecnologiche di colonizzabilità, meccaniche di scoperta (portata e
-    costo di sonde e flotte) e posizioni di partenza dei giocatori.
--   Intensità numerica delle tendenze di generazione per regione.
-
-### 8.5 Sistemi stellari e corpi celesti
-
--   ~~Frequenze delle classi stellari~~ → §5.6 (da bilanciare).
--   ~~Numero massimo di lune~~ → §5.10.
--   ~~Modello di abitabilità~~ → §5.8 (soglie numeriche per specie da
-    definire).
--   ~~Condizioni di abitabilità di una luna~~ → §5.10.
--   ~~Valori e raggi delle anomalie~~ → §5.9 (da bilanciare).
--   ~~Orbite nei sistemi multipli e fascia abitabile~~ → §5.8.1.
--   ~~Ricchezza di risorse dei corpi~~ → §5.11 (da bilanciare).
--   Nota: le anomalie sono descritte sia in §5.4 sia in §5.9; valutare
-    l'unificazione.
-
-### 8.6 Colonie e popolazione
-
-Impostati in v0.39 come bozza in §6 (valori [PROPOSTA] da bilanciare):
-specie, crescita, stabilità, carestia, personale.
-
--   Specie definitive: nomi, tratti esatti e regole delle minoranze.
--   Bilanciamento dei valori numerici di §6.1--6.6.
--   Costo e tempi delle navi coloniali (con le ricette, §8.1).
--   Organizzazione sociale dell'impero: forme definitive e relativi
-    effetti (§6.7).
-
------------------------------------------------------------------------
-
-### 8.7 Flotte e combattimento
-
--   Quanti slot ha ciascuna delle 5 taglie di scafo? [RISOLTO: §7.4]
--   Quali componenti esistono per ogni tipo e a quali tecnologie sono
-    legati? [livelli: 5 per tipo, §7.5]
--   ~~Personale per componenti e taglie, capacità, costi e tempi
-    dell'Accademia~~ → §7.5.2 (costi di costruzione dell'Accademia
-    rimandati a §8.1).
--   ~~Valori di danno, scudi, armatura e riparazioni~~ → §7.9, §7.11
-    (valori da bilanciare).
--   ~~Spionaggio, contromisure e ricerca in nave~~ → §7.12.
--   ~~Collegamento navi–cantieri (PC)~~ → §7.12.
-
-------------------------------------------------------------------------
+Le voci presenti in `OPEN_QUESTIONS.md` non costituiscono regole
+approvate. Una questione passa allo stato `Decisa` soltanto dopo
+l'approvazione esplicita dell'utente; la relativa specifica viene quindi
+incorporata nel GDD e registrata negli altri documenti pertinenti.
 
 ## 9. Principi di progettazione da preservare
 
@@ -2788,6 +2885,7 @@ specie, crescita, stabilità, carestia, personale.
 
 | Tema | Decisione |
 |---|---|
+| Organizzazione documentale | Quattro documenti canonici distinti: GDD, DECISIONS, CHANGELOG e OPEN_QUESTIONS (ADR-002) |
 | Modalità | Single-player e multiplayer |
 | Struttura | Gioco a turni; risoluzione affidata al TurnResolver, con eventi ordinati (mai realmente simultanei) |
 | TurnResolver | Azioni con ETA; quelle non completate entro il turno vanno in una coda persistente consultata a inizio elaborazione |
@@ -2807,19 +2905,19 @@ specie, crescita, stabilità, carestia, personale.
 | Capacità produttiva | Unità comune: Punti Capacità (PC); capacità base unica per tipologia; budget condiviso tra i reparti dello stesso impianto principale; budget indipendenti tra impianti principali; limite massimo specifico per ciascun reparto |
 | Assegnazione PC | Automatica all'inizio del mese; priorità prima, ripartizione equa a parità di priorità; PC indivisibili; PC residui assegnati secondo anzianità dell'ordine; nessuna redistribuzione durante il mese; PC non utilizzati scadono |
 | Capacità effettivamente disponibile | Capacità nominale modificata da fattori percentuali moltiplicativi e perdite fisse in PC; `PC_disponibili = max(0, floor(PC_nominali × C − PC_persi))` |
-| Fabbisogno di PC | Calcolato individualmente per ordine in base a LR residuo ed efficienza: `ceil(LR_residuo / (E_g × E_l))`; ricalcolato a ogni distribuzione mensile |
+| Fabbisogno di PC ([ADR-001](DECISIONS.md#adr-001--soglia-minima-dellefficienza-effettiva-nel-calcolo-dei-pc)) | Calcolato individualmente per ordine in base a LR residuo ed efficienza effettiva: `E_eff = max(E_g × E_l, 0.01)` e `ceil(LR_residuo / E_eff)`; ricalcolato a ogni distribuzione mensile (§4.3.6) |
 | Coefficienti di efficienza | Calcolo specifico per ordine sulla situazione comune fotografata all'inizio della distribuzione mensile; eventi successivi incidono dal mese seguente |
 | Ordini, reparti e impianti | Ogni ordine produttivo è associato a un solo impianto principale e a uno specifico reparto compatibile; la ricetta determina la tipologia di reparto, il giocatore sceglie l'impianto e, se necessario, il reparto; assegnazione automatica se esiste un solo reparto compatibile; trasferimento solo manuale tra reparti compatibili dello stesso impianto, con conservazione di identità, anzianità, priorità e progresso e applicazione dal mese successivo; le fasi di una filiera sono ordini distinti; ciascun impianto principale ha un budget PC autonomo |
 | Capacità base al livello 1 | Miniera 100 PC; Centrale energetica 90 PC; Raffineria 80 PC; Fabbrica di componenti 70 PC; Cantiere/Assemblaggio 60 PC; Deposito/Magazzino 50 PC; Spazioporto 40 PC |
 | Limite massimo dei reparti | Per ogni reparto: 50% della capacità base dell'impianto al livello 1, moltiplicato per il coefficiente del livello dell'impianto e per i modificatori tecnologici generali e specifici applicabili; modificatori moltiplicativi; arrotondamento per difetto; il limite del reparto non aumenta il budget condiviso dell'impianto |
 | Indisponibilità dei reparti e degli impianti | Indisponibilità temporanea: ordini sospesi, con progresso e input consumati conservati; indisponibilità parziale: ordini attivi con capacità ridotta; distruzione: ordini di produzione e rifornimento riferiti alla struttura rimossi/cancellati |
-| Punti Struttura | Ogni reparto possiede PS; i PS totali dell'impianto sono la somma dei PS dei reparti; tecnologie specifiche e fattore sociale possono modificarli; valori base e formule numeriche da definire |
+| Punti Struttura | Tutti i reparti condividono un valore base di PS massimi, indipendente da tipologia e livello; modificatori locali ambientali e sociali e modificatori globali tecnologici specifici, governativi e razziali si applicano moltiplicativamente; modificatori non applicabili = 1,00; arrotondamento finale per difetto; valore base numerico da bilanciare. I PS massimi vengono ricalcolati immediatamente quando cambia un fattore applicabile; i PS correnti mantengono precisione decimale interna, sono limitati immediatamente al nuovo massimo se questo diminuisce e non aumentano automaticamente se il massimo cresce; il recupero avviene tramite riparazione |
 | Danni strutturali | Danni da bombardamenti, attacchi militari, eventi ambientali e incidenti industriali; mitigazione tramite tecnologie, fattori sociali/governativi e caratteristiche razziali con modificatori moltiplicativi. Attacchi mirati: il giocatore seleziona il reparto, ma il colpo dipende da precisione dell'arma, difese e tecnologie; un mancato può mancare del tutto o colpire accidentalmente un altro reparto. Danni non mirati: selezione casuale ponderata per esposizione e caratteristiche dell'attacco. Un attacco può coinvolgere uno o più reparti; il danno eccedente i PS residui viene perso e non si trasferisce. Danni secondari trattati come eventi distinti, con propria selezione e calcolo. Nessun PS separato per l'impianto: è distrutto quando tutti i reparti sono a 0 PS, equivalente a PS complessivi residui pari a zero |
 | Capacità produttiva dei reparti danneggiati | Fattore temporaneo direttamente proporzionale ai PS residui: `M_danno = PS_attuali / PS_massimi`; applicato al limite di PC del reparto secondo le regole dei modificatori di capacità |
 | Ordini di riparazione | Nuova tipologia di ordine, manuale o automatica tramite flag per impianto/reparto; associata alla struttura danneggiata; usa PC di riparazione dedicati e non il budget PC produttivo; ordini automatici con priorità predefinita modificabile manualmente; distribuzione dei PC di riparazione tra gli ordini dello stesso impianto secondo priorità e precedenza temporale, con regole analoghe alla produzione |
 | Capacità di riparazione | Ogni impianto ha PC di riparazione autonomi; modificatori tecnologici, ambientali, sociali/governativi e razziali moltiplicativi; valori base e modificatori da bilanciare |
 | Costi e avanzamento delle riparazioni | Costo proporzionale alla quota di PS persi e alle risorse originarie di costruzione; avanzamento con LR/UDL ed efficienza globale/locale; consumo risorse 50%/30%/20%; progresso e risorse consumate conservati in caso di interruzione; PS ripristinati progressivamente in proporzione alle UDL; nuovi danni durante la riparazione aggiornano PS mancanti, lavoro e costi residui senza annullare l'ordine o perdere il progresso |
-| Demolizione e distruzione | La demolizione volontaria segue le stesse regole della distruzione; a 0 PS il reparto è distrutto e non riparabile: serve un nuovo ordine di costruzione, con nuovi costi e tempi; la distruzione di un reparto o impianto cancella tutti gli ordini direttamente o indirettamente collegati nel relativo ambito, inclusi produzione, riparazione, logistica, ordini continuativi e convogli non partiti; gli ordini cancellati restano in cronologia, il progresso è perso e le risorse già consumate non sono restituite; gli ordini cancellati non vengono ripristinati con la ricostruzione |
+| Demolizione e distruzione | La demolizione volontaria segue le stesse regole della distruzione; a 0 PS il reparto è distrutto e non riparabile: serve un nuovo ordine di costruzione, con nuovi costi e tempi; la distruzione di un reparto o impianto cancella tutti gli ordini direttamente o indirettamente collegati nel relativo ambito, inclusi produzione, riparazione, logistica, ordini continuativi e convogli non partiti; gli ordini cancellati restano in cronologia, il progresso è perso e le risorse già consumate non sono restituite; gli ordini cancellati non vengono ripristinati con la ricostruzione; il reparto ricostruito mantiene le proprie impostazioni personalizzate (incluse impostazioni strutturali, riparazione automatica e priorità predefinita degli ordini automatici), ma non le priorità dei singoli ordini cancellati né le impostazioni dipendenti da tali ordini |
 | Convogli verso strutture distrutte/demolite | Gli ordini continuativi diretti alla struttura e gli ordini dei convogli non ancora partiti vengono cancellati; i convogli già in viaggio invertono la rotta, conservano il carico e lo riportano al punto di partenza; le risorse tornano disponibili all'arrivo |
 | Vincoli di località | Energia e personale/popolazione locale |
 | Ricette | 2-4 input; tutte le lavorazioni avanzano tramite LR e UDL; lotti con input consumati all'avvio e output al completamento; assemblaggi con consumo 50/30/20 |
@@ -2865,6 +2963,21 @@ specie, crescita, stabilità, carestia, personale.
 | Rotte e portali: visibilità | Rotte note solo se scoperte; portali avversari e transiti visibili solo con intelligence/sensori |
 | Portali: livelli | 1-5; determinano navi/tonnellaggio al mese; costo crescente |
 | Popolazione | Numerica per colonia, in milioni; cresce in base a specie, fattori sociali e ambientali; fornisce personale |
+| Generazione PR | 1 PR per turno ogni milione di abitanti, senza moltiplicatori; installazioni scientifiche generano PR aggiuntivi secondo produzione base per tipologia e livello, bonus di specializzazione, requisiti operativi, disponibilità di personale e modificatori ambientali, sociali e contingenti |
+| Accumulo PR | Serbatoio di ricerca centralizzato per impero; PR frazionari conservati con precisione decimale interna; i PR non spesi si accumulano |
+| Avvio e parallelismo della ricerca | Ogni tecnologia ha un costo in PR per avviare lo studio; massimo tre ricerche attive per impero; i PR non assegnati restano nel serbatoio |
+| Sviluppo tecnologico | Ogni tecnologia ha un tempo di sviluppo distinto dal costo in PR; il tempo è modificabile da fattori ambientali, sociali e contingenti |
+| Installazioni scientifiche | Tre categorie: laboratori planetari (ricerca sperimentale e applicata), università/istituti (ricerca teorica e multidisciplinare) e stazioni scientifiche orbitali (ricerca scientifica e spaziale avanzata); produzione base L1: 1, 2 e 3 PR/turno rispettivamente |
+| Produzione PR per livello | Moltiplicatori provvisori comuni: L1 ×1,00; L2 ×1,50; L3 ×2,00; L4 ×2,50; L5 ×3,00; valori soggetti a bilanciamento |
+| Bonus di specializzazione scientifica | +25% alla produzione PR dell'installazione quando contribuisce a una ricerca compatibile; bonus applicato una sola volta per installazione, anche in presenza di più condizioni di compatibilità; installazioni diverse applicano ciascuna il proprio bonus; nessuna riduzione del costo PR della tecnologia |
+| Specializzazione dei laboratori planetari | Ogni laboratorio è associato a uno specifico ramo TechTree, scelto dal giocatore al momento della costruzione; può ospitare ricerche di qualsiasi ramo, ma riceve +25% PR solo sulle ricerche del ramo corrispondente; specializzazione modificabile tramite riconversione con costi e tempi da definire; durante la riconversione il laboratorio diventa inoperativo, le ricerche assegnate sono sospese automaticamente con progresso integralmente conservato e riprendono automaticamente al termine; è possibile trasferirle preventivamente, facoltativamente |
+| Specializzazione delle stazioni orbitali | Bonus +25% alla produzione di PR nei soli rami D. Scienza e Intelligence e C. Navale e Propulsione; ramo E. Colonizzazione e Biologico escluso anche in presenza di laboratori dedicati |
+| Requisiti operativi delle installazioni scientifiche | Necessari integrità strutturale sufficiente, energia e presenza di personale scientifico; la carenza parziale riduce la produzione senza rendere automaticamente inattiva la struttura; per le stazioni orbitali servono anche i collegamenti logistici necessari al sostentamento; soglie e quantità da definire |
+| Personale scientifico | Tre categorie: ricercatori, tecnici scientifici e personale di supporto scientifico; la carenza riduce linearmente la produzione PR, il personale oltre il fabbisogno non dà bonus e l'assenza totale azzera la produzione; fabbisogni richiesti scalano con il livello secondo ×1,00/×1,50/×2,00/×2,50/×3,00 |
+| Formazione scientifica | Ogni università/istituto forma annualmente tutte e tre le categorie; in condizioni neutre la produzione base è uguale per categoria; modificatori tecnologici, sociali globali e specifici, ambientali locali e contingenti possono modificarne quantità e distribuzione; i fattori sociali globali, inclusa l'impostazione di governo, possono favorire categorie differenti |
+| Sede della ricerca | Ogni progetto è assegnato a uno specifico laboratorio planetario, università/istituto o stazione scientifica orbitale; la sede determina i modificatori locali ed è un obiettivo strategico |
+| Interruzione della ricerca | Sede danneggiata ma operativa: ricerca continua; sede temporaneamente inoperativa: ricerca sospesa e progresso conservato; sede distrutta: perdita parziale del progresso secondo `(T_totale − T_trascorso) × 100 / T_totale`, applicata solo alla distruzione completa; `T_totale` è congelato al momento dell'avvio, dopo i modificatori allora vigenti |
+| Trasferimento della ricerca | Progetto trasferibile a un'altra installazione compatibile; nessuna ulteriore perdita di progresso; ricerca sospesa per un turno e velocità aggiornata in base alla nuova sede |
 | Specie | Specie giocabili con tratti propri; una specie principale per impero, minoranze possibili |
 | Stabilità | Felicità/stabilità per colonia, da organizzazione sociale, condizioni e guerra; influisce su efficienza e rivolte |
 | Sostentamento | Cibo per la popolazione, energia per i servizi; carenza di cibo riduce crescita e stabilità fino alla carestia |
@@ -2946,7 +3059,7 @@ specie, crescita, stabilità, carestia, personale.
 
 ------------------------------------------------------------------------
 
-## 11. Architettura tecnica del TurnResolver [NUOVO v0.37]
+## 11. Architettura tecnica del TurnResolver
 
 Questo capitolo raccoglie l'abbozzo tecnico discusso nella progettazione
 dei Blocchi 1–3. Non è ancora codice definitivo, ma fissa le interfacce
@@ -3031,7 +3144,7 @@ DefenderFleetIds, Doctrines);
 
 GrowthPayload (ColonyId, Kind).
 
-**Scelta [CONFERMATO v0.38]:** registro separato con `PayloadId`. Il registro è serializzabile nativamente in Unity, senza converter custom. Il payload è immutabile dopo la creazione dell'evento.
+**Scelta [CONFERMATO]:** registro separato con `PayloadId`. Il registro è serializzabile nativamente in Unity, senza converter custom. Il payload è immutabile dopo la creazione dell'evento.
 
 ### 11.6 Log per-utente
 Il TurnResolver emette LogEntry con destinatario esplicito:
@@ -3048,7 +3161,7 @@ Il filtro non è di visualizzazione: il payload viene sanitizzato prima
 dell'emissione, e il log completo è disponibile solo in build di
 sviluppo, mai nel client di produzione.
 
-### 11.7 Decisioni sui punti dell'architettura [CONFERMATO v0.38]
+### 11.7 Decisioni sui punti dell'architettura [CONFERMATO]
 
 1.  **Payload:** registro separato con `PayloadId` (§11.5).
 2.  **Engagement:** entità persistente in `MutableWorldState`
@@ -3073,7 +3186,3 @@ sviluppo, mai nel client di produzione.
     conseguenza (§1.3). Il servizio è puro e deterministico e legge lo
     stato a inizio mese.
 6.  **`RequiredFuel`:** vedi §2.3.5.
-Nota di manutenzione: questa è una bozza di lavoro consolidata,
-non ancora il GDD completo. Quando una questione aperta viene decisa,
-la regola corrispondente dovrà essere aggiornata nel capitolo pertinente
-e nel registro sintetico.
