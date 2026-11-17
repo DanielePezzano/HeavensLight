@@ -2,6 +2,18 @@
 
 Cronologia delle modifiche al documento di game design. Le voci sono riportate dalle versioni precedenti e ordinate dalla più recente alla più vecchia.
 
+## Novità v0.59
+
+Aggiunta in §4.3.4 una descrizione illustrativa e non vincolante di che
+cosa comprende ciascuna delle sette famiglie di materiali raffinati
+(approvata dall'utente come elenco narrativo): in gioco resta un solo
+materiale aggregato per famiglia e i materiali citati non diventano
+risorse distinte né hanno ricette, valori o stock propri. Tabella delle
+famiglie e dieci esempi individuali invariati. Aggiornata l'indicazione
+della versione corrente (0.59) nell'intestazione del GDD. Annotata in
+`OPEN_QUESTIONS.md` la scheda OQ-001, che resta aperta. Nessun nuovo ADR
+in `DECISIONS.md`.
+
 ## Novità v0.58
 
 Esplicitato in §4.3.4 che le sette famiglie di materiali raffinati
