@@ -1,7 +1,7 @@
 # Game Design Document — HeavensLight
 
 **Last updated:** 17 novembre 2026  
-**Versione:** 0.58  
+**Versione:** 0.59  
 **Stato:** documento di progettazione corrente
 
 Questo documento descrive il modello di gioco corrente. Le decisioni confermate, le proposte e le questioni aperte sono indicate nelle sezioni pertinenti. Le questioni ancora aperte sono gestite in `OPEN_QUESTIONS.md`; la cronologia delle modifiche è mantenuta separatamente in `CHANGELOG.md`.
@@ -914,6 +914,22 @@ strategiche, tecnologiche, produttive o logistiche; la scelta conferma
 l'approccio misto già descritto in §4.3. L'elenco definitivo dei
 materiali individuali, le loro ricette, quantità, tempi, fonti di
 approvvigionamento ed effetti meccanici sono da definire (OQ-001).
+
+**[ILLUSTRATIVO, NON VINCOLANTE: OQ-001]** La tabella seguente descrive
+a titolo illustrativo che cosa comprende ciascuna famiglia. Non è una
+regola meccanica: in gioco resta un solo materiale aggregato per
+famiglia; i materiali citati non diventano risorse distinte e non hanno
+ricette, valori o stock propri.
+
+| Famiglia | Comprende, a titolo illustrativo |
+|---|---|
+| Metalli strutturali | Ferro, alluminio, titanio e leghe da costruzione |
+| Metalli rari | Platino, iridio, terre rare e metalli pregiati |
+| Composti chimici | Acidi, polimeri, solventi e reagenti industriali |
+| Cristalli e semiconduttori | Silicio, cristalli sintetici e substrati elettronici |
+| Combustibili raffinati | Idrogeno e idrocarburi raffinati, propellenti |
+| Materiali energetici | Celle, isotopi e materiali per accumulo e reattori |
+| Biomateriali | Fibre, tessuti e composti organici di derivazione biologica |
 
 **[ESEMPI ILLUSTRATIVI, ELENCO DA DEFINIRE: OQ-001]** I materiali
 seguenti illustrano il tipo di eccezione individuale; non costituiscono
