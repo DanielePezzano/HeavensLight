@@ -2,6 +2,19 @@
 
 Cronologia delle modifiche al documento di game design. Le voci sono riportate dalle versioni precedenti e ordinate dalla più recente alla più vecchia.
 
+## Novità v0.58
+
+Esplicitato in §4.3.4 che le sette famiglie di materiali raffinati
+restano aggregate per impostazione predefinita e che i materiali
+individuali sono eccezioni limitate ai casi con conseguenze strategiche,
+tecnologiche, produttive o logistiche (approccio misto già confermato in
+§4.3). Aggiunta una tabella di dieci materiali individuali a titolo di
+esempio illustrativo (tre indicati dall'utente, sette proposti e non
+approvati), senza regole, valori o ricette. Aggiornata l'indicazione
+della versione corrente (0.58) nell'intestazione del GDD. Annotata in
+`OPEN_QUESTIONS.md` la scheda OQ-001, che resta aperta. Nessun nuovo ADR
+in `DECISIONS.md`.
+
 ## Novità v0.57
 
 Confermato in §4.3.5 che le ricette hanno un output principale e possono

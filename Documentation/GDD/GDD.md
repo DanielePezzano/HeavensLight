@@ -1,7 +1,7 @@
 # Game Design Document — HeavensLight
 
-**Last updated:** 16 novembre 2026  
-**Versione:** 0.57  
+**Last updated:** 17 novembre 2026  
+**Versione:** 0.58  
 **Stato:** documento di progettazione corrente
 
 Questo documento descrive il modello di gioco corrente. Le decisioni confermate, le proposte e le questioni aperte sono indicate nelle sezioni pertinenti. Le questioni ancora aperte sono gestite in `OPEN_QUESTIONS.md`; la cronologia delle modifiche è mantenuta separatamente in `CHANGELOG.md`.
@@ -907,6 +907,31 @@ complete.
 Le famiglie sono gruppi industriali: all'interno di una famiglia i
 materiali possono essere trattati in modo aggregato. Le ricette
 specifiche e le eventuali eccezioni individuali sono da definire.
+
+Per impostazione predefinita le sette famiglie restano aggregate. Un
+materiale è rappresentato individualmente soltanto se ha conseguenze
+strategiche, tecnologiche, produttive o logistiche; la scelta conferma
+l'approccio misto già descritto in §4.3. L'elenco definitivo dei
+materiali individuali, le loro ricette, quantità, tempi, fonti di
+approvvigionamento ed effetti meccanici sono da definire (OQ-001).
+
+**[ESEMPI ILLUSTRATIVI, ELENCO DA DEFINIRE: OQ-001]** I materiali
+seguenti illustrano il tipo di eccezione individuale; non costituiscono
+un elenco confermato, non hanno regole, valori o ricette associati e
+sono al massimo dieci.
+
+| Famiglia | Materiale | Ruolo indicativo | Provenienza |
+|---|---|---|---|
+| Combustibili raffinati | Celle di antimateria | Combustibile avanzato | Esempio dell'utente |
+| Metalli rari | Vanadium-234 | Costruzione di armature | Esempio dell'utente |
+| Biomateriali | Cellule estratte da specifici animali (specie da definire) | Rigenerazione di strutture biomeccaniche | Esempio dell'utente |
+| Metalli strutturali | Neutronio compresso | Corazzature estreme | Proposta, non approvata |
+| Cristalli e semiconduttori | Cristalli di risonanza | Sensori avanzati | Proposta, non approvata |
+| Materiali energetici | Nuclei di fusione stabilizzati | Da definire | Proposta, non approvata |
+| Composti chimici | Catalizzatore esotico | Da definire | Proposta, non approvata |
+| Combustibili raffinati | Deuterio arricchito | Propulsione | Proposta, non approvata |
+| Biomateriali | Fibre di biosintesi neurale | Supporto vitale | Proposta, non approvata |
+| Cristalli e semiconduttori | Wafer quantistici | Da definire | Proposta, non approvata |
 
 **Categorie funzionali di componenti (6):**
 

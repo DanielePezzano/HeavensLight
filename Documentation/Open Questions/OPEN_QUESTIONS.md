@@ -105,7 +105,7 @@ automaticamente in fase di migrazione.
 - **Proposta corrente:** nessuna proposta approvata. Eventuali valori o modelli già presenti nel GDD sono indicati come provvisori e non diventano automaticamente decisioni.
 - **Riferimenti:** §4.3–§4.4.
 - **Decisione parziale:** il punto sui sottoprodotti è deciso con ADR-003 (sottoprodotti opzionali, presenti solo in ricette specificamente scelte; formato GDD §4.3.5). Restano aperti: quali ricette hanno sottoprodotti; regole di stoccaggio, smaltimento e volume; tipologia e trasportabilità dei sottoprodotti; il resto del catalogo (materiali per famiglia, quantità, tempi, bilanciamento).
-
+- **Granularità dei materiali (approvata il 17 novembre 2026):** le sette famiglie di §4.3.4 restano aggregate per impostazione predefinita; materiali individuali solo dove hanno conseguenze strategiche, tecnologiche, produttive o logistiche (approccio misto già confermato in §4.3). Gli esempi di materiali individuali in §4.3.4 sono illustrativi: tre indicati dall'utente, sette proposti e non approvati. Restano aperti: elenco definitivo dei materiali individuali; ricette, quantità e tempi; fonti di approvvigionamento (ad esempio per Vanadium-234 e cellule animali; eventuale relazione con OQ-002, OQ-003, OQ-004 da valutare); effetti meccanici dei materiali; specie animale delle cellule; il resto del catalogo.
 ### OQ-002 — Depositi naturali e distribuzione delle risorse
 
 - **Area:** Risorse e galassia.
