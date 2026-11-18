@@ -151,3 +151,159 @@ principale.
 Restano aperti, nell'ambito di OQ-001: quali ricette prevedono
 sottoprodotti; regole di stoccaggio, smaltimento e volume; tipologia e
 trasportabilità dei sottoprodotti; il resto del catalogo.
+
+
+---
+
+## ADR-004 — Relazioni territoriali, gruppi demografici e infrastrutture orbitali
+
+- **Data:** 2026-11-18
+- **Stato:** Confermata
+- **Ambito:** Modello del mondo, territorialità, colonie, popolazione e infrastrutture
+- **Riferimenti GDD:** §5.12; §6.9–§6.11
+
+### Contesto
+
+La definizione delle entità del mondo richiedeva di distinguere la
+proprietà delle entità, il loro utilizzo e il controllo politico-militare,
+oltre a chiarire come rappresentare pianeti condivisi o contesi,
+popolazioni autoctone e infrastrutture orbitali.
+
+### Decisione
+
+- Gli imperi possiedono direttamente flotte, navi e installazioni; il
+  pianeta natale iniziale è proprietà diretta dell'impero.
+- La relazione di utilizzo è distinta dalla proprietà. I pianeti
+  colonizzati sono utilizzati in modo esclusivo da un solo impero alla
+  volta; sistemi stellari e rotte possono essere utilizzati da più
+  imperi contemporaneamente.
+- L'utilizzo di un pianeta non attribuisce automaticamente diritti
+  esclusivi sull'intero spazio orbitale o sulle installazioni orbitali.
+- Proprietà, utilizzo e controllo sono relazioni distinte.
+- Le popolazioni sono rappresentate da gruppi demografici autonomi. La
+  popolazione totale della colonia deriva dalla somma dei gruppi; origine
+  (autoctona/immigrata) e affiliazione politica (imperiale/indipendente)
+  sono attributi, non classi di entità separate.
+- L'occupazione militare non elimina automaticamente i gruppi presenti.
+  L'espulsione e la riconversione degli slot sono operazioni esplicite.
+- Gli insediamenti neutrali sono comunità indipendenti, ma non sono
+  automaticamente imperi autonomi completi. I corpi disabitati restano
+  distinti dalle popolazioni autoctone e dagli insediamenti neutrali.
+- I pianeti hanno slot di sviluppo suddivisi tra abitazione, industria,
+  ricerca, commercio e socialità. La capacità dipende dalla dimensione
+  ed è modificata da tecnologie e fattori sociali globali.
+- Le installazioni orbitali sono concettualmente unificate e
+  specializzate almeno in stazioni scientifiche, di assemblaggio,
+  logistiche civili e logistiche militari.
+
+### Alternative considerate
+
+Nel corso della discussione è stata valutata la possibilità che più
+imperi utilizzassero lo stesso pianeta. È stata scelta l'esclusività
+planetaria, mantenendo invece condivisibili sistemi stellari e rotte.
+È stata inoltre preferita la rappresentazione delle popolazioni
+autoctone tramite lo stesso tipo di entità dei gruppi demografici
+immigrati, distinguendole tramite attributi.
+
+### Conseguenze
+
+- Il modello del mondo deve rappresentare separatamente entità e
+  relazioni di proprietà, utilizzo e controllo.
+- La conquista militare non comporta una sostituzione automatica della
+  popolazione residente.
+- Il totale demografico della colonia è un valore derivato.
+- La capacità di sviluppo planetario può variare senza cancellare
+  automaticamente le strutture e gli slot già occupati.
+- Le infrastrutture orbitali non sono implicitamente incluse nei diritti
+  di utilizzo del pianeta sottostante.
+
+### Questioni collegate
+
+Restano da definire il calcolo numerico degli slot e la gestione delle
+variazioni di capacità (OQ-052), gli effetti operativi delle relazioni
+territoriali e dell'accesso orbitale (OQ-053), gli attributi completi
+dei gruppi e le procedure di espulsione/riconversione (OQ-056), nonché
+frequenza e distribuzione delle popolazioni autoctone e neutrali
+(OQ-028).
+
+---
+
+## ADR-005 — Modello delle informazioni e dell'intelligence
+
+- **Data:** 2026-11-18
+- **Stato:** Confermata
+- **Ambito:** Informazioni, osservazione e intelligence
+- **Riferimento GDD:** §1.3
+
+### Contesto
+
+Il modello di intelligence doveva chiarire quali informazioni sugli
+altri imperi possono essere ottenute e come rappresentare la differenza
+tra stato effettivo del mondo e conoscenza del singolo osservatore.
+
+### Decisione
+
+Lo stato reale del mondo è unico. Ogni impero dispone di una propria
+rappresentazione della conoscenza, filtrata dalle capacità di
+osservazione e intelligence. Le categorie informative comprendono
+rotte utilizzate da altri imperi, composizione delle flotte e relativi
+armamenti, stato delle colonie nemiche, tecnologie e posizione/funzione
+delle installazioni.
+
+La scala generale di intelligence è articolata in cinque livelli,
+indicizzati da 0 a 4: nessuna osservazione utile; rilevazione di
+presenza/attività; identificazione di tipologia/funzione; analisi di
+composizione, stato coloniale o tecnologie pertinenti; dettaglio
+approfondito, come armamenti e componenti. La scala è comune come
+riferimento, ma le soglie effettive possono differire tra categorie.
+Le informazioni osservate devono poter essere distinte in base alla
+loro attualità.
+
+### Conseguenze
+
+- Non vengono create copie delle entità del mondo per ciascun
+  osservatore: varia la conoscenza disponibile, non l'identità
+  dell'entità reale.
+- Le informazioni possono avere livelli di dettaglio differenti e
+  riferibilità temporale.
+- Le regole di condivisione tra alleati e le soglie specifiche per
+  categoria devono essere definite separatamente.
+
+### Questioni collegate
+
+OQ-054 — soglie per categoria informativa, aggiornamento e decadimento
+delle informazioni.
+
+---
+
+## ADR-006 — Autonomia delle navi e ammiraglia della flotta
+
+- **Data:** 2026-11-18
+- **Stato:** Confermata
+- **Ambito:** Flotte e unità navali
+- **Riferimento GDD:** §7.1
+
+### Contesto
+
+Occorreva stabilire se una nave potesse esistere al di fuori di una
+flotta e quale fosse il comportamento della flotta in caso di perdita
+della nave di riferimento.
+
+### Decisione
+
+Una nave può esistere e operare indipendentemente da una flotta. La
+flotta è un raggruppamento di navi e, alla creazione, riceve
+un'ammiraglia selezionata dal giocatore. Se l'ammiraglia viene perduta,
+la flotta si dissolve e le navi superstiti tornano indipendenti.
+
+### Conseguenze
+
+L'appartenenza a una flotta deve essere modellata come relazione
+modificabile e non come requisito di esistenza della nave. La perdita
+dell'ammiraglia comporta la dissoluzione del raggruppamento, non la
+perdita automatica delle altre navi.
+
+### Questioni collegate
+
+OQ-055 — comportamento in caso di distacco volontario, trasferimento o
+sostituzione dell'ammiraglia.

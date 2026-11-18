@@ -59,7 +59,7 @@ modificati.
 | OQ-025 | Non assegnata | Generazione galattica | Quote regionali e transizione tra regioni galattiche | Aperta | Da valutare | §3 |
 | OQ-026 | Non assegnata | Generazione galattica | Generazione dei sistemi stellari e dei corpi celesti | Aperta | Da valutare | §3; §5 |
 | OQ-027 | Non assegnata | Movimento e logistica | Parametri di rotte e portali | Aperta | Da valutare | §3.7 |
-| OQ-028 | Non assegnata | Esplorazione e colonizzazione | Popolazioni autoctone, scoperta e posizioni iniziali | Aperta | Da valutare | §3.6; §5; §6 |
+| OQ-028 | Non assegnata | Esplorazione e colonizzazione | Popolazioni autoctone, scoperta e posizioni iniziali | Aperta | Da valutare | §3.6; §5; §6.9; ADR-004 |
 | OQ-029 | Non assegnata | Generazione galattica | Intensità delle tendenze regionali di generazione | Aperta | Da valutare | §3 |
 | OQ-030 | Non assegnata | Sistemi stellari | Frequenze delle classi stellari | Proposta | Da valutare | §5.6 |
 | OQ-031 | Non assegnata | Abitabilità | Soglie di abitabilità per specie | Proposta | Da valutare | §5.8; §5.10 |
@@ -83,7 +83,11 @@ modificati.
 | OQ-049 | Non assegnata | Ricerca e sviluppo | Riconversione dei laboratori planetari | Aperta | Da valutare | §6.8 |
 | OQ-050 | Non assegnata | Ricerca e sviluppo | Trasferimento dei progetti di ricerca | Aperta | Da valutare | §6.8 |
 | OQ-051 | Non assegnata | Ricerca e sviluppo | Bonus di ricerca in nave e modello generale dei PR | Aperta | Da valutare | §7.12; §6.8 |
-| OQ-052 | Non assegnata | Economia e produzione | Quantità di input/output e bilanciamento economico delle ricette | Aperta | Da valutare | §4.3.5; OQ-001; OQ-012 |
+| OQ-052 | Non assegnata | Sviluppo planetario | Calcolo degli slot planetari e gestione delle variazioni di capacità | Aperta | Da valutare | §6.10 |
+| OQ-053 | Non assegnata | Territorialità e infrastrutture orbitali | Regole operative di utilizzo, controllo e accesso orbitale | Aperta | Da valutare | §5.12; §6.11 |
+| OQ-054 | Non assegnata | Intelligence | Soglie informative, aggiornamento e decadimento della conoscenza | Aperta | Da valutare | §1.3; §7.12 |
+| OQ-055 | Non assegnata | Flotte e navi | Distacco, trasferimento e sostituzione dell'ammiraglia | Aperta | Da valutare | §7.1 |
+| OQ-056 | Non assegnata | Colonie e popolazione | Attributi dei gruppi demografici ed effetti di espulsione/riconversione | Aperta | Da valutare | §6.9–§6.10 |
 
 ## 3. Schede delle questioni
 
@@ -105,12 +109,6 @@ automaticamente in fase di migrazione.
 - **Preparazione dell’analisi:** assistente.
 - **Proposta corrente:** nessuna proposta approvata. Eventuali valori o modelli già presenti nel GDD sono indicati come provvisori e non diventano automaticamente decisioni.
 - **Riferimenti:** §4.3–§4.4.
-- **Decisione parziale:** il punto sui sottoprodotti è deciso con ADR-003 (sottoprodotti opzionali, presenti solo in ricette specificamente scelte; formato GDD §4.3.5). Restano aperti: quali ricette hanno sottoprodotti; regole di stoccaggio, smaltimento e volume; tipologia e trasportabilità dei sottoprodotti; il resto del catalogo (materiali per famiglia, quantità, tempi, bilanciamento).
-- **Granularità dei materiali (approvata il 17 novembre 2026):** le sette famiglie di §4.3.4 restano aggregate per impostazione predefinita; materiali individuali solo dove hanno conseguenze strategiche, tecnologiche, produttive o logistiche (approccio misto già confermato in §4.3). Gli esempi di materiali individuali in §4.3.4 sono illustrativi: tre indicati dall'utente, sette proposti e non approvati. Restano aperti: elenco definitivo dei materiali individuali; ricette, quantità e tempi; fonti di approvvigionamento (ad esempio per Vanadium-234 e cellule animali; eventuale relazione con OQ-002, OQ-003, OQ-004 da valutare); effetti meccanici dei materiali; specie animale delle cellule; il resto del catalogo.
-- **Descrizione illustrativa delle famiglie (approvata il 17 novembre 2026):** approvata una descrizione narrativa e non vincolante di che cosa comprende ciascuna famiglia (GDD §4.3.4). Non è una regola meccanica: in gioco resta un solo materiale aggregato per famiglia; i materiali citati non diventano risorse distinte né hanno ricette, valori o stock propri. Restano aperti: ricette, quantità e tempi; fonti di approvvigionamento; effetti meccanici; elenco definitivo dei materiali individuali; il resto del catalogo.
-- **Struttura degli input di raffinazione (proposta provvisoria approvata il 18 novembre 2026):** integrata in GDD §4.3.5 come proposta provvisoria, non decisione definitiva (Raffineria; 2–4 input; un output principale; solo tipi di input). Metalli strutturali: Minerali, Energia. Metalli rari: Minerali, Materiali avanzati, Energia. Combustibili raffinati: Carburante, Energia. Biomateriali: Cibo, Energia. Composti chimici: Minerali, Carburante, Energia. Cristalli e semiconduttori: Minerali, Materiali avanzati, Energia. Materiali energetici: Carburante, Materiali avanzati, Energia. Le prime quattro seguono le derivazioni di §4.3.4; le ultime tre sono ipotesi di lavoro approvate come provvisorie. Relazione con OQ-004: da valutare. Restano aperti: quantità, tempi, LR, tecnologie richieste, eventuali sottoprodotti per ricetta, ricette di livello superiore (componenti, assemblaggi), fonti dei materiali individuali; il resto del catalogo.
-- **Struttura degli input dei componenti (proposta provvisoria approvata il 18 novembre 2026):** integrata in GDD §4.3.5 (v0.61) come proposta provvisoria, non decisione definitiva (Fabbrica di componenti; 2–4 input; un output principale; solo famiglie di input). Strutturali: Metalli strutturali, Composti chimici. Propulsione: Metalli strutturali, Materiali energetici, Metalli rari. Le due categorie sono già nell'esempio illustrativo di §4.3.5. Energia: Materiali energetici, Cristalli e semiconduttori, Metalli strutturali. Elettronica e sensori: Cristalli e semiconduttori, Metalli rari, Composti chimici. Armamenti: Metalli strutturali, Materiali energetici, Metalli rari. Supporto vitale: Biomateriali, Composti chimici, Metalli strutturali. Le ultime quattro sono ipotesi di lavoro dell'assistente approvate come provvisorie.
-- **Criterio di chiusura (approvato il 18 novembre 2026):** OQ-001 si chiuderà quando il catalogo avrà la struttura completa, cioè l'elenco di tutte le ricette con input e output per tipo. Quantità di input/output e bilanciamento economico passano a OQ-052; i valori di LR per ricetta a OQ-012. Restano aperti in OQ-001: ricette degli assemblaggi (navi, strutture, prodotti finiti), eventuali sottoprodotti per ricetta, tecnologie richieste, fonti dei materiali individuali ed elenco definitivo dei materiali individuali; la struttura delle ricette già coperte resta provvisoria. Le precedenti indicazioni "restano aperti" su quantità, tempi e LR vanno lette alla luce di questo criterio.
 
 ### OQ-002 — Depositi naturali e distribuzione delle risorse
 
@@ -153,8 +151,6 @@ automaticamente in fase di migrazione.
 - **Preparazione dell’analisi:** assistente.
 - **Proposta corrente:** nessuna proposta approvata. Eventuali valori o modelli già presenti nel GDD sono indicati come provvisori e non diventano automaticamente decisioni.
 - **Riferimenti:** §4.3–§4.4.
-- **Nota:** il principio generale sui sottoprodotti è deciso con ADR-003 (opzionali, solo in ricette specificamente scelte; GDD §4.3.5). Restano aperti per questa questione i processi di raffinazione, i materiali in ingresso, i prodotti in uscita e quali raffinazioni prevedano sottoprodotti (vedi anche OQ-001).
-- **Relazione con OQ-001 (da valutare):** una struttura provvisoria dei soli tipi di input delle ricette di raffinazione è stata integrata in GDD §4.3.5 (v0.60) ed è annotata in OQ-001. Eventuale sovrapposizione o dipendenza tra le due questioni: da valutare.
 
 ### OQ-005 — Reparti integrati e lavorazioni degli impianti
 
@@ -267,7 +263,6 @@ automaticamente in fase di migrazione.
 - **Preparazione dell’analisi:** assistente.
 - **Proposta corrente:** nessuna proposta approvata. Eventuali valori o modelli già presenti nel GDD sono indicati come provvisori e non diventano automaticamente decisioni.
 - **Riferimenti:** §4.3.6; §4.4.
-- **Nota (18 novembre 2026):** i valori di LR per ricetta sono tracciati in questa questione e non più in OQ-001 (vedi criterio di chiusura di OQ-001). Nessuna priorità o dipendenza assegnata.
 
 ### OQ-013 — Modelli produttivi, priorità e spareggi
 
@@ -490,8 +485,8 @@ automaticamente in fase di migrazione.
 - **Dipendenze:** da valutare; nessun prerequisito viene assunto senza verifica.
 - **Responsabile della decisione:** utente.
 - **Preparazione dell’analisi:** assistente.
-- **Proposta corrente:** nessuna proposta approvata. Eventuali valori o modelli già presenti nel GDD sono indicati come provvisori e non diventano automaticamente decisioni.
-- **Riferimenti:** §3.6; §5; §6.
+- **Proposta corrente:** sono confermate le distinzioni tra gruppi demografici autoctoni, insediamenti neutrali e corpi celesti disabitati. Le popolazioni autoctone utilizzano lo stesso modello dei gruppi demografici immigrati, distinguendosi tramite l'attributo di origine; gli insediamenti neutrali non costituiscono automaticamente imperi autonomi completi. Restano da definire frequenze, distribuzione, contenuti e comportamento degli insediamenti, nonché scoperta e posizioni iniziali dei giocatori.
+- **Riferimenti:** §3.6; §5; §6.9; ADR-004.
 
 ### OQ-029 — Intensità delle tendenze regionali di generazione
 
@@ -815,19 +810,77 @@ automaticamente in fase di migrazione.
 - **Proposta corrente:** nessuna proposta approvata. Eventuali valori o modelli già presenti nel GDD sono indicati come provvisori e non diventano automaticamente decisioni.
 - **Riferimenti:** §7.12; §6.8.
 
-### OQ-052 — Quantità di input/output e bilanciamento economico delle ricette
+### OQ-052 — Calcolo degli slot planetari e gestione delle variazioni di capacità
 
-- **Area:** Economia e produzione.
+- **Area:** Sviluppo planetario.
 - **Stato:** Aperta.
 - **Priorità:** Non assegnata.
-- **Problema da affrontare:** Definire le quantità di input e output delle ricette e il bilanciamento economico del catalogo. Questo ambito è stato separato da OQ-001 con il nuovo criterio di chiusura approvato il 18 novembre 2026.
-- **Obiettivo:** definire una specifica verificabile e coerente con i sistemi già documentati.
-- **Cosa blocca:** da valutare nell’analisi; non ancora determinato.
+- **Problema da affrontare:** Definire il numero base di slot per dimensione planetaria, i modificatori tecnologici e sociali, il ricalcolo della capacità e il comportamento quando il limite diminuisce o aumenta.
+- **Obiettivo:** ottenere un modello deterministico che preservi gli slot e le strutture già occupati senza consentire nuove assegnazioni oltre la capacità effettiva.
+- **Cosa blocca:** il dimensionamento numerico e le regole complete di assegnazione degli slot.
 - **Dipendenze:** da valutare; nessun prerequisito viene assunto senza verifica.
 - **Responsabile della decisione:** utente.
-- **Preparazione dell’analisi:** assistente.
-- **Proposta corrente:** nessuna proposta approvata. Le quantità presenti negli esempi del GDD sono segnaposto e non costituiscono decisioni.
-- **Riferimenti:** §4.3.5; OQ-001; OQ-012.
+- **Preparazione dell'analisi:** assistente.
+- **Proposta corrente:** sono confermate le cinque funzioni (abitazione, industria, ricerca, commercio, socialità), la dipendenza dalla dimensione e i modificatori tecnologici/sociali. Resta da definire l'associazione dei gruppi demografici alle funzioni non residenziali e sociali.
+- **Riferimenti:** §6.10; ADR-004.
+
+### OQ-053 — Regole operative di utilizzo, controllo e accesso orbitale
+
+- **Area:** Territorialità e infrastrutture orbitali.
+- **Stato:** Aperta.
+- **Priorità:** Non assegnata.
+- **Problema da affrontare:** Specificare come si acquisiscono, trasferiscono o perdono le relazioni di utilizzo e controllo e quali diritti derivano dall'utilizzo di un pianeta rispetto allo spazio orbitale e alle installazioni presenti.
+- **Obiettivo:** rendere coerenti colonizzazione, occupazione, conquista, accesso alle installazioni orbitali e utilizzo condiviso di sistemi e rotte.
+- **Cosa blocca:** le regole operative di colonizzazione/occupazione e interazione con infrastrutture orbitali.
+- **Dipendenze:** da valutare; nessun prerequisito viene assunto senza verifica.
+- **Responsabile della decisione:** utente.
+- **Preparazione dell'analisi:** assistente.
+- **Proposta corrente:** sono confermate l'esclusività dell'utilizzo planetario e la possibilità di utilizzo condiviso di sistemi e rotte. L'utilizzo del pianeta non attribuisce automaticamente diritti esclusivi sull'orbita o sulle installazioni orbitali.
+- **Riferimenti:** §5.12; §6.11; ADR-004.
+
+### OQ-054 — Soglie informative, aggiornamento e decadimento della conoscenza
+
+- **Area:** Intelligence.
+- **Stato:** Aperta.
+- **Priorità:** Non assegnata.
+- **Problema da affrontare:** Definire soglie specifiche per categoria informativa, condivisione tra alleati, frequenza di aggiornamento e decadimento delle informazioni non più osservate.
+- **Obiettivo:** garantire una rappresentazione coerente e temporalmente corretta della conoscenza di ciascun impero.
+- **Cosa blocca:** il dettaglio operativo delle informazioni disponibili nell'interfaccia e nei sistemi decisionali.
+- **Dipendenze:** da valutare; nessun prerequisito viene assunto senza verifica.
+- **Responsabile della decisione:** utente.
+- **Preparazione dell'analisi:** assistente.
+- **Proposta corrente:** è confermata la scala generale 0–4 e le categorie informative riportate in §1.3. Le soglie puntuali possono differire tra categorie.
+- **Riferimenti:** §1.3; §7.12; ADR-005.
+
+### OQ-055 — Distacco, trasferimento e sostituzione dell'ammiraglia
+
+- **Area:** Flotte e navi.
+- **Stato:** Aperta.
+- **Priorità:** Non assegnata.
+- **Problema da affrontare:** Definire cosa accade se l'ammiraglia viene distaccata volontariamente, trasferita o sostituita prima di essere perduta.
+- **Obiettivo:** completare le regole di ciclo di vita della flotta senza contraddire la dissoluzione automatica in caso di perdita dell'ammiraglia.
+- **Cosa blocca:** le operazioni di riorganizzazione e trasferimento delle navi tra flotte.
+- **Dipendenze:** da valutare; nessun prerequisito viene assunto senza verifica.
+- **Responsabile della decisione:** utente.
+- **Preparazione dell'analisi:** assistente.
+- **Proposta corrente:** è confermato che la perdita dell'ammiraglia dissolve la flotta e rende indipendenti le navi superstiti. Non è ancora definito il caso di distacco volontario o sostituzione.
+- **Riferimenti:** §7.1; ADR-006.
+
+### OQ-056 — Attributi dei gruppi demografici ed effetti di espulsione/riconversione
+
+- **Area:** Colonie e popolazione.
+- **Stato:** Aperta.
+- **Priorità:** Non assegnata.
+- **Problema da affrontare:** Definire gli attributi completi dei gruppi demografici, le relazioni con gli slot e le procedure, i tempi e gli effetti dell'espulsione e della riconversione degli slot occupati.
+- **Obiettivo:** rendere simulabili migrazione, coesistenza, insediamento e rimozione di gruppi senza cancellazioni automatiche dovute alla conquista.
+- **Cosa blocca:** la definizione completa della gestione demografica e delle operazioni di insediamento forzato.
+- **Dipendenze:** da valutare; nessun prerequisito viene assunto senza verifica.
+- **Responsabile della decisione:** utente.
+- **Preparazione dell'analisi:** assistente.
+- **Proposta corrente:** sono confermati gruppi autonomi con specie, popolazione, origine e affiliazione politica; la popolazione totale della colonia è derivata dalla somma dei gruppi. L'occupazione militare non elimina automaticamente i gruppi esistenti; espulsione e riconversione sono operazioni esplicite.
+- **Riferimenti:** §6.9–§6.10; ADR-004.
+
+## 4. Questioni risolte e archivio
 
 Le questioni risolte saranno trasferite qui dopo l’approvazione e
 l’integrazione documentale. Per ciascuna saranno mantenuti ID, decisione

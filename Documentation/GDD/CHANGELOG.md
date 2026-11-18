@@ -1,5 +1,23 @@
 # Changelog — HeavensLight
 
+
+## Novità v0.62
+
+Integrato nel GDD il primo modello consolidato delle entità territoriali,
+demografiche e orbitali. Distinte le relazioni di proprietà, utilizzo e
+controllo; confermato l'utilizzo esclusivo di ciascun pianeta da parte di
+un solo impero, con sistemi stellari e rotte condivisibili. Introdotti i
+gruppi demografici autonomi, gli attributi di origine e affiliazione, la
+distinzione tra popolazioni autoctone, insediamenti neutrali e corpi
+celesti disabitati, gli slot di sviluppo planetario e le quattro
+categorie di installazioni orbitali. Precisato il modello informativo
+con stato reale unico, conoscenza distinta per impero e scala generale
+di intelligence 0–4. Aggiornata la regola delle flotte: le navi possono
+esistere indipendentemente e la perdita dell'ammiraglia dissolve la
+flotta. Registrate le decisioni in ADR-004, ADR-005 e ADR-006; aggiornato
+il registro sintetico del GDD. In `OPEN_QUESTIONS.md`, aggiornata OQ-028
+e aggiunte OQ-052–OQ-056 per i dettagli operativi ancora da definire.
+
 Cronologia delle modifiche al documento di game design. Le voci sono riportate dalle versioni precedenti e ordinate dalla più recente alla più vecchia.
 
 ## Novità v0.61

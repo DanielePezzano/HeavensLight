@@ -1,7 +1,7 @@
 # Game Design Document — HeavensLight
 
 **Last updated:** 18 novembre 2026  
-**Versione:** 0.61  
+**Versione:** 0.62  
 **Stato:** documento di progettazione corrente
 
 Questo documento descrive il modello di gioco corrente. Le decisioni confermate, le proposte e le questioni aperte sono indicate nelle sezioni pertinenti. Le questioni ancora aperte sono gestite in `OPEN_QUESTIONS.md`; la cronologia delle modifiche è mantenuta separatamente in `CHANGELOG.md`.
@@ -63,6 +63,42 @@ Il principio vale anche per il **log del TurnResolver** (§11.6): ogni
 giocatore riceve un log già filtrato per le proprie capacità di
 osservazione. Il log completo è disponibile solo in build di sviluppo e
 non attraversa mai il confine di rete in multiplayer.
+
+Il modello informativo distingue lo **stato reale del mondo** dalla
+conoscenza posseduta da ciascun impero. Le entità del mondo esistono una
+sola volta nello stato autorevole; l'intelligence determina quali loro
+attributi sono conosciuti da ciascun osservatore e con quale livello di
+dettaglio. La conoscenza osservata può essere conservata con la relativa
+riferibilità temporale, così da distinguere un dato aggiornato da
+un'informazione non più verificata.
+
+Le informazioni ottenibili riguardano almeno:
+
+- **Rotte utilizzate da altri imperi**, alleati o avversari: l'intelligence
+aumenta il dettaglio sulle attività rilevate.
+- **Composizione delle flotte**: il livello di intelligence determina
+quali dettagli delle navi e dei loro armamenti sono visibili.
+- **Stato delle colonie nemiche**: le informazioni sulle colonie nemiche
+richiedono capacità di intelligence; le regole di condivisione delle
+informazioni tra alleati restano da precisare.
+- **Tecnologie** degli altri imperi.
+- **Posizione e funzione delle installazioni**: il dettaglio conosciuto
+dipende dal livello di intelligence.
+
+Scala generale di riferimento:
+
+| Livello | Informazione ottenibile |
+|---|---|
+| 0 | Nessuna osservazione utile |
+| 1 | Rilevazione di presenza o attività |
+| 2 | Identificazione della tipologia e della funzione |
+| 3 | Analisi della composizione, dello stato della colonia o delle tecnologie pertinenti |
+| 4 | Dettaglio approfondito, per esempio armamenti e componenti |
+
+La scala è un riferimento comune, non una soglia uniforme: i requisiti
+specifici possono variare in base alla categoria informativa. Le soglie
+per ciascuna categoria e le regole di aggiornamento/decadimento delle
+informazioni sono tracciate in `OPEN_QUESTIONS.md` (OQ-054).
 
 ### 1.4 Logistica militare
 
@@ -2241,6 +2277,42 @@ I corpi non elencati hanno ricchezza assente per quella risorsa, salvo
 eccezioni. Il moltiplicatore numerico di ogni livello è da definire con
 le ricette (OQ-001) [PROPOSTA: ×0 / ×0,5 / ×1 / ×1,5 / ×2,5].
 
+### 5.12 Relazioni territoriali e utilizzo dei corpi celesti [CONFERMATO]
+
+Il modello distingue tre relazioni, che non devono essere considerate
+sinonimi:
+
+- **Proprietà:** titolarità diretta di entità appartenenti a un impero.
+  Gli imperi possiedono direttamente le proprie flotte, navi e
+  installazioni. Il pianeta natale iniziale è proprietà diretta
+  dell'impero.
+- **Utilizzo:** diritto/relazione con cui un impero utilizza un corpo
+  celeste o un collegamento per colonizzare, insediare strutture o
+  svolgere attività. I pianeti colonizzati e le rotte scoperte sono
+  normalmente rappresentati tramite questa relazione, non come
+  proprietà diretta dell'intero corpo o collegamento.
+- **Controllo:** relazione politico-militare che descrive chi esercita
+  il controllo effettivo. Non coincide automaticamente con la
+  popolazione presente né con la proprietà delle singole installazioni.
+
+Regole territoriali:
+
+- Un **pianeta può essere utilizzato da un solo impero alla volta**.
+  L'utilizzo planetario è quindi esclusivo.
+- Un **sistema stellare può essere utilizzato da più imperi**
+  contemporaneamente.
+- Una **rotta può essere utilizzata da più imperi** contemporaneamente,
+  nel rispetto delle regole di accesso ai portali (§3.7.3).
+- L'utilizzo esclusivo di un pianeta non attribuisce automaticamente
+  diritti esclusivi sull'intero spazio orbitale né sulle installazioni
+  orbitali: queste mantengono una propria identità e una propria
+  relazione di proprietà/utilizzo.
+
+La distinzione tra proprietà, utilizzo e controllo deve essere mantenuta
+anche in caso di occupazione militare, conquista o cambiamento della
+situazione politica. Le modalità operative di trasferimento, perdita e
+contestazione di tali relazioni restano da definire (OQ-053).
+
 ------------------------------------------------------------------------
 
 ## 6. Capitolo 5 --- Colonie e popolazione
@@ -2251,11 +2323,12 @@ coloniali e organizzazione sociale sono tracciate in
 
 ### 6.1 Popolazione e crescita demografica [CONFERMATO: modello logistico, VALORI DA BILANCIARE: OQ-036]
 
--   Ogni colonia ha una **popolazione numerica**, espressa in
-    **milioni**.
--   La popolazione **cresce nel tempo** in base a fattori **di specie,
-    sociali e ambientali**, fino a una **capacità massima** dipendente
-    dal corpo celeste e dalla specie (modello logistico).
+-   Ogni colonia ha una **popolazione complessiva**, espressa in
+    **milioni** e calcolata come somma delle popolazioni dei gruppi
+    demografici presenti (§6.9).
+-   La popolazione dei gruppi **cresce nel tempo** in base a fattori
+    **di specie, sociali e ambientali**, entro la capacità massima
+    dipendente dal corpo celeste e dalla specie (modello logistico).
 -   La crescita è modellata come un **evento mensile** per colonia
     (tipo `Growth`, §11.5). Un evento annuale è stato scartato: il
     mensile è coerente con la granularità della simulazione (§2.1) e
@@ -2317,10 +2390,13 @@ Archetipi [PROPOSTA, nomi provvisori]:
 6.  *(opzionale)* **Criofili** --- pianeti freddi, consumo di energia
     alto.
 
-**Minoranze** [PROPOSTA]: una colonia può ospitare popolazioni di specie
-diverse. Ogni minoranza ≥ 10% della popolazione applica i propri tratti
-di stabilità (malus se la specie principale le è ostile) in proporzione
-alla quota.
+**Gruppi di specie minoritarie** [PROPOSTA]: una colonia può ospitare
+gruppi demografici appartenenti a specie diverse da quella principale.
+Ogni gruppo minoritario che raggiunge almeno il 10% della popolazione
+complessiva applica i propri tratti di stabilità (malus se la specie
+principale gli è ostile) in proporzione alla propria quota. La quota è
+calcolata sulla popolazione del gruppo rispetto al totale della colonia
+(§6.9).
 
 ### 6.3 Stabilità sociale [CONFERMATO: scala 0--100 con soglie, VALORI DA BILANCIARE]
 
@@ -2665,6 +2741,94 @@ singoli modificatori.
 -   La nuova sede può determinare una velocità di sviluppo diversa,
     in funzione dei propri modificatori locali.
 
+### 6.9 Gruppi demografici autonomi [CONFERMATO]
+
+La popolazione di una colonia è articolata in **gruppi demografici
+autonomi**, anziché essere trattata soltanto come un totale aggregato
+con quote di specie. Ogni gruppo è un'entità distinta e mantiene almeno
+la propria specie, la propria consistenza demografica e le proprie
+relazioni con gli slot occupati.
+
+- La popolazione complessiva della colonia è un valore derivato dalla
+  somma delle popolazioni dei gruppi presenti.
+- L'origine del gruppo distingue almeno popolazioni **autoctone** e
+  **immigrate**.
+- L'affiliazione politica distingue gruppi appartenenti a un impero e
+  gruppi indipendenti. Un gruppo indipendente non costituisce, per
+  questo solo fatto, un impero controllato dall'IA.
+- Una popolazione autoctona usa lo stesso modello di gruppo
+  demografico delle popolazioni immigrate: l'origine è un attributo,
+  non una classe di entità separata.
+- La conquista o l'occupazione militare di un pianeta non elimina e non
+  trasferisce automaticamente i gruppi demografici già presenti.
+- Un nuovo insediamento può utilizzare slot liberi oppure richiedere
+  l'espulsione degli occupanti e la riconversione degli slot. Espulsione
+  e riconversione sono operazioni esplicite e non avvengono
+  istantaneamente per il solo arrivo dei nuovi coloni.
+
+Si distinguono inoltre tre condizioni del corpo celeste:
+
+1. **Popolazioni autoctone:** gruppi demografici presenti dalla
+   generazione del mondo.
+2. **Insediamenti neutrali:** comunità organizzate indipendenti dagli
+   imperi giocabili, potenzialmente dotate di strutture e attività
+   locali; non sono automaticamente imperi autonomi completi.
+3. **Corpi celesti disabitati:** privi di popolazione o insediamento
+   permanente, pur potendo contenere risorse e anomalie.
+
+Gli attributi completi dei gruppi, le procedure e i tempi di espulsione
+e riconversione e gli effetti conseguenti restano da definire (OQ-056;
+OQ-028).
+
+### 6.10 Slot di sviluppo planetario [CONFERMATO: PRINCIPIO E CATEGORIE]
+
+Ogni pianeta dispone di un numero totale di **slot di sviluppo
+planetario**. Il numero base dipende dalla dimensione del pianeta ed è
+modificato dalle tecnologie e dai fattori sociali globali applicabili.
+
+Gli slot sono assegnati a una delle seguenti funzioni:
+
+- abitazione;
+- industria;
+- ricerca;
+- commercio;
+- socialità.
+
+Uno slot rappresenta un'unità/area di sviluppo e non implica
+necessariamente una corrispondenza rigida di un solo edificio per slot.
+Ogni slot mantiene una propria identità, funzione, eventuale gruppo
+demografico associato quando pertinente, struttura presente e stato.
+Gli stati comprendono almeno: libero, occupato, in costruzione, in
+riconversione e non disponibile.
+
+La diminuzione della capacità massima calcolata non cancella
+automaticamente gli slot già occupati: gli slot e le strutture esistenti
+vengono conservati; finché il numero effettivo di slot non rientra nel
+nuovo limite, non è possibile aggiungere nuovi slot/insediamenti oltre
+la capacità consentita. Le regole numeriche di calcolo, la gestione
+puntuale delle variazioni e l'associazione dei gruppi alle diverse
+funzioni sono da definire (OQ-052).
+
+### 6.11 Installazioni orbitali [CONFERMATO: CATEGORIE]
+
+Le installazioni orbitali condividono la natura di infrastrutture
+costruite nello spazio orbitale, ma sono specializzate per funzione.
+Sono previste almeno quattro categorie:
+
+- **Stazioni scientifiche:** ricerca e attività scientifiche, secondo
+  le regole del §6.8.
+- **Stazioni di assemblaggio:** costruzione e assemblaggio di navi o
+  altri prodotti compatibili.
+- **Stazioni logistiche civili:** supporto al trasporto, allo stoccaggio
+  e alla logistica civile.
+- **Stazioni logistiche militari:** supporto logistico alle flotte e
+  alle operazioni militari.
+
+Le categorie condividono il concetto generale di installazione
+orbitale, ma non si presume che abbiano identici requisiti, capacità,
+processi o regole operative. Le specifiche funzionali e i rapporti con
+l'utilizzo del pianeta sottostante sono da definire (OQ-053).
+
 ------------------------------------------------------------------------
 
 ## 7. Capitolo 6 --- Flotte e combattimento
@@ -2678,9 +2842,20 @@ movimento e combattimento sono ordinati dal TurnResolver (§2.3).
 
 ### 7.1 Flotte e navi [CONFERMATO]
 
--   Una **flotta** è composta da una o più **navi**.
+-   Una **nave** può esistere e operare indipendentemente da una flotta;
+    l'appartenenza a una flotta è una relazione di raggruppamento, non
+    un requisito per l'esistenza della nave.
+-   Una **flotta** è composta da una o più navi e dispone di una nave
+    designata come **ammiraglia**.
+-   Quando una flotta viene creata, il giocatore ne seleziona
+    l'ammiraglia.
+-   Se l'ammiraglia viene distrutta o altrimenti perduta, la flotta si
+    dissolve e le navi superstiti tornano a essere unità indipendenti.
 -   Le navi appartengono a **classi** diverse.
 -   Alcune classi si sbloccano solo avanzando nella **tecnologia**.
+
+Il comportamento in caso di distacco volontario, trasferimento o
+sostituzione dell'ammiraglia è da definire (OQ-055).
 
 ### 7.2 Categorie di navi [CONFERMATO]
 
@@ -2978,6 +3153,9 @@ incorporata nel GDD e registrata negli altri documenti pertinenti.
 
 | Tema | Decisione |
 |---|---|
+| Modello territoriale e demografico ([ADR-004](DECISIONS.md#adr-004--relazioni-territoriali-gruppi-demografici-e-infrastrutture-orbitali)) | Distinzione tra proprietà, utilizzo e controllo; pianeti a utilizzo esclusivo, sistemi e rotte condivisibili; gruppi demografici autonomi; slot di sviluppo planetario e categorie di installazioni orbitali (§5.12; §6.9–§6.11) |
+| Intelligence ([ADR-005](DECISIONS.md#adr-005--modello-delle-informazioni-e-dellintelligence)) | Stato reale unico e conoscenza per impero; categorie informative e scala generale di intelligence 0–4 (§1.3) |
+| Navi e flotte ([ADR-006](DECISIONS.md#adr-006--autonomia-delle-navi-e-ammiraglia-della-flotta)) | Navi indipendenti o raggruppate in flotte; ogni flotta ha un'ammiraglia e si dissolve se questa viene perduta (§7.1) |
 | Organizzazione documentale | Quattro documenti canonici distinti: GDD, DECISIONS, CHANGELOG e OPEN_QUESTIONS (ADR-002) |
 | Sottoprodotti nelle ricette ([ADR-003](DECISIONS.md#adr-003--sottoprodotti-opzionali-nelle-ricette)) | Output principale più eventuali sottoprodotti, presenti solo in ricette specificamente scelte; non tutte le ricette li hanno; formato base invariato: 2–4 input e un output principale (§4.3.5) |
 | Modalità | Single-player e multiplayer |
