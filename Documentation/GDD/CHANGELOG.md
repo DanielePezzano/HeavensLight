@@ -2,6 +2,25 @@
 
 Cronologia delle modifiche al documento di game design. Le voci sono riportate dalle versioni precedenti e ordinate dalla più recente alla più vecchia.
 
+## Novità v0.61
+
+Aggiunta in §4.3.5 una proposta provvisoria e non vincolante sulla
+struttura degli input delle ricette dei componenti (Fabbrica di
+componenti, 2–4 input, un output principale), con le sole famiglie di
+input per ciascuna delle sei categorie funzionali. Strutturali e
+Propulsione corrispondono agli esempi illustrativi già presenti in
+§4.3.5; Energia, Elettronica e sensori, Armamenti e Supporto vitale sono
+ipotesi di lavoro dell'assistente approvate come provvisorie. Aggiornato
+l'elenco di ciò che resta da definire: ricette degli assemblaggi,
+eventuali sottoprodotti per ricetta, tecnologie richieste e fonti dei
+materiali individuali restano in OQ-001; quantità, tempi e bilanciamento
+passano a OQ-052, i valori di LR a OQ-012. Aggiornata l'indicazione
+della versione corrente (0.61) nell'intestazione del GDD. In
+`OPEN_QUESTIONS.md`: aggiornata la scheda OQ-001 (che resta aperta) con
+il criterio di chiusura approvato (struttura completa del catalogo),
+aggiunta la nuova questione OQ-052 e annotata OQ-012. Nessun nuovo ADR
+in `DECISIONS.md`.
+
 ## Novità v0.60
 
 Aggiunta in §4.3.5 una proposta provvisoria e non vincolante sulla

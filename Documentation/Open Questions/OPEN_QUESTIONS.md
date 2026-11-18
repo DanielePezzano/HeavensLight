@@ -83,6 +83,7 @@ modificati.
 | OQ-049 | Non assegnata | Ricerca e sviluppo | Riconversione dei laboratori planetari | Aperta | Da valutare | §6.8 |
 | OQ-050 | Non assegnata | Ricerca e sviluppo | Trasferimento dei progetti di ricerca | Aperta | Da valutare | §6.8 |
 | OQ-051 | Non assegnata | Ricerca e sviluppo | Bonus di ricerca in nave e modello generale dei PR | Aperta | Da valutare | §7.12; §6.8 |
+| OQ-052 | Non assegnata | Economia e produzione | Quantità di input/output e bilanciamento economico delle ricette | Aperta | Da valutare | §4.3.5; OQ-001; OQ-012 |
 
 ## 3. Schede delle questioni
 
@@ -108,6 +109,8 @@ automaticamente in fase di migrazione.
 - **Granularità dei materiali (approvata il 17 novembre 2026):** le sette famiglie di §4.3.4 restano aggregate per impostazione predefinita; materiali individuali solo dove hanno conseguenze strategiche, tecnologiche, produttive o logistiche (approccio misto già confermato in §4.3). Gli esempi di materiali individuali in §4.3.4 sono illustrativi: tre indicati dall'utente, sette proposti e non approvati. Restano aperti: elenco definitivo dei materiali individuali; ricette, quantità e tempi; fonti di approvvigionamento (ad esempio per Vanadium-234 e cellule animali; eventuale relazione con OQ-002, OQ-003, OQ-004 da valutare); effetti meccanici dei materiali; specie animale delle cellule; il resto del catalogo.
 - **Descrizione illustrativa delle famiglie (approvata il 17 novembre 2026):** approvata una descrizione narrativa e non vincolante di che cosa comprende ciascuna famiglia (GDD §4.3.4). Non è una regola meccanica: in gioco resta un solo materiale aggregato per famiglia; i materiali citati non diventano risorse distinte né hanno ricette, valori o stock propri. Restano aperti: ricette, quantità e tempi; fonti di approvvigionamento; effetti meccanici; elenco definitivo dei materiali individuali; il resto del catalogo.
 - **Struttura degli input di raffinazione (proposta provvisoria approvata il 18 novembre 2026):** integrata in GDD §4.3.5 come proposta provvisoria, non decisione definitiva (Raffineria; 2–4 input; un output principale; solo tipi di input). Metalli strutturali: Minerali, Energia. Metalli rari: Minerali, Materiali avanzati, Energia. Combustibili raffinati: Carburante, Energia. Biomateriali: Cibo, Energia. Composti chimici: Minerali, Carburante, Energia. Cristalli e semiconduttori: Minerali, Materiali avanzati, Energia. Materiali energetici: Carburante, Materiali avanzati, Energia. Le prime quattro seguono le derivazioni di §4.3.4; le ultime tre sono ipotesi di lavoro approvate come provvisorie. Relazione con OQ-004: da valutare. Restano aperti: quantità, tempi, LR, tecnologie richieste, eventuali sottoprodotti per ricetta, ricette di livello superiore (componenti, assemblaggi), fonti dei materiali individuali; il resto del catalogo.
+- **Struttura degli input dei componenti (proposta provvisoria approvata il 18 novembre 2026):** integrata in GDD §4.3.5 (v0.61) come proposta provvisoria, non decisione definitiva (Fabbrica di componenti; 2–4 input; un output principale; solo famiglie di input). Strutturali: Metalli strutturali, Composti chimici. Propulsione: Metalli strutturali, Materiali energetici, Metalli rari. Le due categorie sono già nell'esempio illustrativo di §4.3.5. Energia: Materiali energetici, Cristalli e semiconduttori, Metalli strutturali. Elettronica e sensori: Cristalli e semiconduttori, Metalli rari, Composti chimici. Armamenti: Metalli strutturali, Materiali energetici, Metalli rari. Supporto vitale: Biomateriali, Composti chimici, Metalli strutturali. Le ultime quattro sono ipotesi di lavoro dell'assistente approvate come provvisorie.
+- **Criterio di chiusura (approvato il 18 novembre 2026):** OQ-001 si chiuderà quando il catalogo avrà la struttura completa, cioè l'elenco di tutte le ricette con input e output per tipo. Quantità di input/output e bilanciamento economico passano a OQ-052; i valori di LR per ricetta a OQ-012. Restano aperti in OQ-001: ricette degli assemblaggi (navi, strutture, prodotti finiti), eventuali sottoprodotti per ricetta, tecnologie richieste, fonti dei materiali individuali ed elenco definitivo dei materiali individuali; la struttura delle ricette già coperte resta provvisoria. Le precedenti indicazioni "restano aperti" su quantità, tempi e LR vanno lette alla luce di questo criterio.
 
 ### OQ-002 — Depositi naturali e distribuzione delle risorse
 
@@ -264,6 +267,7 @@ automaticamente in fase di migrazione.
 - **Preparazione dell’analisi:** assistente.
 - **Proposta corrente:** nessuna proposta approvata. Eventuali valori o modelli già presenti nel GDD sono indicati come provvisori e non diventano automaticamente decisioni.
 - **Riferimenti:** §4.3.6; §4.4.
+- **Nota (18 novembre 2026):** i valori di LR per ricetta sono tracciati in questa questione e non più in OQ-001 (vedi criterio di chiusura di OQ-001). Nessuna priorità o dipendenza assegnata.
 
 ### OQ-013 — Modelli produttivi, priorità e spareggi
 
@@ -811,7 +815,19 @@ automaticamente in fase di migrazione.
 - **Proposta corrente:** nessuna proposta approvata. Eventuali valori o modelli già presenti nel GDD sono indicati come provvisori e non diventano automaticamente decisioni.
 - **Riferimenti:** §7.12; §6.8.
 
-## 4. Questioni risolte e archivio
+### OQ-052 — Quantità di input/output e bilanciamento economico delle ricette
+
+- **Area:** Economia e produzione.
+- **Stato:** Aperta.
+- **Priorità:** Non assegnata.
+- **Problema da affrontare:** Definire le quantità di input e output delle ricette e il bilanciamento economico del catalogo. Questo ambito è stato separato da OQ-001 con il nuovo criterio di chiusura approvato il 18 novembre 2026.
+- **Obiettivo:** definire una specifica verificabile e coerente con i sistemi già documentati.
+- **Cosa blocca:** da valutare nell’analisi; non ancora determinato.
+- **Dipendenze:** da valutare; nessun prerequisito viene assunto senza verifica.
+- **Responsabile della decisione:** utente.
+- **Preparazione dell’analisi:** assistente.
+- **Proposta corrente:** nessuna proposta approvata. Le quantità presenti negli esempi del GDD sono segnaposto e non costituiscono decisioni.
+- **Riferimenti:** §4.3.5; OQ-001; OQ-012.
 
 Le questioni risolte saranno trasferite qui dopo l’approvazione e
 l’integrazione documentale. Per ciascuna saranno mantenuti ID, decisione

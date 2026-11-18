@@ -1,7 +1,7 @@
 # Game Design Document — HeavensLight
 
 **Last updated:** 18 novembre 2026  
-**Versione:** 0.60  
+**Versione:** 0.61  
 **Stato:** documento di progettazione corrente
 
 Questo documento descrive il modello di gioco corrente. Le decisioni confermate, le proposte e le questioni aperte sono indicate nelle sezioni pertinenti. Le questioni ancora aperte sono gestite in `OPEN_QUESTIONS.md`; la cronologia delle modifiche è mantenuta separatamente in `CHANGELOG.md`.
@@ -1007,9 +1007,32 @@ quantità, tempi, LR, tecnologie richieste né sottoprodotti.
 | Cristalli e semiconduttori | Minerali, Materiali avanzati, Energia | Ipotesi di lavoro, approvata come provvisoria |
 | Materiali energetici | Carburante, Materiali avanzati, Energia | Ipotesi di lavoro, approvata come provvisoria |
 
-Restano da definire (OQ-001): quantità, tempi, LR, tecnologie
-richieste, eventuali sottoprodotti per ricetta, ricette di livello
-superiore (componenti e assemblaggi) e fonti dei materiali individuali.
+Restano da definire: tecnologie richieste, eventuali sottoprodotti per
+ricetta, ricette di livello superiore (assemblaggi) e fonti dei
+materiali individuali (OQ-001). Quantità di input e output e
+bilanciamento economico delle ricette sono tracciati in OQ-052; i
+valori di LR per ricetta in OQ-012.
+
+**[PROPOSTA PROVVISORIA, NON VINCOLANTE: OQ-001]** Struttura degli input
+delle ricette dei componenti. Le ricette dei componenti sono prodotte
+nella Fabbrica di componenti, hanno da 2 a 4 input e un output
+principale. La tabella indica soltanto le famiglie di input per
+categoria funzionale: non definisce quantità, tempi, LR, tecnologie
+richieste né sottoprodotti.
+
+| Categoria funzionale (output principale) | Famiglie di input | Provenienza |
+|---|---|---|
+| Strutturali | Metalli strutturali, Composti chimici | Già nell'esempio illustrativo di §4.3.5 |
+| Propulsione | Metalli strutturali, Materiali energetici, Metalli rari | Già nell'esempio illustrativo di §4.3.5 |
+| Energia | Materiali energetici, Cristalli e semiconduttori, Metalli strutturali | Ipotesi di lavoro dell'assistente, approvata come provvisoria |
+| Elettronica e sensori | Cristalli e semiconduttori, Metalli rari, Composti chimici | Ipotesi di lavoro dell'assistente, approvata come provvisoria |
+| Armamenti | Metalli strutturali, Materiali energetici, Metalli rari | Ipotesi di lavoro dell'assistente, approvata come provvisoria |
+| Supporto vitale | Biomateriali, Composti chimici, Metalli strutturali | Ipotesi di lavoro dell'assistente, approvata come provvisoria |
+
+Restano da definire (OQ-001): ricette degli assemblaggi (navi,
+strutture e prodotti finiti), eventuali sottoprodotti per ricetta e
+tecnologie richieste. Quantità, tempi e LR non fanno parte di OQ-001
+(OQ-052; OQ-012).
 
 **Tipi di lavorazione**
 
