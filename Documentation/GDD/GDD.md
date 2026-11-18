@@ -1,7 +1,7 @@
 # Game Design Document — HeavensLight
 
-**Last updated:** 17 novembre 2026  
-**Versione:** 0.59  
+**Last updated:** 18 novembre 2026  
+**Versione:** 0.60  
 **Stato:** documento di progettazione corrente
 
 Questo documento descrive il modello di gioco corrente. Le decisioni confermate, le proposte e le questioni aperte sono indicate nelle sezioni pertinenti. Le questioni ancora aperte sono gestite in `OPEN_QUESTIONS.md`; la cronologia delle modifiche è mantenuta separatamente in `CHANGELOG.md`.
@@ -990,6 +990,26 @@ scelte; non tutte le ricette li hanno. Il formato base resta di 2–4
 input e un output principale. Restano da definire (OQ-001): quali
 ricette prevedono sottoprodotti, le regole di stoccaggio, smaltimento e
 volume, la tipologia e la trasportabilità dei sottoprodotti.
+
+**[PROPOSTA PROVVISORIA, NON VINCOLANTE: OQ-001]** Struttura degli input
+delle ricette di raffinazione. Le ricette di raffinazione sono prodotte
+nella Raffineria, hanno da 2 a 4 input e un output principale. La
+tabella indica soltanto i tipi di input per famiglia: non definisce
+quantità, tempi, LR, tecnologie richieste né sottoprodotti.
+
+| Famiglia (output principale) | Tipi di input | Provenienza |
+|---|---|---|
+| Metalli strutturali | Minerali, Energia | Derivazione già indicata in §4.3.4 |
+| Metalli rari | Minerali, Materiali avanzati, Energia | Derivazione già indicata in §4.3.4 |
+| Combustibili raffinati | Carburante, Energia | Derivazione già indicata in §4.3.4 |
+| Biomateriali | Cibo, Energia | Derivazione già indicata in §4.3.4 |
+| Composti chimici | Minerali, Carburante, Energia | Ipotesi di lavoro, approvata come provvisoria |
+| Cristalli e semiconduttori | Minerali, Materiali avanzati, Energia | Ipotesi di lavoro, approvata come provvisoria |
+| Materiali energetici | Carburante, Materiali avanzati, Energia | Ipotesi di lavoro, approvata come provvisoria |
+
+Restano da definire (OQ-001): quantità, tempi, LR, tecnologie
+richieste, eventuali sottoprodotti per ricetta, ricette di livello
+superiore (componenti e assemblaggi) e fonti dei materiali individuali.
 
 **Tipi di lavorazione**
 

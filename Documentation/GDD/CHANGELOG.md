@@ -2,6 +2,20 @@
 
 Cronologia delle modifiche al documento di game design. Le voci sono riportate dalle versioni precedenti e ordinate dalla più recente alla più vecchia.
 
+## Novità v0.60
+
+Aggiunta in §4.3.5 una proposta provvisoria e non vincolante sulla
+struttura degli input delle ricette di raffinazione (Raffineria, 2–4
+input, un output principale), con i soli tipi di input per ciascuna
+delle sette famiglie. Quattro famiglie seguono le derivazioni già
+indicate in §4.3.4; Composti chimici, Cristalli e semiconduttori e
+Materiali energetici sono ipotesi di lavoro approvate come provvisorie.
+Quantità, tempi, LR, tecnologie, sottoprodotti per ricetta, ricette di
+livello superiore e fonti dei materiali restano da definire. Aggiornata
+l'indicazione della versione corrente (0.60) nell'intestazione del GDD.
+Annotate in `OPEN_QUESTIONS.md` le schede OQ-001, che resta aperta, e
+OQ-004. Nessun nuovo ADR in `DECISIONS.md`.
+
 ## Novità v0.59
 
 Aggiunta in §4.3.4 una descrizione illustrativa e non vincolante di che
