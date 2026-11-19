@@ -307,3 +307,167 @@ perdita automatica delle altre navi.
 
 OQ-055 — comportamento in caso di distacco volontario, trasferimento o
 sostituzione dell'ammiraglia.
+
+---
+
+## ADR-007 — Gestione temporale della conoscenza e osservazione mediante sonde
+
+- **Data:** 2026-11-18
+- **Stato:** Confermata
+- **Ambito:** Intelligence, osservazione e aggiornamento simulativo dei sistemi
+- **Riferimenti GDD:** §1.3; §3.6.2; §5.13
+- **Decisione collegata:** estende il modello generale definito in ADR-005.
+
+### Contesto
+
+ADR-005 ha stabilito la distinzione tra stato reale del mondo e
+conoscenza posseduta da ciascun impero, ma lasciava da definire il
+comportamento temporale dei singoli dati, il modo in cui le osservazioni
+vengono acquisite e aggiornate e il rapporto tra sonde, attività dei
+sistemi e aggiornamento delle posizioni dei corpi celesti.
+
+### Decisione
+
+La conoscenza di un impero conserva le informazioni acquisite anche
+quando non sono più attuali. Il trascorrere del tempo non cancella
+automaticamente un dato. Le informazioni sono gestite per singolo
+attributo e ciascun attributo mantiene un valore conosciuto, un livello
+di dettaglio, una data di osservazione e una data di acquisizione.
+
+La data di osservazione indica quando il dato è stato effettivamente
+rilevato e determina la sua età; la data di acquisizione indica quando
+è entrato nella conoscenza dell'impero. Un rapporto ricevuto in ritardo
+non rende recente l'osservazione originaria.
+
+Si distinguono tre comportamenti informativi:
+
+- **Statico:** il dato non perde attualità per il solo trascorrere del
+tempo; cambia nella conoscenza dell'impero soltanto a seguito di una
+nuova osservazione del cambiamento reale.
+- **Dinamico a variazione continua:** il valore reale varia nel tempo;
+la conoscenza conserva il valore osservato, senza estrapolare
+automaticamente un valore attuale.
+- **Dinamico a variazione discreta:** il valore cambia in seguito a
+eventi; un cambiamento non osservato non aggiorna la conoscenza.
+
+Per ogni attributo viene conservato un solo valore conosciuto corrente.
+Una nuova osservazione lo sostituisce soltanto se ha una data di
+osservazione più recente e aggiorna esclusivamente gli attributi
+realmente rilevati. Il criterio per osservazioni discordanti con la
+stessa data resta aperto.
+
+Il sistema non assegna punteggi di affidabilità alle fonti e non
+classifica automaticamente la freschezza in stati discreti. Il
+riferimento temporale è esposto tramite la data di osservazione e la
+valutazione dell'attualità è lasciata al giocatore. La prima versione
+non genera stime o estrapolazioni di valori attuali; tale capacità è
+rinviata a uno sviluppo futuro.
+
+Le sonde hanno una portata distinta dal livello di intelligence. La
+portata e il dettaglio informativo sono capacità indipendenti e possono
+essere sviluppati separatamente. La copertura è una sfera 3D quando la
+sonda opera all'interno di un sistema stellare e un cerchio 2D sul piano
+galattico quando viaggia tra sistemi; durante il viaggio il cerchio è
+centrato sulla posizione corrente della sonda e si muove con essa.
+
+Una sonda in movimento osserva le aree attraversate, senza continuare ad
+aggiornare le aree lasciate alle spalle. Una sonda stazionaria continua
+a osservare la propria area di copertura. Alla distruzione della sonda,
+le informazioni raccolte sono conservate con la data dell'ultima
+osservazione. Per i dati dinamici, il tempo trascorso permette al
+giocatore di valutarne l'attualità; i valori a variazione continua
+possono diventare progressivamente meno rappresentativi, mentre quelli
+a variazione discreta possono non riflettere eventi non osservati.
+Nessun dato viene cancellato automaticamente.
+
+L'attività di un sistema è uno stato operativo distinto dalla sua
+conoscenza da parte degli imperi. Un sistema è attivo in presenza di
+almeno una nave, struttura/installazione o colonia di proprietà di un
+impero giocante, oppure quando ricade entro il raggio operativo di una
+sonda appartenente a un impero giocante. L'attività governa
+l'aggiornamento mensile delle posizioni dei corpi celesti: nei sistemi
+inattivi il calcolo è differito e viene recuperato dal riferimento
+temporale conservato quando il sistema torna attivo o diventa oggetto
+di un'azione. Le posizioni dei sistemi stellari sulla mappa galattica
+sono aggiornate mensilmente.
+
+### Conseguenze
+
+- Il valore conosciuto di un attributo non coincide necessariamente con
+  il suo valore reale corrente; il dato conserva la propria data di
+  osservazione.
+- Un aggiornamento parziale non rinnova la data di attributi che la
+  nuova osservazione non ha effettivamente rilevato.
+- La ricezione di un rapporto e il momento dell'osservazione restano
+  distinguibili.
+- L'attività simulativa non deve essere usata come indicatore di
+  scoperta o come canale implicito di divulgazione delle informazioni.
+- Il differimento degli aggiornamenti locali è un'ottimizzazione del
+  calcolo e non modifica il comportamento temporale del modello.
+
+### Aspetti ancora da definire
+
+Restano aperte le soglie di rilevamento per categoria informativa, le
+regole di condivisione tra alleati, la frequenza precisa delle
+osservazioni delle sonde stazionarie, gli attributi rilevabili dalle
+diverse capacità di sensori e il trattamento di osservazioni
+conflittuali con la stessa data. Questi aspetti sono tracciati in
+OQ-054.
+
+
+
+---
+
+## ADR-008 — Entità radice `World` e avanzamento temporale
+
+- **Data:** 2026-11-19
+- **Stato:** Confermata
+- **Ambito:** Modello del mondo e tempo di simulazione
+- **Riferimento GDD:** §1.2.1; §2.1
+
+### Contesto
+
+La definizione dell'entità radice dell'universo simulato richiede di
+distinguere lo stato del mondo dall'orchestrazione della partita e di
+stabilire chi possiede il tempo di simulazione e come viene richiesto
+un suo avanzamento. È inoltre necessario garantire che il mondo non
+esponga come definitivo uno stato aggiornato soltanto in parte.
+
+### Decisione
+
+`World` rappresenta esclusivamente l'universo simulato ed è il
+contenitore autorevole del suo stato. Comprende la struttura galattica,
+tutti gli imperi esistenti e le entità che popolano l'universo. Le
+relazioni tra queste entità non sono ricondotte necessariamente a una
+gerarchia rigida: proprietà, controllo, appartenenza, utilizzo e
+posizione restano relazioni distinte.
+
+`World` possiede il tempo della simulazione, espresso in tick assoluti
+interi. Il contesto della partita mantiene invece la responsabilità di
+giocatori, turni, fasi di pianificazione e sincronizzazione; decide
+quando richiedere l'avanzamento, senza trasferire a `World` la gestione
+del ciclo della partita.
+
+L'avanzamento utilizza un istante assoluto di destinazione, secondo
+l'interfaccia concettuale `World.advanceTo(targetTick)`. `World`
+determina l'intervallo da elaborare a partire dal proprio tempo
+corrente e rifiuta una destinazione precedente.
+
+L'avanzamento deve rispettare atomicità logica e coerenza temporale: gli
+stati intermedi non sono esposti come stati autorevoli definitivi; il
+tempo di `World` viene aggiornato soltanto al completamento di tutti
+gli aggiornamenti previsti; un errore o un'interruzione non deve
+lasciare `World` in uno stato autorevole parzialmente aggiornato.
+L'implementazione può usare più fasi di elaborazione, purché garantisca
+queste proprietà.
+
+### Conseguenze
+
+- Il tempo di simulazione appartiene a `World`; il tempo e il flusso dei
+  turni appartengono al contesto della partita.
+- Il chiamante specifica un istante assoluto, evitando ambiguità tra
+  data di destinazione e durata relativa.
+- Il modello deve impedire l'esposizione di stati intermedi come stato
+  autorevole definitivo.
+- I dettagli tecnici di staging, commit, recupero e persistenza
+  dell'avanzamento non sono definiti da questa decisione.

@@ -1,82 +1,18 @@
 # Changelog — HeavensLight
 
-
-## Novità v0.62
-
-Integrato nel GDD il primo modello consolidato delle entità territoriali,
-demografiche e orbitali. Distinte le relazioni di proprietà, utilizzo e
-controllo; confermato l'utilizzo esclusivo di ciascun pianeta da parte di
-un solo impero, con sistemi stellari e rotte condivisibili. Introdotti i
-gruppi demografici autonomi, gli attributi di origine e affiliazione, la
-distinzione tra popolazioni autoctone, insediamenti neutrali e corpi
-celesti disabitati, gli slot di sviluppo planetario e le quattro
-categorie di installazioni orbitali. Precisato il modello informativo
-con stato reale unico, conoscenza distinta per impero e scala generale
-di intelligence 0–4. Aggiornata la regola delle flotte: le navi possono
-esistere indipendentemente e la perdita dell'ammiraglia dissolve la
-flotta. Registrate le decisioni in ADR-004, ADR-005 e ADR-006; aggiornato
-il registro sintetico del GDD. In `OPEN_QUESTIONS.md`, aggiornata OQ-028
-e aggiunte OQ-052–OQ-056 per i dettagli operativi ancora da definire.
-
 Cronologia delle modifiche al documento di game design. Le voci sono riportate dalle versioni precedenti e ordinate dalla più recente alla più vecchia.
 
-## Novità v0.61
+## Novità v0.64
 
-Aggiunta in §4.3.5 una proposta provvisoria e non vincolante sulla
-struttura degli input delle ricette dei componenti (Fabbrica di
-componenti, 2–4 input, un output principale), con le sole famiglie di
-input per ciascuna delle sei categorie funzionali. Strutturali e
-Propulsione corrispondono agli esempi illustrativi già presenti in
-§4.3.5; Energia, Elettronica e sensori, Armamenti e Supporto vitale sono
-ipotesi di lavoro dell'assistente approvate come provvisorie. Aggiornato
-l'elenco di ciò che resta da definire: ricette degli assemblaggi,
-eventuali sottoprodotti per ricetta, tecnologie richieste e fonti dei
-materiali individuali restano in OQ-001; quantità, tempi e bilanciamento
-passano a OQ-052, i valori di LR a OQ-012. Aggiornata l'indicazione
-della versione corrente (0.61) nell'intestazione del GDD. In
-`OPEN_QUESTIONS.md`: aggiornata la scheda OQ-001 (che resta aperta) con
-il criterio di chiusura approvato (struttura completa del catalogo),
-aggiunta la nuova questione OQ-052 e annotata OQ-012. Nessun nuovo ADR
-in `DECISIONS.md`.
+Definita in §1.2.1 l'entità radice `World` come contenitore autorevole
+dell'universo simulato, separandola dal contesto della partita.
+Attribuito a `World` il possesso del tempo di simulazione e adottata
+l'interfaccia concettuale `World.advanceTo(targetTick)`, basata su un
+istante assoluto in tick; le destinazioni precedenti al tempo corrente
+sono rifiutate. Confermato il requisito di atomicità logica e coerenza
+temporale dell'avanzamento. Registrata la decisione in ADR-008 e
+aggiornato il registro sintetico delle decisioni nel GDD.
 
-## Novità v0.60
-
-Aggiunta in §4.3.5 una proposta provvisoria e non vincolante sulla
-struttura degli input delle ricette di raffinazione (Raffineria, 2–4
-input, un output principale), con i soli tipi di input per ciascuna
-delle sette famiglie. Quattro famiglie seguono le derivazioni già
-indicate in §4.3.4; Composti chimici, Cristalli e semiconduttori e
-Materiali energetici sono ipotesi di lavoro approvate come provvisorie.
-Quantità, tempi, LR, tecnologie, sottoprodotti per ricetta, ricette di
-livello superiore e fonti dei materiali restano da definire. Aggiornata
-l'indicazione della versione corrente (0.60) nell'intestazione del GDD.
-Annotate in `OPEN_QUESTIONS.md` le schede OQ-001, che resta aperta, e
-OQ-004. Nessun nuovo ADR in `DECISIONS.md`.
-
-## Novità v0.59
-
-Aggiunta in §4.3.4 una descrizione illustrativa e non vincolante di che
-cosa comprende ciascuna delle sette famiglie di materiali raffinati
-(approvata dall'utente come elenco narrativo): in gioco resta un solo
-materiale aggregato per famiglia e i materiali citati non diventano
-risorse distinte né hanno ricette, valori o stock propri. Tabella delle
-famiglie e dieci esempi individuali invariati. Aggiornata l'indicazione
-della versione corrente (0.59) nell'intestazione del GDD. Annotata in
-`OPEN_QUESTIONS.md` la scheda OQ-001, che resta aperta. Nessun nuovo ADR
-in `DECISIONS.md`.
-
-## Novità v0.58
-
-Esplicitato in §4.3.4 che le sette famiglie di materiali raffinati
-restano aggregate per impostazione predefinita e che i materiali
-individuali sono eccezioni limitate ai casi con conseguenze strategiche,
-tecnologiche, produttive o logistiche (approccio misto già confermato in
-§4.3). Aggiunta una tabella di dieci materiali individuali a titolo di
-esempio illustrativo (tre indicati dall'utente, sette proposti e non
-approvati), senza regole, valori o ricette. Aggiornata l'indicazione
-della versione corrente (0.58) nell'intestazione del GDD. Annotata in
-`OPEN_QUESTIONS.md` la scheda OQ-001, che resta aperta. Nessun nuovo ADR
-in `DECISIONS.md`.
 
 ## Novità v0.57
 

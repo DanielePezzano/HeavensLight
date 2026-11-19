@@ -1,7 +1,7 @@
 # Game Design Document — HeavensLight
 
-**Last updated:** 18 novembre 2026  
-**Versione:** 0.62  
+**Last updated:** 19 novembre 2026  
+**Versione:** 0.64  
 **Stato:** documento di progettazione corrente
 
 Questo documento descrive il modello di gioco corrente. Le decisioni confermate, le proposte e le questioni aperte sono indicate nelle sezioni pertinenti. Le questioni ancora aperte sono gestite in `OPEN_QUESTIONS.md`; la cronologia delle modifiche è mantenuta separatamente in `CHANGELOG.md`.
@@ -52,6 +52,43 @@ e non una semplice replica di altri titoli del genere.
     mondo a inizio anno N, coda persistente a inizio anno N, seed della
     partita. È riproducibile bit-per-bit.
 
+### 1.2.1 Entità radice `World` e avanzamento della simulazione
+
+`World` rappresenta esclusivamente l'universo simulato. È il contenitore
+autorevole dello stato dell'universo e comprende la struttura galattica
+(`Galaxy`), tutti gli imperi esistenti (`Empires`) e le entità che
+popolano l'universo, tra cui sistemi stellari, corpi celesti, navi,
+flotte, colonie, popolazioni e installazioni. L'appartenenza a `World`
+non implica necessariamente una gerarchia rigida di contenimento: le
+relazioni di proprietà, controllo, appartenenza, utilizzo e posizione
+restano concetti distinti.
+
+`World` possiede il riferimento temporale della simulazione, espresso
+in tick assoluti interi secondo §2.1. Non gestisce giocatori, turni,
+fasi di pianificazione o sincronizzazione multiplayer: questi aspetti
+appartengono al contesto della partita. Quest'ultimo decide quando
+richiedere un avanzamento; `World` esegue gli aggiornamenti necessari
+per raggiungere l'istante richiesto.
+
+L'interfaccia concettuale di avanzamento è basata su un istante assoluto
+di destinazione:
+
+`World.advanceTo(targetTick)`
+
+`targetTick` identifica l'istante che `World` deve raggiungere. `World`
+determina l'intervallo da elaborare a partire dal proprio tempo
+corrente. Una destinazione precedente al tempo corrente viene
+rifiutata.
+
+L'avanzamento rispetta un requisito di **atomicità logica e coerenza
+temporale**: gli stati intermedi di elaborazione non sono esposti come
+stati autorevoli definitivi; il riferimento temporale di `World` viene
+aggiornato soltanto quando tutti gli aggiornamenti previsti sono
+completati. In caso di errore o interruzione, `World` non deve restare
+in uno stato autorevole parzialmente aggiornato. L'implementazione può
+articolare l'elaborazione in più fasi, purché garantisca questo
+comportamento.
+
 ### 1.3 Informazioni e intelligence
 
 La segretezza delle mosse avversarie è una regola generale, ma non
@@ -66,24 +103,25 @@ non attraversa mai il confine di rete in multiplayer.
 
 Il modello informativo distingue lo **stato reale del mondo** dalla
 conoscenza posseduta da ciascun impero. Le entità del mondo esistono una
-sola volta nello stato autorevole; l'intelligence determina quali loro
-attributi sono conosciuti da ciascun osservatore e con quale livello di
-dettaglio. La conoscenza osservata può essere conservata con la relativa
-riferibilità temporale, così da distinguere un dato aggiornato da
-un'informazione non più verificata.
+sola volta nello stato autorevole; ogni impero mantiene una propria
+rappresentazione delle informazioni effettivamente acquisite, filtrata
+dalle capacità di osservazione e intelligence. L'attività del sistema
+di simulazione e la conoscenza del sistema da parte dell'impero sono
+concetti distinti: l'aggiornamento interno del mondo non rende
+automaticamente note le informazioni al giocatore.
 
 Le informazioni ottenibili riguardano almeno:
 
 - **Rotte utilizzate da altri imperi**, alleati o avversari: l'intelligence
-aumenta il dettaglio sulle attività rilevate.
+  aumenta il dettaglio sulle attività rilevate.
 - **Composizione delle flotte**: il livello di intelligence determina
-quali dettagli delle navi e dei loro armamenti sono visibili.
+  quali dettagli delle navi e dei loro armamenti sono visibili.
 - **Stato delle colonie nemiche**: le informazioni sulle colonie nemiche
-richiedono capacità di intelligence; le regole di condivisione delle
-informazioni tra alleati restano da precisare.
+  richiedono capacità di intelligence; le regole di condivisione delle
+  informazioni tra alleati restano da precisare.
 - **Tecnologie** degli altri imperi.
 - **Posizione e funzione delle installazioni**: il dettaglio conosciuto
-dipende dal livello di intelligence.
+  dipende dal livello di intelligence.
 
 Scala generale di riferimento:
 
@@ -96,10 +134,105 @@ Scala generale di riferimento:
 | 4 | Dettaglio approfondito, per esempio armamenti e componenti |
 
 La scala è un riferimento comune, non una soglia uniforme: i requisiti
-specifici possono variare in base alla categoria informativa. Le soglie
-per ciascuna categoria e le regole di aggiornamento/decadimento delle
-informazioni sono tracciate in `OPEN_QUESTIONS.md` (OQ-054).
+specifici possono variare in base alla categoria informativa.
 
+#### 1.3.1 Struttura temporale delle informazioni conosciute
+
+La conoscenza di un impero conserva i dati acquisiti anche quando non
+sono più attuali. Il trascorrere del tempo, da solo, non cancella un dato né ne modifica
+il valore registrato. Per le informazioni dinamiche, l'età
+dell'osservazione permette al giocatore di valutarne l'attualità: nei
+dati a variazione continua il valore osservato può diventare
+progressivamente meno rappresentativo; nei dati a variazione discreta
+il valore resta quello osservato finché una nuova osservazione non
+rileva un evento che lo ha modificato. Le informazioni statiche non
+perdono attualità per il solo trascorrere del tempo.
+
+Ogni informazione è gestita al livello del singolo **attributo** e
+mantiene separatamente:
+
+- il valore conosciuto;
+- il livello di dettaglio acquisito;
+- la **data di osservazione**, cioè quando il dato è stato effettivamente
+  rilevato dalla fonte;
+- la **data di acquisizione**, cioè quando il dato è entrato nella
+  conoscenza dell'impero.
+
+La data di osservazione determina l'età dell'informazione. La data di
+acquisizione registra quando l'impero ne è venuto a conoscenza: la
+ricezione ritardata di un rapporto non rende recente un'osservazione
+avvenuta in precedenza.
+
+Le informazioni sono distinte, ai fini del loro comportamento, in:
+
+- **Statiche:** il dato non perde attualità per il solo trascorrere del
+tempo. Può cambiare soltanto se cambia la caratteristica reale; se il
+cambiamento non viene osservato, la conoscenza dell'impero conserva il
+valore precedente.
+- **Dinamiche a variazione continua:** il valore reale può variare
+continuamente nel tempo, come una posizione orbitale o la posizione di
+una flotta. La conoscenza conserva il valore osservato e la relativa
+data, senza estrapolare automaticamente una posizione attuale.
+- **Dinamiche a variazione discreta:** il valore resta invariato fino a
+un evento che lo modifica, come un cambio di proprietà, composizione,
+controllo, popolazione o stato di un'installazione. Un cambiamento non
+osservato non aggiorna la conoscenza dell'impero.
+
+Ogni attributo conserva un solo valore conosciuto corrente. Una nuova
+osservazione sostituisce il valore precedente soltanto se la sua data di
+osservazione è più recente. L'aggiornamento riguarda esclusivamente gli
+attributi effettivamente rilevati: un'osservazione che aggiorna la
+presenza di una flotta, ma non ne rileva la composizione, non rinnova la
+data del dato relativo alla composizione. La gestione di osservazioni
+con date uguali e valori discordanti resta da definire.
+
+Il modello non assegna un punteggio di affidabilità alle fonti e non
+classifica automaticamente le informazioni in stati discreti di
+freschezza. Il giocatore valuta l'attualità del dato sulla base della
+data di osservazione. Nella prima versione non vengono prodotti valori
+stimati o posizioni attuali estrapolate da osservazioni precedenti; tale
+funzionalità è rinviata a uno sviluppo futuro.
+
+#### 1.3.2 Osservazione mediante sonde
+
+Le sonde rilevano informazioni entro un raggio che dipende dal tipo di
+sonda e dalle tecnologie sviluppate. **Portata** e **livello di
+intelligence** sono capacità indipendenti, sviluppate attraverso
+ricerche distinte: aumentare la portata non implica aumentare il
+dettaglio delle informazioni rilevate, e viceversa.
+
+La copertura dipende dalla modalità di operazione:
+
+- **All'interno di un sistema stellare:** il raggio di rilevamento è una
+  sfera tridimensionale.
+- **Durante il viaggio tra sistemi:** il raggio di rilevamento è un
+  cerchio bidimensionale sul piano galattico, centrato sulla posizione
+  corrente della sonda e quindi mobile insieme ad essa.
+
+Le prestazioni di rilevamento nelle due modalità possono essere
+sviluppate separatamente. Sono quindi distinte le capacità tecnologiche
+relative alla portata e all'intelligence in ambito locale/tridimensionale
+e quelle relative alla portata e all'intelligence in ambito galattico/
+bidimensionale.
+
+Una sonda in movimento osserva le aree attraversate; le informazioni
+acquisite restano nella conoscenza dell'impero con la data della
+rispettiva osservazione, ma le aree già lasciate alle spalle non
+continuano a essere aggiornate dalla sonda. Una sonda stazionaria
+continua invece a osservare la propria area di copertura. Se viene
+distrutta, le informazioni già raccolte sono conservate e la loro data
+di ultima osservazione resta quella dell'ultimo rilevamento, coincidente
+con il momento della distruzione. Da quel momento i dati restano conservati con la data dell'ultima
+osservazione. Per i dati dinamici, il tempo trascorso permette al
+giocatore di valutare l'attualità dell'informazione; i valori a
+variazione continua possono diventare progressivamente meno
+rappresentativi, mentre quelli a variazione discreta possono non
+riflettere eventi non osservati. Nessun dato viene cancellato
+automaticamente.
+
+La frequenza precisa delle osservazioni effettuate da una sonda
+stazionaria e le soglie di rilevamento per le singole categorie restano
+da definire (OQ-054).
 ### 1.4 Logistica militare
 
 La logistica deve avere un peso sostanziale. Le flotte non devono poter
@@ -721,6 +854,34 @@ abitabili o opportunità di colonizzazione.
 
 Gli stati non sono mutuamente esclusivi: un sistema può essere
 contemporaneamente esplorabile, colonizzabile e abitato.
+
+#### 3.6.2 Attività simulativa dei sistemi stellari
+
+L'**attività** di un sistema stellare è uno stato operativo del motore
+di simulazione e non una proprietà astronomica né un indicatore della
+conoscenza che un impero possiede del sistema.
+
+Un sistema è attivo se è soddisfatta almeno una delle seguenti
+condizioni:
+
+- è presente almeno una nave di proprietà di un impero giocante;
+- è presente almeno una struttura o installazione di proprietà di un
+  impero giocante;
+- è presente almeno una colonia appartenente a un impero giocante;
+- il sistema ricade entro il raggio operativo di una sonda appartenente
+  a un impero giocante.
+
+Quando nessuna di queste condizioni è soddisfatta, il sistema è
+inattivo. L'attività determina la frequenza con cui vengono aggiornate
+le posizioni dei corpi celesti al suo interno; non determina quali dati
+siano conosciuti da un impero.
+
+Un sistema può quindi essere attivo senza essere stato scoperto o senza
+che un impero ne conosca la composizione; viceversa, può essere noto a
+un impero e rimanere inattivo. L'attivazione dovuta alla copertura di
+una sonda non comporta di per sé che tutte le informazioni del sistema
+siano rilevate: la conoscenza dipende dalle capacità di osservazione e
+intelligence (§1.3).
 
 ### 3.7 Movimento e collegamenti tra sistemi
 
@@ -2313,6 +2474,33 @@ anche in caso di occupazione militare, conquista o cambiamento della
 situazione politica. Le modalità operative di trasferimento, perdita e
 contestazione di tali relazioni restano da definire (OQ-053).
 
+
+### 5.13 Posizioni e aggiornamento dei corpi celesti
+
+Le posizioni dei sistemi stellari nella galassia e quelle dei corpi
+celesti all'interno dei sistemi appartengono a due scale spaziali
+indipendenti. Le posizioni dei sistemi stellari sulla mappa galattica
+vengono aggiornate ogni mese durante la risoluzione del turno.
+
+Anche le posizioni dei corpi celesti all'interno dei sistemi seguono
+l'avanzamento mensile della simulazione, ma il ricalcolo è ottimizzato
+in base allo stato di attività del sistema (§3.6.2):
+
+- nei sistemi attivi, le posizioni dei corpi celesti vengono aggiornate
+  mensilmente;
+- nei sistemi inattivi, il motore conserva il riferimento temporale
+  dell'ultimo aggiornamento e differisce il ricalcolo;
+- quando un sistema inattivo diventa oggetto di un'azione o torna attivo,
+  le posizioni dei corpi celesti vengono calcolate dal riferimento
+  temporale conservato fino al tempo corrente della simulazione,
+  prima di risolvere le operazioni che ne dipendono.
+
+Il differimento del calcolo nei sistemi inattivi è un'ottimizzazione
+simulativa: non modifica le regole del moto né trasforma la posizione
+calcolata in un'informazione automaticamente conosciuta dagli imperi.
+La conoscenza delle posizioni resta regolata dall'osservazione e dal
+modello informativo (§1.3).
+
 ------------------------------------------------------------------------
 
 ## 6. Capitolo 5 --- Colonie e popolazione
@@ -3155,6 +3343,8 @@ incorporata nel GDD e registrata negli altri documenti pertinenti.
 |---|---|
 | Modello territoriale e demografico ([ADR-004](DECISIONS.md#adr-004--relazioni-territoriali-gruppi-demografici-e-infrastrutture-orbitali)) | Distinzione tra proprietà, utilizzo e controllo; pianeti a utilizzo esclusivo, sistemi e rotte condivisibili; gruppi demografici autonomi; slot di sviluppo planetario e categorie di installazioni orbitali (§5.12; §6.9–§6.11) |
 | Intelligence ([ADR-005](DECISIONS.md#adr-005--modello-delle-informazioni-e-dellintelligence)) | Stato reale unico e conoscenza per impero; categorie informative e scala generale di intelligence 0–4 (§1.3) |
+| Entità radice `World` e avanzamento temporale ([ADR-008](DECISIONS.md#adr-008--entità-radice-world-e-avanzamento-temporale)) | `World` contiene lo stato autorevole dell'universo, possiede il tempo di simulazione e avanza verso un tick assoluto tramite `advanceTo`; atomicità logica e coerenza temporale (§1.2.1) |
+| Gestione temporale della conoscenza e osservazione mediante sonde ([ADR-007](DECISIONS.md#adr-007--gestione-temporale-della-conoscenza-e-osservazione-mediante-sonde)) | Informazioni per attributo con date di osservazione/acquisizione; distinzione statiche/dinamiche; aggiornamento tramite sonde e separazione tra attività del sistema e conoscenza (§1.3; §3.6.2; §5.13) |
 | Navi e flotte ([ADR-006](DECISIONS.md#adr-006--autonomia-delle-navi-e-ammiraglia-della-flotta)) | Navi indipendenti o raggruppate in flotte; ogni flotta ha un'ammiraglia e si dissolve se questa viene perduta (§7.1) |
 | Organizzazione documentale | Quattro documenti canonici distinti: GDD, DECISIONS, CHANGELOG e OPEN_QUESTIONS (ADR-002) |
 | Sottoprodotti nelle ricette ([ADR-003](DECISIONS.md#adr-003--sottoprodotti-opzionali-nelle-ricette)) | Output principale più eventuali sottoprodotti, presenti solo in ricette specificamente scelte; non tutte le ricette li hanno; formato base invariato: 2–4 input e un output principale (§4.3.5) |
