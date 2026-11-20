@@ -2,6 +2,23 @@
 
 Cronologia delle modifiche al documento di game design. Le voci sono riportate dalle versioni precedenti e ordinate dalla più recente alla più vecchia.
 
+## Novità v0.65
+
+Aggiunta in §4.3.5 una proposta provvisoria e non vincolante sulla
+struttura degli input delle ricette degli assemblaggi (Cantiere/
+Assemblaggio), con i soli tipi di input. Precisato che le navi non hanno
+ricette fisse per classe ma derivano dal progetto (componenti scelti
+negli slot più scafo, §7.4; §7.5); nel catalogo restano cinque ricette di
+scafo, una per taglia. Strutture e prodotti finiti del Cantiere
+comprendono soltanto moduli di stazione orbitale e infrastrutture
+(impianti, avamposti). Tutte le ipotesi di input sono dell'assistente e
+approvate come provvisorie. Aggiornato l'elenco di ciò che resta da
+definire: eventuali sottoprodotti per ricetta, tecnologie richieste e
+verifica della completezza dell'elenco delle strutture. Aggiornata la
+versione (0.65) e la data nell'intestazione del GDD. In
+`OPEN_QUESTIONS.md`: aggiornata la scheda OQ-001, che resta aperta.
+Nessun nuovo ADR in `DECISIONS.md`.
+
 ## Novità v0.64
 
 Definita in §1.2.1 l'entità radice `World` come contenitore autorevole
