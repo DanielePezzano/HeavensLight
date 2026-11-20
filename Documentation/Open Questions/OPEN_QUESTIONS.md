@@ -107,8 +107,9 @@ automaticamente in fase di migrazione.
 - **Dipendenze:** da valutare; nessun prerequisito viene assunto senza verifica.
 - **Responsabile della decisione:** utente.
 - **Preparazione dell’analisi:** assistente.
-- **Proposta corrente:** nessuna proposta approvata. Eventuali valori o modelli già presenti nel GDD sono indicati come provvisori e non diventano automaticamente decisioni.
-- **Riferimenti:** §4.3–§4.4.
+- **Proposta corrente:** nessuna proposta approvata come decisione. In §4.3.5 sono presenti proposte provvisorie e non vincolanti sui tipi di input delle ricette di raffinazione, dei componenti e degli assemblaggi. Assemblaggi (v0.65): le navi non hanno ricette fisse per classe ma derivano dal progetto (componenti negli slot più scafo); nel catalogo restano cinque ricette di scafo, una per taglia; strutture e prodotti finiti del Cantiere comprendono solo moduli di stazione orbitale e infrastrutture (impianti, avamposti). Gli input di scafi, moduli e infrastrutture sono ipotesi dell'assistente approvate come provvisorie.
+- **Resta da definire:** eventuali sottoprodotti per ricetta, tecnologie richieste, verifica della completezza dell'elenco delle strutture, fonti dei materiali individuali. Quantità, tempi e bilanciamento sono in OQ-052; i valori di LR in OQ-012.
+- **Riferimenti:** §4.3–§4.4; §4.3.5.
 
 ### OQ-002 — Depositi naturali e distribuzione delle risorse
 

@@ -1,7 +1,7 @@
 # Game Design Document — HeavensLight
 
-**Last updated:** 19 novembre 2026  
-**Versione:** 0.64  
+**Last updated:** 20 novembre 2026  
+**Versione:** 0.65  
 **Stato:** documento di progettazione corrente
 
 Questo documento descrive il modello di gioco corrente. Le decisioni confermate, le proposte e le questioni aperte sono indicate nelle sezioni pertinenti. Le questioni ancora aperte sono gestite in `OPEN_QUESTIONS.md`; la cronologia delle modifiche è mantenuta separatamente in `CHANGELOG.md`.
@@ -1226,10 +1226,31 @@ richieste né sottoprodotti.
 | Armamenti | Metalli strutturali, Materiali energetici, Metalli rari | Ipotesi di lavoro dell'assistente, approvata come provvisoria |
 | Supporto vitale | Biomateriali, Composti chimici, Metalli strutturali | Ipotesi di lavoro dell'assistente, approvata come provvisoria |
 
-Restano da definire (OQ-001): ricette degli assemblaggi (navi,
-strutture e prodotti finiti), eventuali sottoprodotti per ricetta e
-tecnologie richieste. Quantità, tempi e LR non fanno parte di OQ-001
-(OQ-052; OQ-012).
+**[PROPOSTA PROVVISORIA, NON VINCOLANTE: OQ-001]** Struttura degli input
+delle ricette degli assemblaggi. Le ricette degli assemblaggi sono
+prodotte nel Cantiere/Assemblaggio. Le **navi non hanno ricette fisse
+per classe**: la ricetta di una nave è generata dal progetto, cioè dai
+componenti scelti negli slot più lo scafo (§7.4; §7.5). Nel catalogo
+restano quindi cinque ricette di scafo, una per taglia. Strutture e
+prodotti finiti del Cantiere comprendono soltanto i moduli di stazione
+orbitale e le infrastrutture (impianti, avamposti), senza altri prodotti
+finiti. La tabella indica soltanto i tipi di input: non definisce
+quantità, tempi, LR, tecnologie richieste né sottoprodotti.
+
+| Assemblaggio (output principale) | Tipi di input | Provenienza |
+|---|---|---|
+| Scafo Piccolo | Componenti strutturali, Metalli strutturali | Ipotesi di lavoro dell'assistente, approvata come provvisoria |
+| Scafo Medio | Componenti strutturali, Metalli strutturali | Ipotesi di lavoro dell'assistente, approvata come provvisoria |
+| Scafo Grande | Componenti strutturali, Metalli strutturali, Composti chimici | Ipotesi di lavoro dell'assistente, approvata come provvisoria |
+| Scafo Capitale | Componenti strutturali, Metalli strutturali, Composti chimici, Metalli rari | Ipotesi di lavoro dell'assistente, approvata come provvisoria |
+| Scafo Colosso | Componenti strutturali, Metalli strutturali, Composti chimici, Metalli rari | Ipotesi di lavoro dell'assistente, approvata come provvisoria |
+| Modulo di stazione orbitale | Componenti strutturali, Componenti di energia, Componenti di supporto vitale | Ipotesi di lavoro dell'assistente, approvata come provvisoria |
+| Infrastruttura (impianto o avamposto) | Componenti strutturali, Componenti di energia, Componenti di elettronica e sensori, Metalli strutturali | Ipotesi di lavoro dell'assistente, approvata come provvisoria |
+
+Restano da definire (OQ-001): eventuali sottoprodotti per ricetta,
+tecnologie richieste e verifica della completezza dell'elenco delle
+strutture. Quantità, tempi e LR non fanno parte di OQ-001 (OQ-052;
+OQ-012).
 
 **Tipi di lavorazione**
 
