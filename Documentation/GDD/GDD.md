@@ -1,7 +1,7 @@
 # Game Design Document — HeavensLight
 
 **Last updated:** 25 novembre 2026  
-**Versione:** 0.66  
+**Versione:** 0.67  
 **Stato:** documento di progettazione corrente
 
 Questo documento descrive il modello di gioco corrente. Le decisioni confermate, le proposte e le questioni aperte sono indicate nelle sezioni pertinenti. Le questioni ancora aperte sono gestite in `OPEN_QUESTIONS.md`; la cronologia delle modifiche è mantenuta separatamente in `CHANGELOG.md`.
@@ -1187,14 +1187,17 @@ scelte; non tutte le ricette li hanno. Il formato base resta di 2–4
 input e un output principale. Le ricette che prevedono sottoprodotti
 sono oggetto della proposta provvisoria riportata più sotto. Restano da
 definire (OQ-001): le regole di stoccaggio, smaltimento e volume, la
-trasportabilità dei sottoprodotti e le tecnologie richieste; la
+trasportabilità dei sottoprodotti e le tecnologie specifiche richieste
+(il solo livello tecnologico richiesto è nella proposta provvisoria
+dedicata, più sotto); la
 quantità dei sottoprodotti è tracciata in OQ-052.
 
 **[PROPOSTA PROVVISORIA, NON VINCOLANTE: OQ-001]** Struttura degli input
 delle ricette di raffinazione. Le ricette di raffinazione sono prodotte
 nella Raffineria, hanno da 2 a 4 input e un output principale. La
 tabella indica soltanto i tipi di input per famiglia: non definisce
-quantità, tempi, LR, tecnologie richieste; i sottoprodotti sono trattati
+quantità, tempi, LR, tecnologie richieste (il livello tecnologico è nella
+proposta provvisoria dedicata); i sottoprodotti sono trattati
 nella proposta provvisoria dedicata.
 
 | Famiglia (output principale) | Tipi di input | Provenienza |
@@ -1207,7 +1210,8 @@ nella proposta provvisoria dedicata.
 | Cristalli e semiconduttori | Minerali, Materiali avanzati, Energia | Ipotesi di lavoro, approvata come provvisoria |
 | Materiali energetici | Carburante, Materiali avanzati, Energia | Ipotesi di lavoro, approvata come provvisoria |
 
-Restano da definire: tecnologie richieste, regole di stoccaggio,
+Restano da definire: tecnologie specifiche richieste (per il livello
+tecnologico vedi la proposta provvisoria dedicata), regole di stoccaggio,
 smaltimento e volume e trasportabilità dei sottoprodotti, e fonti dei
 materiali individuali (OQ-001). Quantità di input e output e
 bilanciamento economico delle ricette sono tracciati in OQ-052; i
@@ -1221,7 +1225,7 @@ esistente (nessuna nuova risorsa) ed è previsto solo nelle ricette di
 raffinazione; i componenti e gli assemblaggi non hanno sottoprodotti. La
 tabella indica soltanto quali ricette prevedono un sottoprodotto e quale:
 non definisce quantità, regole di stoccaggio, smaltimento o volume,
-trasportabilità né tecnologie richieste.
+trasportabilità né tecnologie specifiche richieste.
 
 | Ricetta di raffinazione (output principale) | Sottoprodotto | Provenienza |
 |---|---|---|
@@ -1256,7 +1260,8 @@ restano quindi cinque ricette di scafo, una per taglia. Strutture e
 prodotti finiti del Cantiere comprendono soltanto i moduli di stazione
 orbitale e le infrastrutture (impianti, avamposti), senza altri prodotti
 finiti. La tabella indica soltanto i tipi di input: non definisce
-quantità, tempi, LR né tecnologie richieste; per gli assemblaggi non sono
+quantità, tempi, LR né tecnologie specifiche richieste (il livello
+tecnologico è nella proposta provvisoria dedicata); per gli assemblaggi non sono
 previsti sottoprodotti (proposta provvisoria sui sottoprodotti, sopra).
 
 | Assemblaggio (output principale) | Tipi di input | Provenienza |
@@ -1269,9 +1274,31 @@ previsti sottoprodotti (proposta provvisoria sui sottoprodotti, sopra).
 | Modulo di stazione orbitale | Componenti strutturali, Componenti di energia, Componenti di supporto vitale | Ipotesi di lavoro dell'assistente, approvata come provvisoria |
 | Infrastruttura (impianto o avamposto) | Componenti strutturali, Componenti di energia, Componenti di elettronica e sensori, Metalli strutturali | Ipotesi di lavoro dell'assistente, approvata come provvisoria |
 
-Restano da definire (OQ-001): tecnologie richieste e verifica della completezza dell'elenco delle
-strutture. Quantità, tempi e LR non fanno parte di OQ-001 (OQ-052;
-OQ-012).
+**[PROPOSTA PROVVISORIA, NON VINCOLANTE: OQ-001]** Livello tecnologico
+richiesto dalle ricette. Nel catalogo si fissa soltanto il **livello**
+tecnologico (L1–L5) richiesto da ogni ricetta, senza nominare tecnologie
+specifiche. La tabella non definisce la struttura dell'albero
+tecnologico e dei suoi rami, né quali tecnologie sbloccano ciascun
+livello, né quantità, tempi o LR. I livelli indicati come ipotesi sono
+dell'assistente, approvati come provvisori.
+
+| Ricetta (output principale) | Livello tecnologico richiesto | Provenienza |
+|---|---|---|
+| Raffinazione: Metalli strutturali, Combustibili raffinati, Biomateriali | L1 | Ipotesi di lavoro, approvata come provvisoria |
+| Raffinazione: Composti chimici, Metalli rari | L2 | Ipotesi di lavoro, approvata come provvisoria |
+| Raffinazione: Cristalli e semiconduttori, Materiali energetici | L3 | Ipotesi di lavoro, approvata come provvisoria |
+| Componenti (le 6 categorie funzionali) | Livello del componente prodotto (1–5): coincide con il livello tecnologico richiesto | Livelli dei componenti già in §7.5 |
+| Scafo Piccolo, Scafo Medio | L1 | Da §7.4 |
+| Scafo Grande | L2–L3 (provvisorio) | Da §7.4 |
+| Scafo Capitale | L4 | Da §7.4 |
+| Scafo Colosso | L5 | Da §7.4 |
+| Modulo di stazione orbitale | L2 | Ipotesi di lavoro, approvata come provvisoria |
+| Infrastruttura (impianto o avamposto) | L1 | Ipotesi di lavoro, approvata come provvisoria |
+
+Restano da definire (OQ-001): la struttura dell'albero tecnologico e dei
+rami, le tecnologie specifiche che sbloccano i livelli e la verifica
+della completezza dell'elenco delle strutture. Quantità, tempi e LR non
+fanno parte di OQ-001 (OQ-052; OQ-012).
 
 **Tipi di lavorazione**
 
