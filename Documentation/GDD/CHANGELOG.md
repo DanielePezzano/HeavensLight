@@ -2,6 +2,34 @@
 
 Cronologia delle modifiche al documento di game design. Le voci sono riportate dalle versioni precedenti e ordinate dalla più recente alla più vecchia.
 
+## Novità v0.68
+
+Chiusa OQ-001 (Catalogo completo delle ricette) sul criterio approvato:
+la struttura del catalogo è l'elenco di tutte le ricette con input e
+output per tipo; quantità, tempi, LR e bilanciamento ne sono esclusi
+(OQ-052; OQ-012). In §4.3.5 le proposte provvisorie diventano struttura
+**[CONFERMATA]**, senza modifiche sostanziali: tabelle degli input di
+raffinazione (7), componenti (6) e assemblaggi (5 scafi, moduli di
+stazione orbitale, infrastrutture); assegnazione dei sottoprodotti
+(Metalli strutturali → Composti chimici; Composti chimici → Combustibili
+raffinati; Combustibili raffinati → Composti chimici; nessun altro);
+livelli tecnologici richiesti L1–L5, senza nominare tecnologie
+specifiche, inclusa l'equivalenza tra livello del cantiere e livello
+tecnologico per gli scafi. Le ricette restano modificabili tramite una
+nuova decisione. Nelle colonne «Provenienza» «approvata come
+provvisoria» diventa «confermata». In §4.3.4 l'elenco dei materiali
+individuali resta illustrativo e non confermato; i rimandi a OQ-001 in
+§4.3.4 e §4.3.5 sono sostituiti da OQ-057, OQ-058 e OQ-059; sono
+mantenuti i rimandi a OQ-052 e OQ-012. Aggiunta la riga nel registro
+sintetico delle decisioni (§10). Aggiornata la versione (0.68)
+nell'intestazione del GDD; la data è invariata (stesso giorno). In
+`DECISIONS.md`: nuovo ADR-009 (Struttura del catalogo delle ricette). In
+`OPEN_QUESTIONS.md`: OQ-001 trasferita nell'archivio delle questioni
+risolte; create OQ-057 (elenco definitivo e fonti dei materiali
+individuali), OQ-058 (stoccaggio, smaltimento, volume e trasportabilità
+dei sottoprodotti) e OQ-059 (albero tecnologico e tecnologie che
+sbloccano i livelli); aggiornata la scheda OQ-004.
+
 ## Novità v0.67
 
 Aggiunta in §4.3.5 una proposta provvisoria e non vincolante sul livello

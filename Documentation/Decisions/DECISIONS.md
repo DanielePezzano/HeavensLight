@@ -471,3 +471,71 @@ queste proprietà.
   autorevole definitivo.
 - I dettagli tecnici di staging, commit, recupero e persistenza
   dell'avanzamento non sono definiti da questa decisione.
+
+---
+
+## ADR-009 — Struttura del catalogo delle ricette
+
+- **Data:** 2026-11-25
+- **Stato:** Confermata
+- **Ambito:** Economia e produzione — catalogo delle ricette
+- **Riferimento GDD:** §4.3.4; §4.3.5
+
+### Contesto
+
+La questione OQ-001 (Catalogo completo delle ricette) chiedeva di
+definire il catalogo delle ricette. Il suo contenuto è stato affrontato
+per parti, registrate nel GDD come proposte provvisorie (v0.64–v0.67):
+tipi di input delle ricette di raffinazione, dei componenti e degli
+assemblaggi, assegnazione dei sottoprodotti e livello tecnologico
+richiesto. Occorreva stabilire quale parte costituisse il catalogo vero
+e proprio e chiudere la questione, separando ciò che resta da definire.
+
+### Decisione
+
+La struttura del catalogo è l'elenco di tutte le ricette con i relativi
+input e output per tipo. Quantità, tempi, LR e bilanciamento economico
+ne sono esclusi. Sono confermati, senza modifiche sostanziali rispetto
+alle proposte provvisorie:
+
+- le tabelle degli input di raffinazione (7 famiglie), dei componenti
+  (6 categorie funzionali) e degli assemblaggi (5 scafi, moduli di
+  stazione orbitale, infrastrutture);
+- l'assegnazione dei sottoprodotti: Metalli strutturali → Composti
+  chimici; Composti chimici → Combustibili raffinati; Combustibili
+  raffinati → Composti chimici; nessun sottoprodotto per le altre
+  ricette;
+- i livelli tecnologici richiesti (L1–L5), senza nominare tecnologie
+  specifiche, inclusa l'equivalenza tra livello del cantiere e livello
+  tecnologico per gli scafi.
+
+Le ricette restano modificabili in futuro tramite una nuova decisione.
+L'elenco dei materiali individuali resta illustrativo e non confermato.
+
+### Alternative considerate
+
+- **Sottoprodotti:** nessun sottoprodotto, sottoprodotti opzionali in
+  ricette scelte o sottoprodotti in tutte le raffinazioni; la scelta
+  (opzionali) è documentata in ADR-003, di cui questa decisione conferma
+  l'assegnazione per ricetta.
+- **Ricette delle navi:** ricette fisse per classe oppure ricetta
+  generata dal progetto (componenti negli slot più scafo). È stata
+  adottata la seconda; nel catalogo restano cinque ricette di scafo, una
+  per taglia.
+
+### Conseguenze
+
+- Il catalogo ha una struttura stabile su cui definire quantità, tempi e
+  LR.
+- Le ricette restano modificabili soltanto tramite una nuova decisione.
+- Restano aperti l'elenco e le fonti dei materiali individuali, le
+  regole sui sottoprodotti e l'albero tecnologico.
+
+### Note e questioni collegate
+
+OQ-001 è chiusa e archiviata. Collegate: OQ-052 e OQ-012 (quantità e
+bilanciamento; valori di LR, come indicato nel GDD); OQ-057 (elenco e
+fonti dei materiali individuali); OQ-058 (stoccaggio, smaltimento,
+volume e trasportabilità dei sottoprodotti, ADR-003); OQ-059 (albero
+tecnologico e tecnologie che sbloccano i livelli, collegata a OQ-039 e
+OQ-046).

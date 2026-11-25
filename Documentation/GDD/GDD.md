@@ -1,7 +1,7 @@
 # Game Design Document — HeavensLight
 
 **Last updated:** 25 novembre 2026  
-**Versione:** 0.67  
+**Versione:** 0.68  
 **Stato:** documento di progettazione corrente
 
 Questo documento descrive il modello di gioco corrente. Le decisioni confermate, le proposte e le questioni aperte sono indicate nelle sezioni pertinenti. Le questioni ancora aperte sono gestite in `OPEN_QUESTIONS.md`; la cronologia delle modifiche è mantenuta separatamente in `CHANGELOG.md`.
@@ -1110,9 +1110,9 @@ materiale è rappresentato individualmente soltanto se ha conseguenze
 strategiche, tecnologiche, produttive o logistiche; la scelta conferma
 l'approccio misto già descritto in §4.3. L'elenco definitivo dei
 materiali individuali, le loro ricette, quantità, tempi, fonti di
-approvvigionamento ed effetti meccanici sono da definire (OQ-001).
+approvvigionamento ed effetti meccanici sono da definire (OQ-057).
 
-**[ILLUSTRATIVO, NON VINCOLANTE: OQ-001]** La tabella seguente descrive
+**[ILLUSTRATIVO, NON VINCOLANTE: OQ-057]** La tabella seguente descrive
 a titolo illustrativo che cosa comprende ciascuna famiglia. Non è una
 regola meccanica: in gioco resta un solo materiale aggregato per
 famiglia; i materiali citati non diventano risorse distinte e non hanno
@@ -1128,7 +1128,7 @@ ricette, valori o stock propri.
 | Materiali energetici | Celle, isotopi e materiali per accumulo e reattori |
 | Biomateriali | Fibre, tessuti e composti organici di derivazione biologica |
 
-**[ESEMPI ILLUSTRATIVI, ELENCO DA DEFINIRE: OQ-001]** I materiali
+**[ESEMPI ILLUSTRATIVI, ELENCO DA DEFINIRE: OQ-057]** I materiali
 seguenti illustrano il tipo di eccezione individuale; non costituiscono
 un elenco confermato, non hanno regole, valori o ricette associati e
 sono al massimo dieci.
@@ -1185,20 +1185,28 @@ principale, un impianto richiesto e una tecnologia richiesta.
 prevedere uno o più sottoprodotti soltanto in ricette specificamente
 scelte; non tutte le ricette li hanno. Il formato base resta di 2–4
 input e un output principale. Le ricette che prevedono sottoprodotti
-sono oggetto della proposta provvisoria riportata più sotto. Restano da
-definire (OQ-001): le regole di stoccaggio, smaltimento e volume, la
-trasportabilità dei sottoprodotti e le tecnologie specifiche richieste
-(il solo livello tecnologico richiesto è nella proposta provvisoria
-dedicata, più sotto); la
+sono indicate più sotto. Restano da definire (OQ-058): le regole di
+stoccaggio, smaltimento e volume e la trasportabilità dei sottoprodotti;
+le tecnologie specifiche richieste sono in OQ-059 (il solo livello
+tecnologico richiesto è nella tabella dedicata, più sotto); la
 quantità dei sottoprodotti è tracciata in OQ-052.
 
-**[PROPOSTA PROVVISORIA, NON VINCOLANTE: OQ-001]** Struttura degli input
+**Catalogo delle ricette: struttura** ([ADR-009](DECISIONS.md#adr-009--struttura-del-catalogo-delle-ricette))
+**[CONFERMATO]**: il catalogo è l'elenco di tutte le ricette con i
+relativi input e output per tipo. Le tabelle seguenti (input di
+raffinazione, componenti e assemblaggi; sottoprodotti; livelli
+tecnologici richiesti) costituiscono la struttura confermata del
+catalogo e sono modificabili in futuro soltanto tramite una nuova
+decisione. Quantità, tempi, LR e bilanciamento economico restano fuori
+dal catalogo e da definire (OQ-052; OQ-012).
+
+**[CONFERMATO]** Struttura degli input
 delle ricette di raffinazione. Le ricette di raffinazione sono prodotte
 nella Raffineria, hanno da 2 a 4 input e un output principale. La
 tabella indica soltanto i tipi di input per famiglia: non definisce
 quantità, tempi, LR, tecnologie richieste (il livello tecnologico è nella
-proposta provvisoria dedicata); i sottoprodotti sono trattati
-nella proposta provvisoria dedicata.
+tabella dedicata); i sottoprodotti sono trattati
+nella tabella dedicata.
 
 | Famiglia (output principale) | Tipi di input | Provenienza |
 |---|---|---|
@@ -1206,52 +1214,52 @@ nella proposta provvisoria dedicata.
 | Metalli rari | Minerali, Materiali avanzati, Energia | Derivazione già indicata in §4.3.4 |
 | Combustibili raffinati | Carburante, Energia | Derivazione già indicata in §4.3.4 |
 | Biomateriali | Cibo, Energia | Derivazione già indicata in §4.3.4 |
-| Composti chimici | Minerali, Carburante, Energia | Ipotesi di lavoro, approvata come provvisoria |
-| Cristalli e semiconduttori | Minerali, Materiali avanzati, Energia | Ipotesi di lavoro, approvata come provvisoria |
-| Materiali energetici | Carburante, Materiali avanzati, Energia | Ipotesi di lavoro, approvata come provvisoria |
+| Composti chimici | Minerali, Carburante, Energia | Ipotesi di lavoro, confermata |
+| Cristalli e semiconduttori | Minerali, Materiali avanzati, Energia | Ipotesi di lavoro, confermata |
+| Materiali energetici | Carburante, Materiali avanzati, Energia | Ipotesi di lavoro, confermata |
 
-Restano da definire: tecnologie specifiche richieste (per il livello
-tecnologico vedi la proposta provvisoria dedicata), regole di stoccaggio,
-smaltimento e volume e trasportabilità dei sottoprodotti, e fonti dei
-materiali individuali (OQ-001). Quantità di input e output e
+Restano da definire: le tecnologie specifiche richieste (OQ-059; per il
+livello tecnologico vedi la tabella dedicata), le regole di stoccaggio,
+smaltimento e volume e la trasportabilità dei sottoprodotti (OQ-058) e
+l'elenco e le fonti dei materiali individuali (OQ-057). Quantità di input e output e
 bilanciamento economico delle ricette sono tracciati in OQ-052; i
 valori di LR per ricetta in OQ-012.
 
-**[PROPOSTA PROVVISORIA, NON VINCOLANTE: OQ-001]** Sottoprodotti per
+**[CONFERMATO]** Sottoprodotti per
 ricetta, in applicazione di [ADR-003](DECISIONS.md#adr-003--sottoprodotti-opzionali-nelle-ricette).
-L'assegnazione è un'ipotesi di lavoro dell'assistente, approvata come
-provvisoria. Un sottoprodotto è sempre una famiglia di materiali già
+L'assegnazione è un'ipotesi di lavoro dell'assistente, confermata
+dall'utente. Un sottoprodotto è sempre una famiglia di materiali già
 esistente (nessuna nuova risorsa) ed è previsto solo nelle ricette di
 raffinazione; i componenti e gli assemblaggi non hanno sottoprodotti. La
 tabella indica soltanto quali ricette prevedono un sottoprodotto e quale:
 non definisce quantità, regole di stoccaggio, smaltimento o volume,
-trasportabilità né tecnologie specifiche richieste.
+trasportabilità (OQ-058) né tecnologie specifiche richieste (OQ-059).
 
 | Ricetta di raffinazione (output principale) | Sottoprodotto | Provenienza |
 |---|---|---|
-| Metalli strutturali | Composti chimici | Ipotesi di lavoro, approvata come provvisoria |
-| Composti chimici | Combustibili raffinati | Ipotesi di lavoro, approvata come provvisoria |
-| Combustibili raffinati | Composti chimici | Ipotesi di lavoro, approvata come provvisoria |
-| Metalli rari, Cristalli e semiconduttori, Materiali energetici, Biomateriali | Nessuno | Ipotesi di lavoro, approvata come provvisoria |
+| Metalli strutturali | Composti chimici | Ipotesi di lavoro, confermata |
+| Composti chimici | Combustibili raffinati | Ipotesi di lavoro, confermata |
+| Combustibili raffinati | Composti chimici | Ipotesi di lavoro, confermata |
+| Metalli rari, Cristalli e semiconduttori, Materiali energetici, Biomateriali | Nessuno | Ipotesi di lavoro, confermata |
 
-**[PROPOSTA PROVVISORIA, NON VINCOLANTE: OQ-001]** Struttura degli input
+**[CONFERMATO]** Struttura degli input
 delle ricette dei componenti. Le ricette dei componenti sono prodotte
 nella Fabbrica di componenti, hanno da 2 a 4 input e un output
 principale. La tabella indica soltanto le famiglie di input per
 categoria funzionale: non definisce quantità, tempi, LR né tecnologie
 richieste; per i componenti non sono previsti sottoprodotti
-(proposta provvisoria sui sottoprodotti, sopra).
+(tabella dei sottoprodotti, sopra).
 
 | Categoria funzionale (output principale) | Famiglie di input | Provenienza |
 |---|---|---|
 | Strutturali | Metalli strutturali, Composti chimici | Già nell'esempio illustrativo di §4.3.5 |
 | Propulsione | Metalli strutturali, Materiali energetici, Metalli rari | Già nell'esempio illustrativo di §4.3.5 |
-| Energia | Materiali energetici, Cristalli e semiconduttori, Metalli strutturali | Ipotesi di lavoro dell'assistente, approvata come provvisoria |
-| Elettronica e sensori | Cristalli e semiconduttori, Metalli rari, Composti chimici | Ipotesi di lavoro dell'assistente, approvata come provvisoria |
-| Armamenti | Metalli strutturali, Materiali energetici, Metalli rari | Ipotesi di lavoro dell'assistente, approvata come provvisoria |
-| Supporto vitale | Biomateriali, Composti chimici, Metalli strutturali | Ipotesi di lavoro dell'assistente, approvata come provvisoria |
+| Energia | Materiali energetici, Cristalli e semiconduttori, Metalli strutturali | Ipotesi di lavoro dell'assistente, confermata |
+| Elettronica e sensori | Cristalli e semiconduttori, Metalli rari, Composti chimici | Ipotesi di lavoro dell'assistente, confermata |
+| Armamenti | Metalli strutturali, Materiali energetici, Metalli rari | Ipotesi di lavoro dell'assistente, confermata |
+| Supporto vitale | Biomateriali, Composti chimici, Metalli strutturali | Ipotesi di lavoro dell'assistente, confermata |
 
-**[PROPOSTA PROVVISORIA, NON VINCOLANTE: OQ-001]** Struttura degli input
+**[CONFERMATO]** Struttura degli input
 delle ricette degli assemblaggi. Le ricette degli assemblaggi sono
 prodotte nel Cantiere/Assemblaggio. Le **navi non hanno ricette fisse
 per classe**: la ricetta di una nave è generata dal progetto, cioè dai
@@ -1261,44 +1269,46 @@ prodotti finiti del Cantiere comprendono soltanto i moduli di stazione
 orbitale e le infrastrutture (impianti, avamposti), senza altri prodotti
 finiti. La tabella indica soltanto i tipi di input: non definisce
 quantità, tempi, LR né tecnologie specifiche richieste (il livello
-tecnologico è nella proposta provvisoria dedicata); per gli assemblaggi non sono
-previsti sottoprodotti (proposta provvisoria sui sottoprodotti, sopra).
+tecnologico è nella tabella dedicata); per gli assemblaggi non sono
+previsti sottoprodotti (tabella dei sottoprodotti, sopra).
 
 | Assemblaggio (output principale) | Tipi di input | Provenienza |
 |---|---|---|
-| Scafo Piccolo | Componenti strutturali, Metalli strutturali | Ipotesi di lavoro dell'assistente, approvata come provvisoria |
-| Scafo Medio | Componenti strutturali, Metalli strutturali | Ipotesi di lavoro dell'assistente, approvata come provvisoria |
-| Scafo Grande | Componenti strutturali, Metalli strutturali, Composti chimici | Ipotesi di lavoro dell'assistente, approvata come provvisoria |
-| Scafo Capitale | Componenti strutturali, Metalli strutturali, Composti chimici, Metalli rari | Ipotesi di lavoro dell'assistente, approvata come provvisoria |
-| Scafo Colosso | Componenti strutturali, Metalli strutturali, Composti chimici, Metalli rari | Ipotesi di lavoro dell'assistente, approvata come provvisoria |
-| Modulo di stazione orbitale | Componenti strutturali, Componenti di energia, Componenti di supporto vitale | Ipotesi di lavoro dell'assistente, approvata come provvisoria |
-| Infrastruttura (impianto o avamposto) | Componenti strutturali, Componenti di energia, Componenti di elettronica e sensori, Metalli strutturali | Ipotesi di lavoro dell'assistente, approvata come provvisoria |
+| Scafo Piccolo | Componenti strutturali, Metalli strutturali | Ipotesi di lavoro dell'assistente, confermata |
+| Scafo Medio | Componenti strutturali, Metalli strutturali | Ipotesi di lavoro dell'assistente, confermata |
+| Scafo Grande | Componenti strutturali, Metalli strutturali, Composti chimici | Ipotesi di lavoro dell'assistente, confermata |
+| Scafo Capitale | Componenti strutturali, Metalli strutturali, Composti chimici, Metalli rari | Ipotesi di lavoro dell'assistente, confermata |
+| Scafo Colosso | Componenti strutturali, Metalli strutturali, Composti chimici, Metalli rari | Ipotesi di lavoro dell'assistente, confermata |
+| Modulo di stazione orbitale | Componenti strutturali, Componenti di energia, Componenti di supporto vitale | Ipotesi di lavoro dell'assistente, confermata |
+| Infrastruttura (impianto o avamposto) | Componenti strutturali, Componenti di energia, Componenti di elettronica e sensori, Metalli strutturali | Ipotesi di lavoro dell'assistente, confermata |
 
-**[PROPOSTA PROVVISORIA, NON VINCOLANTE: OQ-001]** Livello tecnologico
+**[CONFERMATO]** Livello tecnologico
 richiesto dalle ricette. Nel catalogo si fissa soltanto il **livello**
 tecnologico (L1–L5) richiesto da ogni ricetta, senza nominare tecnologie
 specifiche. La tabella non definisce la struttura dell'albero
 tecnologico e dei suoi rami, né quali tecnologie sbloccano ciascun
-livello, né quantità, tempi o LR. I livelli indicati come ipotesi sono
-dell'assistente, approvati come provvisori.
+livello (OQ-059), né quantità, tempi o LR. I livelli indicati come
+ipotesi sono dell'assistente, confermati dall'utente. Per gli scafi il
+livello del cantiere coincide con il livello tecnologico richiesto.
 
 | Ricetta (output principale) | Livello tecnologico richiesto | Provenienza |
 |---|---|---|
-| Raffinazione: Metalli strutturali, Combustibili raffinati, Biomateriali | L1 | Ipotesi di lavoro, approvata come provvisoria |
-| Raffinazione: Composti chimici, Metalli rari | L2 | Ipotesi di lavoro, approvata come provvisoria |
-| Raffinazione: Cristalli e semiconduttori, Materiali energetici | L3 | Ipotesi di lavoro, approvata come provvisoria |
+| Raffinazione: Metalli strutturali, Combustibili raffinati, Biomateriali | L1 | Ipotesi di lavoro, confermata |
+| Raffinazione: Composti chimici, Metalli rari | L2 | Ipotesi di lavoro, confermata |
+| Raffinazione: Cristalli e semiconduttori, Materiali energetici | L3 | Ipotesi di lavoro, confermata |
 | Componenti (le 6 categorie funzionali) | Livello del componente prodotto (1–5): coincide con il livello tecnologico richiesto | Livelli dei componenti già in §7.5 |
 | Scafo Piccolo, Scafo Medio | L1 | Da §7.4 |
 | Scafo Grande | L2–L3 (provvisorio) | Da §7.4 |
 | Scafo Capitale | L4 | Da §7.4 |
 | Scafo Colosso | L5 | Da §7.4 |
-| Modulo di stazione orbitale | L2 | Ipotesi di lavoro, approvata come provvisoria |
-| Infrastruttura (impianto o avamposto) | L1 | Ipotesi di lavoro, approvata come provvisoria |
+| Modulo di stazione orbitale | L2 | Ipotesi di lavoro, confermata |
+| Infrastruttura (impianto o avamposto) | L1 | Ipotesi di lavoro, confermata |
 
-Restano da definire (OQ-001): la struttura dell'albero tecnologico e dei
-rami, le tecnologie specifiche che sbloccano i livelli e la verifica
-della completezza dell'elenco delle strutture. Quantità, tempi e LR non
-fanno parte di OQ-001 (OQ-052; OQ-012).
+Restano da definire: la struttura dell'albero tecnologico e dei rami e
+le tecnologie specifiche che sbloccano i livelli (OQ-059; collegata a
+OQ-039 e OQ-046) e la verifica della completezza dell'elenco delle
+strutture. Quantità, tempi e LR non fanno parte del catalogo (OQ-052;
+OQ-012).
 
 **Tipi di lavorazione**
 
@@ -3417,6 +3427,7 @@ incorporata nel GDD e registrata negli altri documenti pertinenti.
 | Navi e flotte ([ADR-006](DECISIONS.md#adr-006--autonomia-delle-navi-e-ammiraglia-della-flotta)) | Navi indipendenti o raggruppate in flotte; ogni flotta ha un'ammiraglia e si dissolve se questa viene perduta (§7.1) |
 | Organizzazione documentale | Quattro documenti canonici distinti: GDD, DECISIONS, CHANGELOG e OPEN_QUESTIONS (ADR-002) |
 | Sottoprodotti nelle ricette ([ADR-003](DECISIONS.md#adr-003--sottoprodotti-opzionali-nelle-ricette)) | Output principale più eventuali sottoprodotti, presenti solo in ricette specificamente scelte; non tutte le ricette li hanno; formato base invariato: 2–4 input e un output principale (§4.3.5) |
+| Struttura del catalogo delle ricette ([ADR-009](DECISIONS.md#adr-009--struttura-del-catalogo-delle-ricette)) | Catalogo = elenco di tutte le ricette con input e output per tipo; confermati input di raffinazione, componenti e assemblaggi, assegnazione dei sottoprodotti e livelli tecnologici richiesti (L1–L5); quantità, tempi, LR e bilanciamento esclusi (§4.3.5) |
 | Modalità | Single-player e multiplayer |
 | Struttura | Gioco a turni; risoluzione affidata al TurnResolver, con eventi ordinati (mai realmente simultanei) |
 | TurnResolver | Azioni con ETA; quelle non completate entro il turno vanno in una coda persistente consultata a inizio elaborazione |

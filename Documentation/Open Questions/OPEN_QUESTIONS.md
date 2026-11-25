@@ -32,7 +32,6 @@ modificati.
 
 | ID | Priorità | Area | Questione | Stato | Dipendenze | Riferimento GDD |
 |---|---|---|---|---|---|---|
-| OQ-001 | Non assegnata | Economia e produzione | Catalogo completo delle ricette | Aperta | Da valutare | §4.3–§4.4 |
 | OQ-002 | Non assegnata | Risorse e galassia | Depositi naturali e distribuzione delle risorse | Aperta | Da valutare | §4.2; §5.11 |
 | OQ-003 | Non assegnata | Produzione | Estrazione delle risorse | Aperta | Da valutare | §4.3; §5.11 |
 | OQ-004 | Non assegnata | Produzione | Raffinazione e ricette industriali | Aperta | Da valutare | §4.3–§4.4 |
@@ -88,6 +87,9 @@ modificati.
 | OQ-054 | Non assegnata | Intelligence | Soglie informative, aggiornamento e decadimento della conoscenza | Aperta | Da valutare | §1.3; §7.12 |
 | OQ-055 | Non assegnata | Flotte e navi | Distacco, trasferimento e sostituzione dell'ammiraglia | Aperta | Da valutare | §7.1 |
 | OQ-056 | Non assegnata | Colonie e popolazione | Attributi dei gruppi demografici ed effetti di espulsione/riconversione | Aperta | Da valutare | §6.9–§6.10 |
+| OQ-057 | Non assegnata | Economia e produzione | Elenco definitivo e fonti dei materiali individuali | Aperta | Da valutare | §4.3.4 |
+| OQ-058 | Non assegnata | Economia e produzione | Stoccaggio, smaltimento, volume e trasportabilità dei sottoprodotti | Aperta | Da valutare | §4.3.5; ADR-003 |
+| OQ-059 | Non assegnata | Ricerca e sviluppo | Struttura dell'albero tecnologico e tecnologie che sbloccano i livelli | Aperta | Da valutare | §4.3.5 |
 
 ## 3. Schede delle questioni
 
@@ -95,21 +97,6 @@ Le schede riportano il problema da affrontare e il punto di partenza
 ricavato dal GDD. Priorità, impatto bloccante e dipendenze operative
 restano da determinare durante la presa in carico: non sono stati dedotti
 automaticamente in fase di migrazione.
-
-### OQ-001 — Catalogo completo delle ricette
-
-- **Area:** Economia e produzione.
-- **Stato:** Aperta.
-- **Priorità:** Non assegnata.
-- **Problema da affrontare:** Definire materiali per famiglia, quantità, tempi, sottoprodotti e bilanciamento dei valori delle ricette.
-- **Obiettivo:** definire una specifica verificabile e coerente con i sistemi già documentati.
-- **Cosa blocca:** da valutare nell’analisi; non ancora determinato.
-- **Dipendenze:** da valutare; nessun prerequisito viene assunto senza verifica.
-- **Responsabile della decisione:** utente.
-- **Preparazione dell’analisi:** assistente.
-- **Proposta corrente:** nessuna proposta approvata come decisione. In §4.3.5 sono presenti proposte provvisorie e non vincolanti sui tipi di input delle ricette di raffinazione, dei componenti e degli assemblaggi. Assemblaggi (v0.65): le navi non hanno ricette fisse per classe ma derivano dal progetto (componenti negli slot più scafo); nel catalogo restano cinque ricette di scafo, una per taglia; strutture e prodotti finiti del Cantiere comprendono solo moduli di stazione orbitale e infrastrutture (impianti, avamposti). Gli input di scafi, moduli e infrastrutture sono ipotesi dell'assistente approvate come provvisorie. Sottoprodotti (v0.66): proposta provvisoria, ipotesi di lavoro dell'assistente approvata come provvisoria, in applicazione di ADR-003; un sottoprodotto è sempre una famiglia di materiali già esistente, previsto solo nelle ricette di raffinazione: Metalli strutturali → Composti chimici; Composti chimici → Combustibili raffinati; Combustibili raffinati → Composti chimici; nessun sottoprodotto per le altre ricette di raffinazione (Metalli rari, Cristalli e semiconduttori, Materiali energetici, Biomateriali), per i componenti e per gli assemblaggi. Livello tecnologico richiesto (v0.67): proposta provvisoria; nel catalogo si fissa solo il livello (L1–L5), senza nominare tecnologie specifiche. Raffinazione: Metalli strutturali, Combustibili raffinati, Biomateriali L1; Composti chimici, Metalli rari L2; Cristalli e semiconduttori, Materiali energetici L3 (ipotesi dell'assistente, approvata come provvisoria). Componenti: il livello del componente prodotto (1–5, §7.5) coincide con il livello richiesto. Scafi: Piccolo e Medio L1, Grande L2–L3 (provvisorio), Capitale L4, Colosso L5 (da §7.4). Moduli di stazione orbitale L2 e infrastrutture L1 (ipotesi dell'assistente, approvata come provvisoria).
-- **Resta da definire:** regole di stoccaggio, smaltimento e volume dei sottoprodotti, trasportabilità, struttura dell'albero tecnologico e dei rami e tecnologie specifiche che sbloccano i livelli (non coperte da una OQ esistente: OQ-039 riguarda il catalogo dei componenti, OQ-046 costi e tempi di sviluppo), verifica della completezza dell'elenco delle strutture, fonti dei materiali individuali. Quantità (compresi i sottoprodotti), tempi e bilanciamento sono in OQ-052; i valori di LR in OQ-012.
-- **Riferimenti:** §4.3–§4.4; §4.3.5.
 
 ### OQ-002 — Depositi naturali e distribuzione delle risorse
 
@@ -150,8 +137,8 @@ automaticamente in fase di migrazione.
 - **Dipendenze:** da valutare; nessun prerequisito viene assunto senza verifica.
 - **Responsabile della decisione:** utente.
 - **Preparazione dell’analisi:** assistente.
-- **Proposta corrente:** nessuna proposta approvata. Eventuali valori o modelli già presenti nel GDD sono indicati come provvisori e non diventano automaticamente decisioni.
-- **Riferimenti:** §4.3–§4.4.
+- **Proposta corrente:** nessuna proposta approvata per quantità, tempi e valori. La struttura degli input delle ricette di raffinazione e l'assegnazione dei sottoprodotti sono confermate (ADR-009; §4.3.5); restano aperti i valori numerici, le regole sui sottoprodotti (OQ-058) e le tecnologie specifiche (OQ-059).
+- **Riferimenti:** §4.3–§4.4; §4.3.5; ADR-009.
 
 ### OQ-005 — Reparti integrati e lavorazioni degli impianti
 
@@ -881,11 +868,65 @@ automaticamente in fase di migrazione.
 - **Proposta corrente:** sono confermati gruppi autonomi con specie, popolazione, origine e affiliazione politica; la popolazione totale della colonia è derivata dalla somma dei gruppi. L'occupazione militare non elimina automaticamente i gruppi esistenti; espulsione e riconversione sono operazioni esplicite.
 - **Riferimenti:** §6.9–§6.10; ADR-004.
 
+### OQ-057 — Elenco definitivo e fonti dei materiali individuali
+
+- **Area:** Economia e produzione.
+- **Stato:** Aperta.
+- **Priorità:** Non assegnata.
+- **Problema da affrontare:** Definire l'elenco definitivo dei materiali individuali (eccezioni rispetto alle sette famiglie aggregate di §4.3.4), la loro provenienza e le fonti di approvvigionamento, le ricette e gli effetti meccanici.
+- **Obiettivo:** definire una specifica verificabile e coerente con i sistemi già documentati.
+- **Cosa blocca:** da valutare nell’analisi; non ancora determinato.
+- **Dipendenze:** da valutare; nessun prerequisito viene assunto senza verifica.
+- **Responsabile della decisione:** utente.
+- **Preparazione dell’analisi:** assistente.
+- **Proposta corrente:** nessuna proposta approvata. In §4.3.4 l'elenco di esempi (al massimo dieci) e la tabella di ciò che comprende ciascuna famiglia sono illustrativi e non vincolanti. Per impostazione predefinita le famiglie restano aggregate; un materiale è individuale soltanto se ha conseguenze strategiche, tecnologiche, produttive o logistiche.
+- **Riferimenti:** §4.3.4; ADR-009 (questione originata da OQ-001, archiviata).
+
+### OQ-058 — Stoccaggio, smaltimento, volume e trasportabilità dei sottoprodotti
+
+- **Area:** Economia e produzione.
+- **Stato:** Aperta.
+- **Priorità:** Non assegnata.
+- **Problema da affrontare:** Definire le regole di stoccaggio, smaltimento, volume e trasportabilità dei sottoprodotti delle ricette di raffinazione.
+- **Obiettivo:** definire una specifica verificabile e coerente con i sistemi già documentati.
+- **Cosa blocca:** da valutare nell’analisi; non ancora determinato.
+- **Dipendenze:** da valutare; nessun prerequisito viene assunto senza verifica.
+- **Responsabile della decisione:** utente.
+- **Preparazione dell’analisi:** assistente.
+- **Proposta corrente:** nessuna proposta approvata. Sono confermati i sottoprodotti opzionali (ADR-003) e la loro assegnazione per ricetta (ADR-009); non sono definite le regole in oggetto.
+- **Riferimenti:** §4.3.5; ADR-003; ADR-009.
+
+### OQ-059 — Struttura dell'albero tecnologico e tecnologie che sbloccano i livelli
+
+- **Area:** Ricerca e sviluppo.
+- **Stato:** Aperta.
+- **Priorità:** Non assegnata.
+- **Problema da affrontare:** Definire la struttura dell'albero tecnologico e dei rami (il GDD nomina soltanto i rami C, D ed E; i rami A e B non sono definiti) e le tecnologie specifiche che sbloccano i livelli L1–L5 richiesti dalle ricette.
+- **Obiettivo:** definire una specifica verificabile e coerente con i sistemi già documentati.
+- **Cosa blocca:** da valutare nell’analisi; non ancora determinato.
+- **Dipendenze:** da valutare; nessun prerequisito viene assunto senza verifica. Collegata a OQ-039 (componenti delle navi e tecnologie associate) e OQ-046 (costi in PR e tempi di sviluppo).
+- **Responsabile della decisione:** utente.
+- **Preparazione dell’analisi:** assistente.
+- **Proposta corrente:** nessuna proposta approvata. Il catalogo fissa soltanto i livelli tecnologici richiesti dalle ricette (ADR-009), senza nominare tecnologie specifiche.
+- **Riferimenti:** §4.3.5; §7.5; OQ-039; OQ-046; ADR-009.
+
 ## 4. Questioni risolte e archivio
 
 Le questioni risolte saranno trasferite qui dopo l’approvazione e
 l’integrazione documentale. Per ciascuna saranno mantenuti ID, decisione
 finale e riferimenti al GDD e all’eventuale ADR.
+
+### Questioni risolte
+
+- **OQ-001 — Catalogo completo delle ricette** (area: Economia e
+  produzione). Decisione finale: la struttura del catalogo è l'elenco di
+  tutte le ricette con input e output per tipo; quantità, tempi, LR e
+  bilanciamento ne sono esclusi. Confermati input di raffinazione,
+  componenti e assemblaggi, assegnazione dei sottoprodotti e livelli
+  tecnologici richiesti (L1–L5). Le ricette restano modificabili tramite
+  una nuova decisione. Riferimenti: GDD §4.3.5 (v0.68); ADR-009;
+  ADR-003 (sottoprodotti opzionali). Questioni derivate: OQ-057, OQ-058,
+  OQ-059; quantità e LR in OQ-052 e OQ-012.
 
 ### Elementi già confermati o risolti prima della migrazione
 
