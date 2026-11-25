@@ -1,7 +1,7 @@
 # Game Design Document — HeavensLight
 
-**Last updated:** 20 novembre 2026  
-**Versione:** 0.65  
+**Last updated:** 25 novembre 2026  
+**Versione:** 0.66  
 **Stato:** documento di progettazione corrente
 
 Questo documento descrive il modello di gioco corrente. Le decisioni confermate, le proposte e le questioni aperte sono indicate nelle sezioni pertinenti. Le questioni ancora aperte sono gestite in `OPEN_QUESTIONS.md`; la cronologia delle modifiche è mantenuta separatamente in `CHANGELOG.md`.
@@ -1184,15 +1184,18 @@ principale, un impianto richiesto e una tecnologia richiesta.
 **[CONFERMATO]**: le ricette hanno un output principale e possono
 prevedere uno o più sottoprodotti soltanto in ricette specificamente
 scelte; non tutte le ricette li hanno. Il formato base resta di 2–4
-input e un output principale. Restano da definire (OQ-001): quali
-ricette prevedono sottoprodotti, le regole di stoccaggio, smaltimento e
-volume, la tipologia e la trasportabilità dei sottoprodotti.
+input e un output principale. Le ricette che prevedono sottoprodotti
+sono oggetto della proposta provvisoria riportata più sotto. Restano da
+definire (OQ-001): le regole di stoccaggio, smaltimento e volume, la
+trasportabilità dei sottoprodotti e le tecnologie richieste; la
+quantità dei sottoprodotti è tracciata in OQ-052.
 
 **[PROPOSTA PROVVISORIA, NON VINCOLANTE: OQ-001]** Struttura degli input
 delle ricette di raffinazione. Le ricette di raffinazione sono prodotte
 nella Raffineria, hanno da 2 a 4 input e un output principale. La
 tabella indica soltanto i tipi di input per famiglia: non definisce
-quantità, tempi, LR, tecnologie richieste né sottoprodotti.
+quantità, tempi, LR, tecnologie richieste; i sottoprodotti sono trattati
+nella proposta provvisoria dedicata.
 
 | Famiglia (output principale) | Tipi di input | Provenienza |
 |---|---|---|
@@ -1204,18 +1207,36 @@ quantità, tempi, LR, tecnologie richieste né sottoprodotti.
 | Cristalli e semiconduttori | Minerali, Materiali avanzati, Energia | Ipotesi di lavoro, approvata come provvisoria |
 | Materiali energetici | Carburante, Materiali avanzati, Energia | Ipotesi di lavoro, approvata come provvisoria |
 
-Restano da definire: tecnologie richieste, eventuali sottoprodotti per
-ricetta, ricette di livello superiore (assemblaggi) e fonti dei
+Restano da definire: tecnologie richieste, regole di stoccaggio,
+smaltimento e volume e trasportabilità dei sottoprodotti, e fonti dei
 materiali individuali (OQ-001). Quantità di input e output e
 bilanciamento economico delle ricette sono tracciati in OQ-052; i
 valori di LR per ricetta in OQ-012.
+
+**[PROPOSTA PROVVISORIA, NON VINCOLANTE: OQ-001]** Sottoprodotti per
+ricetta, in applicazione di [ADR-003](DECISIONS.md#adr-003--sottoprodotti-opzionali-nelle-ricette).
+L'assegnazione è un'ipotesi di lavoro dell'assistente, approvata come
+provvisoria. Un sottoprodotto è sempre una famiglia di materiali già
+esistente (nessuna nuova risorsa) ed è previsto solo nelle ricette di
+raffinazione; i componenti e gli assemblaggi non hanno sottoprodotti. La
+tabella indica soltanto quali ricette prevedono un sottoprodotto e quale:
+non definisce quantità, regole di stoccaggio, smaltimento o volume,
+trasportabilità né tecnologie richieste.
+
+| Ricetta di raffinazione (output principale) | Sottoprodotto | Provenienza |
+|---|---|---|
+| Metalli strutturali | Composti chimici | Ipotesi di lavoro, approvata come provvisoria |
+| Composti chimici | Combustibili raffinati | Ipotesi di lavoro, approvata come provvisoria |
+| Combustibili raffinati | Composti chimici | Ipotesi di lavoro, approvata come provvisoria |
+| Metalli rari, Cristalli e semiconduttori, Materiali energetici, Biomateriali | Nessuno | Ipotesi di lavoro, approvata come provvisoria |
 
 **[PROPOSTA PROVVISORIA, NON VINCOLANTE: OQ-001]** Struttura degli input
 delle ricette dei componenti. Le ricette dei componenti sono prodotte
 nella Fabbrica di componenti, hanno da 2 a 4 input e un output
 principale. La tabella indica soltanto le famiglie di input per
-categoria funzionale: non definisce quantità, tempi, LR, tecnologie
-richieste né sottoprodotti.
+categoria funzionale: non definisce quantità, tempi, LR né tecnologie
+richieste; per i componenti non sono previsti sottoprodotti
+(proposta provvisoria sui sottoprodotti, sopra).
 
 | Categoria funzionale (output principale) | Famiglie di input | Provenienza |
 |---|---|---|
@@ -1235,7 +1256,8 @@ restano quindi cinque ricette di scafo, una per taglia. Strutture e
 prodotti finiti del Cantiere comprendono soltanto i moduli di stazione
 orbitale e le infrastrutture (impianti, avamposti), senza altri prodotti
 finiti. La tabella indica soltanto i tipi di input: non definisce
-quantità, tempi, LR, tecnologie richieste né sottoprodotti.
+quantità, tempi, LR né tecnologie richieste; per gli assemblaggi non sono
+previsti sottoprodotti (proposta provvisoria sui sottoprodotti, sopra).
 
 | Assemblaggio (output principale) | Tipi di input | Provenienza |
 |---|---|---|
@@ -1247,8 +1269,7 @@ quantità, tempi, LR, tecnologie richieste né sottoprodotti.
 | Modulo di stazione orbitale | Componenti strutturali, Componenti di energia, Componenti di supporto vitale | Ipotesi di lavoro dell'assistente, approvata come provvisoria |
 | Infrastruttura (impianto o avamposto) | Componenti strutturali, Componenti di energia, Componenti di elettronica e sensori, Metalli strutturali | Ipotesi di lavoro dell'assistente, approvata come provvisoria |
 
-Restano da definire (OQ-001): eventuali sottoprodotti per ricetta,
-tecnologie richieste e verifica della completezza dell'elenco delle
+Restano da definire (OQ-001): tecnologie richieste e verifica della completezza dell'elenco delle
 strutture. Quantità, tempi e LR non fanno parte di OQ-001 (OQ-052;
 OQ-012).
 

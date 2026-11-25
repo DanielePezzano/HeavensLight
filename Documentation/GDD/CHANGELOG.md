@@ -2,6 +2,26 @@
 
 Cronologia delle modifiche al documento di game design. Le voci sono riportate dalle versioni precedenti e ordinate dalla più recente alla più vecchia.
 
+## Novità v0.66
+
+Aggiunta in §4.3.5 una proposta provvisoria e non vincolante
+sull'assegnazione dei sottoprodotti per ricetta, in applicazione di
+ADR-003 (sottoprodotti opzionali, solo in ricette scelte). Un
+sottoprodotto è sempre una famiglia di materiali già esistente (nessuna
+nuova risorsa) ed è previsto solo nelle ricette di raffinazione:
+Metalli strutturali → Composti chimici; Composti chimici → Combustibili
+raffinati; Combustibili raffinati → Composti chimici. Nessun
+sottoprodotto per Metalli rari, Cristalli e semiconduttori, Materiali
+energetici, Biomateriali, né per componenti e assemblaggi. L'assegnazione
+è un'ipotesi di lavoro dell'assistente, approvata come provvisoria.
+Aggiornate le frasi su ciò che resta da definire (regole di stoccaggio,
+smaltimento e volume, trasportabilità, tecnologie richieste; quantità in
+OQ-052) e le note delle tabelle di input, che rimandano alla nuova
+proposta. Aggiornata la versione (0.66) e la data nell'intestazione del
+GDD. In `OPEN_QUESTIONS.md`: aggiornata la scheda OQ-001, che resta
+aperta. Nessun nuovo ADR in `DECISIONS.md` (proposta provvisoria che
+applica ADR-003).
+
 ## Novità v0.65
 
 Aggiunta in §4.3.5 una proposta provvisoria e non vincolante sulla
