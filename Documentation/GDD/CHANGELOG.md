@@ -2,6 +2,25 @@
 
 Cronologia delle modifiche al documento di game design. Le voci sono riportate dalle versioni precedenti e ordinate dalla più recente alla più vecchia.
 
+## Novità v0.67
+
+Aggiunta in §4.3.5 una proposta provvisoria e non vincolante sul livello
+tecnologico (L1–L5) richiesto dalle ricette, senza nominare tecnologie
+specifiche. Raffinazione: Metalli strutturali, Combustibili raffinati,
+Biomateriali L1; Composti chimici, Metalli rari L2; Cristalli e
+semiconduttori, Materiali energetici L3. Componenti: il livello del
+componente prodotto (1–5, §7.5) coincide con il livello tecnologico
+richiesto. Scafi: Piccolo e Medio L1, Grande L2–L3 (provvisorio),
+Capitale L4, Colosso L5 (da §7.4). Moduli di stazione orbitale L2;
+infrastrutture (impianti, avamposti) L1. Le ipotesi dell'assistente
+(raffinazione, moduli, infrastrutture) sono approvate come provvisorie.
+Aggiornate le frasi su ciò che resta da definire (struttura dell'albero
+tecnologico e dei rami, tecnologie specifiche che sbloccano i livelli) e
+le note che citavano le tecnologie richieste. Aggiornata la versione
+(0.67) nell'intestazione del GDD; la data è invariata (stesso giorno). In
+`OPEN_QUESTIONS.md`: aggiornata la scheda OQ-001, che resta aperta.
+Nessun nuovo ADR in `DECISIONS.md` (proposta provvisoria).
+
 ## Novità v0.66
 
 Aggiunta in §4.3.5 una proposta provvisoria e non vincolante
