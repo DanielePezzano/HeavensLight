@@ -539,3 +539,74 @@ fonti dei materiali individuali); OQ-058 (stoccaggio, smaltimento,
 volume e trasportabilità dei sottoprodotti, ADR-003); OQ-059 (albero
 tecnologico e tecnologie che sbloccano i livelli, collegata a OQ-039 e
 OQ-046).
+
+---
+
+## ADR-010 — Staging e commit finale dello stato di `World`
+
+- **Data:** 2026-11-26
+- **Stato:** Confermata
+- **Ambito:** Architettura tecnica — avanzamento temporale e consistenza dello stato del mondo
+- **Riferimento GDD:** §1.2.1; §11.1–§11.4
+- **Decisione collegata:** precisa la strategia di implementazione del requisito di atomicità logica definito in ADR-008.
+
+### Contesto
+
+ADR-008 ha stabilito che `World.advanceTo(targetTick)` non deve lasciare
+lo stato autorevole del mondo parzialmente aggiornato in caso di errore
+o interruzione. Occorreva scegliere una strategia architetturale che
+consentisse di elaborare gli aggiornamenti senza esporre risultati
+intermedi come stato definitivo.
+
+### Decisione
+
+L'avanzamento di `World` utilizza uno **stato temporaneo** distinto
+dallo stato autorevole corrente. Gli aggiornamenti necessari per
+raggiungere `targetTick` vengono elaborati nello stato temporaneo.
+Soltanto dopo il completamento con successo di tutti gli aggiornamenti
+previsti, le modifiche vengono applicate allo stato autorevole tramite
+un **commit finale**.
+
+Fino al commit, lo stato autorevole precedente resta integro e
+continua a rappresentare lo stato valido di `World`. Se l'elaborazione
+fallisce o viene interrotta prima del commit, lo stato temporaneo non
+viene promosso e lo stato autorevole precedente resta valido.
+
+La decisione definisce la strategia generale, non la struttura dati o
+il protocollo tecnico con cui staging e commit vengono realizzati.
+
+### Alternative considerate
+
+- **Copia dello stato (snapshot/copy-on-write):** elaborare su una copia
+  dello stato e sostituire lo stato autorevole al termine. È stata
+  considerata, ma può comportare costi elevati se richiede la copia
+  integrale di un universo molto grande.
+- **Stato temporaneo con commit finale:** preparare le modifiche
+  separatamente e applicarle allo stato autorevole soltanto al termine.
+  È la strategia adottata perché evita di imporre una copia integrale
+  dello stato e non richiede di basare il recupero sull'annullamento
+  delle singole mutazioni.
+- **Modifiche dirette con rollback:** modificare lo stato autorevole
+  registrando le informazioni necessarie per annullare le operazioni.
+  È stata considerata, ma rende il ripristino dipendente dalla
+  correttezza e completezza delle operazioni inverse.
+
+### Conseguenze
+
+- Lo stato autorevole non deve esporre gli aggiornamenti intermedi
+  prodotti durante `advanceTo`.
+- Il commit finale costituisce il confine tra elaborazione temporanea e
+  nuovo stato autorevole.
+- Un errore o un'interruzione prima del commit non deve richiedere
+  l'annullamento di mutazioni già rese autorevoli.
+- La strategia non prescrive una copia integrale del mondo né una
+  particolare tecnologia di persistenza.
+- La rappresentazione dello staging, le garanzie tecniche del commit,
+  il recupero dopo un'interruzione e la persistenza restano da definire.
+
+### Note e questioni collegate
+
+OQ-060 — Definizione tecnica dello staging, del commit e del recupero
+di `World.advanceTo`. Da chiarire anche il rapporto con
+`WorldDelta` e `MutableWorldState` descritti in §11.1–§11.4.
+

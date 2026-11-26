@@ -90,6 +90,7 @@ modificati.
 | OQ-057 | Non assegnata | Economia e produzione | Elenco definitivo e fonti dei materiali individuali | Aperta | Da valutare | §4.3.4 |
 | OQ-058 | Non assegnata | Economia e produzione | Stoccaggio, smaltimento, volume e trasportabilità dei sottoprodotti | Aperta | Da valutare | §4.3.5; ADR-003 |
 | OQ-059 | Non assegnata | Ricerca e sviluppo | Struttura dell'albero tecnologico e tecnologie che sbloccano i livelli | Aperta | Da valutare | §4.3.5 |
+| OQ-060 | Non assegnata | Architettura tecnica | Rappresentazione dello staging, commit e recupero di `World.advanceTo` | Aperta | Da valutare | §1.2.1; §11.1–§11.4; ADR-010 |
 
 ## 3. Schede delle questioni
 
@@ -909,6 +910,20 @@ automaticamente in fase di migrazione.
 - **Preparazione dell’analisi:** assistente.
 - **Proposta corrente:** nessuna proposta approvata. Il catalogo fissa soltanto i livelli tecnologici richiesti dalle ricette (ADR-009), senza nominare tecnologie specifiche.
 - **Riferimenti:** §4.3.5; §7.5; OQ-039; OQ-046; ADR-009.
+
+### OQ-060 — Rappresentazione dello staging, commit e recupero di `World.advanceTo`
+
+- **Area:** Architettura tecnica.
+- **Stato:** Aperta.
+- **Priorità:** Non assegnata.
+- **Problema da affrontare:** Definire come rappresentare e gestire lo stato temporaneo utilizzato da `World.advanceTo(targetTick)`, come applicare il commit finale e come recuperare da errori o interruzioni, preservando lo stato autorevole precedente.
+- **Obiettivo:** tradurre la strategia confermata in ADR-010 in un protocollo tecnico verificabile, coerente con l'architettura del `TurnResolver`.
+- **Cosa blocca:** la definizione implementativa completa dell'avanzamento atomico di `World`; non modifica la strategia generale già confermata.
+- **Dipendenze:** da valutare; in particolare va chiarito il rapporto con `WorldDelta`, `IWorldMutation` e `MutableWorldState` (§11.1–§11.4).
+- **Responsabile della decisione:** utente.
+- **Preparazione dell’analisi:** assistente.
+- **Proposta corrente:** è confermata la strategia di elaborazione su uno stato temporaneo distinto dallo stato autorevole, con commit finale dopo il completamento degli aggiornamenti previsti (ADR-010). Non sono ancora definiti struttura dello staging, atomicità tecnica del commit, checkpoint o journal, recupero dopo crash/interruzione e persistenza.
+- **Riferimenti:** §1.2.1; §11.1–§11.4; ADR-008; ADR-010.
 
 ## 4. Questioni risolte e archivio
 

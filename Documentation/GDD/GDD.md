@@ -1,7 +1,7 @@
 # Game Design Document — HeavensLight
 
-**Last updated:** 25 novembre 2026  
-**Versione:** 0.68  
+**Last updated:** 26 novembre 2026  
+**Versione:** 0.69  
 **Stato:** documento di progettazione corrente
 
 Questo documento descrive il modello di gioco corrente. Le decisioni confermate, le proposte e le questioni aperte sono indicate nelle sezioni pertinenti. Le questioni ancora aperte sono gestite in `OPEN_QUESTIONS.md`; la cronologia delle modifiche è mantenuta separatamente in `CHANGELOG.md`.
@@ -88,6 +88,21 @@ completati. In caso di errore o interruzione, `World` non deve restare
 in uno stato autorevole parzialmente aggiornato. L'implementazione può
 articolare l'elaborazione in più fasi, purché garantisca questo
 comportamento.
+
+**Strategia di aggiornamento [CONFERMATA]:** `World` elabora gli
+aggiornamenti su uno **stato temporaneo** distinto dallo stato
+autorevole corrente. Soltanto quando l'elaborazione è completata con
+successo, le modifiche temporanee vengono applicate allo stato
+autorevole tramite un **commit finale**. Prima del commit lo stato
+autorevole precedente resta integro e non viene sostituito da risultati
+parziali. Se l'elaborazione fallisce o viene interrotta prima del
+commit, lo stato temporaneo non viene promosso e lo stato autorevole
+precedente resta quello valido.
+
+La rappresentazione dello stato temporaneo, il meccanismo concreto del
+commit, il recupero dopo un'interruzione e il rapporto con
+`WorldDelta`/`MutableWorldState` (§11.1–§11.4) restano da definire
+(OQ-060).
 
 ### 1.3 Informazioni e intelligence
 
@@ -3423,6 +3438,7 @@ incorporata nel GDD e registrata negli altri documenti pertinenti.
 | Modello territoriale e demografico ([ADR-004](DECISIONS.md#adr-004--relazioni-territoriali-gruppi-demografici-e-infrastrutture-orbitali)) | Distinzione tra proprietà, utilizzo e controllo; pianeti a utilizzo esclusivo, sistemi e rotte condivisibili; gruppi demografici autonomi; slot di sviluppo planetario e categorie di installazioni orbitali (§5.12; §6.9–§6.11) |
 | Intelligence ([ADR-005](DECISIONS.md#adr-005--modello-delle-informazioni-e-dellintelligence)) | Stato reale unico e conoscenza per impero; categorie informative e scala generale di intelligence 0–4 (§1.3) |
 | Entità radice `World` e avanzamento temporale ([ADR-008](DECISIONS.md#adr-008--entità-radice-world-e-avanzamento-temporale)) | `World` contiene lo stato autorevole dell'universo, possiede il tempo di simulazione e avanza verso un tick assoluto tramite `advanceTo`; atomicità logica e coerenza temporale (§1.2.1) |
+| Strategia di aggiornamento atomico di `World` ([ADR-010](DECISIONS.md#adr-010--staging-e-commit-finale-dello-stato-di-world)) | Aggiornamento su stato temporaneo separato dallo stato autorevole e commit finale soltanto dopo il completamento; dettagli implementativi in OQ-060 (§1.2.1; §11.1–§11.4) |
 | Gestione temporale della conoscenza e osservazione mediante sonde ([ADR-007](DECISIONS.md#adr-007--gestione-temporale-della-conoscenza-e-osservazione-mediante-sonde)) | Informazioni per attributo con date di osservazione/acquisizione; distinzione statiche/dinamiche; aggiornamento tramite sonde e separazione tra attività del sistema e conoscenza (§1.3; §3.6.2; §5.13) |
 | Navi e flotte ([ADR-006](DECISIONS.md#adr-006--autonomia-delle-navi-e-ammiraglia-della-flotta)) | Navi indipendenti o raggruppate in flotte; ogni flotta ha un'ammiraglia e si dissolve se questa viene perduta (§7.1) |
 | Organizzazione documentale | Quattro documenti canonici distinti: GDD, DECISIONS, CHANGELOG e OPEN_QUESTIONS (ADR-002) |

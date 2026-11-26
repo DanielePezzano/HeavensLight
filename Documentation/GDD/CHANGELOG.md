@@ -1,5 +1,19 @@
 # Changelog — HeavensLight
 
+## Novità v0.69
+
+In §1.2.1 definita la strategia architetturale per l'atomicità di
+`World.advanceTo(targetTick)`: elaborazione su uno stato temporaneo
+separato dallo stato autorevole e commit finale soltanto dopo il
+completamento con successo degli aggiornamenti previsti. In caso di
+errore o interruzione prima del commit, lo stato temporaneo non viene
+promosso e lo stato autorevole precedente resta valido. Aggiornato il
+registro sintetico delle decisioni (§10) e la versione del GDD
+(0.69; 26 novembre 2026). In `DECISIONS.md` aggiunto ADR-010. In
+`OPEN_QUESTIONS.md` aggiunta OQ-060 per definire rappresentazione dello
+staging, meccanismo di commit, recupero, persistenza e integrazione con
+`WorldDelta`/`MutableWorldState`.
+
 Cronologia delle modifiche al documento di game design. Le voci sono riportate dalle versioni precedenti e ordinate dalla più recente alla più vecchia.
 
 ## Novità v0.68
